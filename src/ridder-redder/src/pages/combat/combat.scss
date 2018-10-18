@@ -1,3 +1,44 @@
 page-combat {
 
 }
+
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+
+    .difficulty {
+        ul {
+            list-style: none;
+            padding-inline-start: 0px;
+        }
+    }
+    .header-info {
+        margin-top: 15px;
+    }
+    .weakness {
+        img {
+            float: right;
+        }
+    }
+}
+
+.footer-container {
+    position: fixed;
+    padding: 0;
+    width: 90%;
+    bottom: 0;
+
+    
+    .info-container {
+        text-align: center;
+    }
+    .combat-style-container {
+        display: flex;
+        justify-content: space-between;
+        padding: 24px;
+    }
+    #img-bow {
+
+    }
+}

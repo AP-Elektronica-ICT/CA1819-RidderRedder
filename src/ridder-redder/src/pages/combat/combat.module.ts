@@ -4,7 +4,7 @@ import { CombatPage } from './combat';
 
 @NgModule({
   declarations: [
-    CombatPage,
+
   ],
   imports: [
     IonicPageModule.forChild(CombatPage),
