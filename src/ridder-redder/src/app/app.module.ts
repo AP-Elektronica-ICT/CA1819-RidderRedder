@@ -8,24 +8,24 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { CombatPage } from '../pages/combat/combat';
 import { ArLauncherComponent } from '../components/ar-launcher/ar-launcher';
-import { CombatPageModule } from '../pages/combat/combat.module';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     CombatPage,
+    ArLauncherComponent
   ],
   imports: [
     BrowserModule,
-    CombatPageModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, HomePage)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
     CombatPage,
+    ArLauncherComponent
   ],
   providers: [
     StatusBar,
