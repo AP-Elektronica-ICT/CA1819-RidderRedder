@@ -7,22 +7,25 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { CombatPage } from '../pages/combat/combat';
+import { ArLauncherComponent } from '../components/ar-launcher/ar-launcher';
+import { CombatPageModule } from '../pages/combat/combat.module';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    CombatPage
+    CombatPage,
   ],
   imports: [
     BrowserModule,
+    CombatPageModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    CombatPage
+    CombatPage,
   ],
   providers: [
     StatusBar,
