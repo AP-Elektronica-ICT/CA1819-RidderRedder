@@ -15,6 +15,7 @@ export class HomePage {
   }
 
   ionViewDidLoad(){
+    console.log("ionViewDidLoad");
     this.loadMap();
   }
 
