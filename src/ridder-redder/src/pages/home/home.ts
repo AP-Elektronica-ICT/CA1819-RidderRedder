@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { GoogleMaps, GoogleMap, GoogleMapOptions } from '@ionic-native/google-maps';
+import { Geolocation } from '@ionic-native/geolocation';
+
 
 
 @Component({
@@ -10,7 +12,7 @@ import { GoogleMaps, GoogleMap, GoogleMapOptions } from '@ionic-native/google-ma
 export class HomePage {
 
   map: GoogleMap;
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public geolocation: Geolocation) {
 
   }
 
@@ -20,26 +22,31 @@ export class HomePage {
   }
 
   loadMap(){
-    let mapOptions: GoogleMapOptions = {
-      camera: {
-        target: {
-          lat: 51.2308134,
-          lng: 4.4238697
-        },
-        zoom: 18,
-        tilt: 30
-      },
-      gestures: {
-        scroll: false,
-        tilt: false,
-        zoom: false,
-        rotate: false
-      },
-    };
+    this.geolocation.getCurrentPosition().then(
+      (resp) => {    
+        let mapOptions: GoogleMapOptions = {
+          camera: {
+            target: {
+              lat: resp.coords.latitude,
+              lng: resp.coords.longitude
+            },
+            zoom: 18,
+            tilt: 30
+          },
+          gestures: {
+            scroll: false,
+            tilt: false,
+            zoom: false,
+            rotate: false
+          },
+        };
 
-    console.log(mapOptions);
-    this.map = GoogleMaps.create('map_canvas', mapOptions);
+        console.log(mapOptions);
 
+        this.map = GoogleMaps.create('map_canvas', mapOptions);
+      }).catch((error) => {
+        console.log(error);
+      });
   }
 
 }
