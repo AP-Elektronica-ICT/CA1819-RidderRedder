@@ -4,11 +4,16 @@ import { CombatPage } from './combat';
 import { ArLauncherComponent } from '../../components/ar-launcher/ar-launcher';
 
 @NgModule({
-  declarations: [
+    declarations: [
 
-  ],
-  imports: [
-    IonicPageModule.forChild(CombatPage),
-  ],
+        ArLauncherComponent
+    ],
+    imports: [
+        IonicPageModule.forChild(CombatPage),
+    ],
+    entryComponents: [
+
+        ArLauncherComponent
+    ]
 })
 export class CombatPageModule { }

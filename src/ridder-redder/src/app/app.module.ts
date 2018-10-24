@@ -13,8 +13,7 @@ import { ArLauncherComponent } from '../components/ar-launcher/ar-launcher';
   declarations: [
     MyApp,
     HomePage,
-    CombatPage,
-    ArLauncherComponent
+    CombatPage
   ],
   imports: [
     BrowserModule,
@@ -24,8 +23,7 @@ import { ArLauncherComponent } from '../components/ar-launcher/ar-launcher';
   entryComponents: [
     MyApp,
     HomePage,
-    CombatPage,
-    ArLauncherComponent
+    CombatPage
   ],
   providers: [
     StatusBar,
