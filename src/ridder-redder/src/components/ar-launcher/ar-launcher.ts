@@ -1,6 +1,5 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { ModalController } from 'ionic-angular';
-
 /**
  * Generated class for the ArLauncherComponent component.
  *

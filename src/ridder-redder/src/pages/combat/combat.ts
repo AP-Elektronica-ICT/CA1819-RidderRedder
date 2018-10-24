@@ -20,7 +20,18 @@ export class CombatPage {
     private numbers;
 
     constructor(public navCtrl: NavController, public navParams: NavParams) {
-
+        this.monster1 = {
+            Difficulty: Math.floor(Math.random() * 4) + 1,
+            Level: 5,
+            Name: {
+                MonsterName: "Charles",
+                MonsterNameId: 1
+            },
+            Title: {
+                MonsterTitle: "Baron ",
+                MonsterTitleId: 1
+            }
+        }
     }
 
     ionViewDidLoad() {

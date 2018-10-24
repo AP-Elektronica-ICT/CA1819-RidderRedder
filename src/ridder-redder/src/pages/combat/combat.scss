@@ -6,6 +6,7 @@ page-combat {
 .header-container {
     display: flex;
     justify-content: space-between;
+    height: 400px;
 
     .difficulty {
         ul {
@@ -21,6 +22,15 @@ page-combat {
             float: right;
         }
     }
+}
+
+.ar-container {
+    position: fixed;
+    height: 50%;
+    width: 100%;
+    border: 3px solid red;
+    left: 0;
+    top: 20%;
 }
 
 .footer-container {

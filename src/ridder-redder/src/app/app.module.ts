@@ -13,17 +13,19 @@ import { ArLauncherComponent } from '../components/ar-launcher/ar-launcher';
   declarations: [
     MyApp,
     HomePage,
-    CombatPage
+    CombatPage,
+    ArLauncherComponent
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp, HomePage)
+    IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    CombatPage
+    CombatPage,
+    ArLauncherComponent
   ],
   providers: [
     StatusBar,
