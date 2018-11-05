@@ -4,33 +4,37 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
-import { MyApp } from './app.component';
+import { RidderRedder } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { CombatPage } from '../pages/combat/combat';
 import { ArLauncherComponent } from '../components/ar-launcher/ar-launcher';
+import { ComponentsModule } from '../components/components.module';
+import { HomePageModule } from '../pages/home/home.module';
+import { CombatPageModule } from '../pages/combat/combat.module';
 
 @NgModule({
-  declarations: [
-    MyApp,
-    HomePage,
-    CombatPage,
-    ArLauncherComponent
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(MyApp)
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    HomePage,
-    CombatPage,
-    ArLauncherComponent
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
-  ]
+    declarations: [
+        RidderRedder,
+        // HomePage,
+        // CombatPage
+    ],
+    imports: [
+        BrowserModule,
+        ComponentsModule,
+        HomePageModule,
+        CombatPageModule,
+        IonicModule.forRoot(RidderRedder)
+    ],
+    bootstrap: [IonicApp],
+    entryComponents: [
+        RidderRedder,
+        // HomePage,
+        // CombatPage
+    ],
+    providers: [
+        StatusBar,
+        SplashScreen,
+        { provide: ErrorHandler, useClass: IonicErrorHandler }
+    ]
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,5 +1,7 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { ModalController } from 'ionic-angular';
+
+
 /**
  * Generated class for the ArLauncherComponent component.
  *
@@ -8,8 +10,7 @@ import { ModalController } from 'ionic-angular';
  */
 @Component({
     selector: 'ar-launcher',
-    templateUrl: 'ar-launcher.html',
-    encapsulation: ViewEncapsulation.None
+    templateUrl: 'ar-launcher.html'
 })
 export class ArLauncherComponent implements OnInit {
 
@@ -22,7 +23,7 @@ export class ArLauncherComponent implements OnInit {
     }
 
     close() {
-        // this.modalCtrl.dismiss();
+        // this.modalCtrl
     }
 
 }

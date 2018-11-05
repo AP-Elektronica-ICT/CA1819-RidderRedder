@@ -14,7 +14,7 @@
                 <img src="assets/icons/fight.png" width="80" height="80" *ngIf="combatState === 0">
                 <div id="combat-timer" *ngIf="combatState != 0">
                     <h1>Time left:</h1>
-                    <p>{{maxTime}} sec</p>
+                    <span>{{maxTime}} sec</span>
                 </div>
                 <div id="combat-monstername">
                     <h2>{{monster.Title.MonsterTitle}}{{monster.Name.MonsterName}}</h2>
@@ -26,9 +26,9 @@
             </div>
         </div>
         <div class="ar-container">
-            <!-- <ar-launcer>
+            <ar-launcher>
                 
-            </ar-launcer> -->
+            </ar-launcher>
         </div>
         <div class="footer-container">
 

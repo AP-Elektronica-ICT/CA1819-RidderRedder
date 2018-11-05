@@ -8,7 +8,8 @@ import { CombatPage } from '../pages/combat/combat';
 @Component({
   templateUrl: 'app.html'
 })
-export class MyApp {
+export class RidderRedder {
+    
   rootPage:any = CombatPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
