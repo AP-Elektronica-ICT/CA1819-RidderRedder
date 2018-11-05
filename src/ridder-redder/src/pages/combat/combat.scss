@@ -6,7 +6,7 @@ page-combat {
 .header-container {
     display: flex;
     justify-content: space-between;
-    height: 400px;
+    height: 200px;
 
     .difficulty {
         ul {
@@ -15,7 +15,24 @@ page-combat {
         }
     }
     .header-info {
+        text-align: center;
         margin-top: 15px;
+
+        #combat-timer {
+            display: flex;
+            justify-content: space-around;
+            flex-direction: column;
+
+            p {
+                font-size: 24px;
+                font-weight: 400;
+                line-height: 12px;
+            }
+        }
+        #combat-monstername {  
+
+        }
+        
     }
     .weakness {
         img {
@@ -42,10 +59,18 @@ page-combat {
     
     .info-container {
         text-align: center;
+        padding: 12px;
     }
     .combat-style-container {
         display: flex;
         justify-content: space-between;
+        padding: 24px;
+    }
+    .combat-melee-container,
+    .combat-magic-container,
+    .combat-ranged-container  {
+        display: flex;
+        justify-content: space-around;
         padding: 24px;
     }
     #img-bow {

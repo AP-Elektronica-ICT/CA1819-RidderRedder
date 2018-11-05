@@ -1,36 +1,61 @@
 <ion-content padding>
-    <div class="header-container" *ngIf="monster1">
-        <div class="difficulty">
-            <p>Difficulty</p>
-            <ul>
-                <li *ngFor="let i of difficulty(monster1.Difficulty)">
-                    <img src="assets/icons/skull.png" width="30" height="30">
-                </li>
-            </ul>
+    <div class="combat-container" *ngIf="monster">
+        <div class="header-container">
+            <div class="difficulty">
+                <p>Difficulty</p>
+                <ul>
+                    <li *ngFor="let i of difficulty(monster.Difficulty)">
+                        <img src="assets/icons/skull.png" width="30" height="30">
+                    </li>
+                </ul>
 
+            </div>
+            <div class="header-info">
+                <img src="assets/icons/fight.png" width="80" height="80" *ngIf="combatState === 0">
+                <div id="combat-timer" *ngIf="combatState != 0">
+                    <h1>Time left:</h1>
+                    <p>{{maxTime}} sec</p>
+                </div>
+                <div id="combat-monstername">
+                    <h2>{{monster.Title.MonsterTitle}}{{monster.Name.MonsterName}}</h2>
+                </div>
+            </div>
+            <div class="weakness">
+                <p>Weakness</p>
+                <img src="assets/icons/fire.png" width="30" height="30">
+            </div>
         </div>
-        <div class="header-info">
-            <img src="assets/icons/fight.png" width="80" height="80">
+        <div class="ar-container">
+            <!-- <ar-launcer>
+                
+            </ar-launcer> -->
         </div>
-        <div class="weakness">
-            <p>Weakness</p>
-            <img src="assets/icons/fire.png" width="30" height="30">
-        </div>
-    </div>
-    <div class="ar-container">
-        <ar-launcer>
-            
-        </ar-launcer>
-    </div>
-    <div class="footer-container">
-        <div class="info-container">
-            <h1>SMASH!</h1>
-            <p>Choose a combat style to start the fight.</p>
-        </div>
-        <div class="combat-style-container">
-            <img src="assets/icons/sword.png" id="img-sword" width="80" height="80">
-            <img src="assets/icons/bow.png" id="img-bow" width="80" height="80">
-            <img src="assets/icons/wand.png" id="img-wand" width="80" height="80">
+        <div class="footer-container">
+
+            <div class="combat-ranged-container" *ngIf="combatState === 2">
+                <img src="assets/icons/bow-straight.png" id="img-ranged-bow" width="100" height="100">
+            </div>
+
+            <div class="info-container">
+                <h1>{{infoHead}}</h1>
+                <p>{{infoParagraph}}</p>
+            </div>
+
+            <div (click)="selectCombatStyle($event)" class="combat-style-container" *ngIf="combatState === 0">
+                <img src="assets/icons/sword.png" id="img-sword" width="80" height="80">
+                <img src="assets/icons/bow.png" id="img-bow" width="80" height="80">
+                <img src="assets/icons/wand.png" id="img-wand" width="80" height="80">
+            </div>
+
+            <div class="combat-melee-container" *ngIf="combatState === 1">
+                <img src="assets/icons/sword-slash.png" id="img-sword-slash" width="100" height="100">
+            </div>
+
+            <div class="combat-magic-container" *ngIf="combatState === 3">
+                <img src="assets/icons/speak-clean.png" id="img-magic-speak" width="100" height="100">
+                <img src="assets/icons/wand.png" id="img-magic-wand" width="100" height="100">
+            </div>
+
         </div>
     </div>
 </ion-content>
