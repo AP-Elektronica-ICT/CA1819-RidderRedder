@@ -26,9 +26,20 @@
             </div>
         </div>
         <div class="ar-container">
-            <ar-launcher>
-                
-            </ar-launcher>
+            <!-- <ar-frame>
+
+            </ar-frame> -->
+            
+            <span class="monsterHealth">{{monster.Health}} / {{monster.MaxHealth}}</span>
+
+            <div class="monster-container">
+                <img src="assets/imgs/tacosmell.gif" class="monsterImage">
+            </div>
+
+            <button ion-button class="btnForfeit" (click)="stopCombat()" *ngIf="inCombat">
+                Forfeit
+            </button>
+
         </div>
         <div class="footer-container">
 

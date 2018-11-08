@@ -1,19 +1,21 @@
-import { NgModule } from '@angular/core';
-import { ArLauncherComponent } from './ar-launcher/ar-launcher';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicModule } from 'ionic-angular';
+import { ArFrameComponent } from './ar-frame/ar-frame';
 
 @NgModule({
     declarations: [
-        ArLauncherComponent,
-    ],
-    entryComponents: [
-        ArLauncherComponent
+
+        ArFrameComponent,
     ],
     imports: [
         IonicModule
     ],
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+    ],
     exports: [
-        ArLauncherComponent,
+
+        ArFrameComponent,
     ]
 })
 export class ComponentsModule { }

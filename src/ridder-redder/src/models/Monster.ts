@@ -8,4 +8,6 @@ export class Monster {
     Model: MonsterModel;
     Difficulty: number;
     Level: number;
+    Health: number;
+    MaxHealth: number;
 }

@@ -1,0 +1,29 @@
+iframe {
+    width: 100%;
+    height: 100%;
+}
+.monster-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+
+
+    .monsterImg {
+        position: fixed;
+        margin: auto;
+        bottom: 35%;
+    }
+   
+}
+.monsterHealth {
+    position: fixed;
+    left: 40%;
+}
+
+.btnForfeit {
+    position: absolute;
+    bottom: -50%;
+    left: 0;
+    height: 30px;
+    width: 60px;
+}

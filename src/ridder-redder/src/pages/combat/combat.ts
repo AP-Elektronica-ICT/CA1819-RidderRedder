@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IonicPage, NavController, NavParams, DateTime } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Monster } from '../../models/Monster';
 import { CombatState } from '../../models/CombatState';
 
@@ -25,6 +25,7 @@ export class CombatPage {
 
     private timer: number;
     private maxTime: number;
+    private inCombat: boolean = false;
 
     constructor(public navCtrl: NavController, public navParams: NavParams) {
         this.monster = {
@@ -41,7 +42,9 @@ export class CombatPage {
             Title: {
                 MonsterTitle: "Baron ",
                 MonsterTitleId: 1
-            }
+            },
+            Health: 500,
+            MaxHealth: 500
         }
         this.setInfo();
 
@@ -82,6 +85,13 @@ export class CombatPage {
         this.startTimer();
     }
 
+    stopCombat() {
+        console.log("Combat has been stopped");
+        this.inCombat = false;
+        this.combatState = CombatState.ChoosingCombatStyle;
+        this.setInfo();
+    }
+
     selectCombatStyle(e) {
         switch (e.path[0].id) {
             case "img-sword":
@@ -99,18 +109,23 @@ export class CombatPage {
     }
 
     startTimer() {
+        this.inCombat = true;
         this.timer = setTimeout(x => {
             if (this.maxTime <= 0) {
                 
             }
             this.maxTime -= 1;
 
-            if (this.maxTime > 0) {
+            if (this.maxTime > 0 && this.inCombat) {
                 this.startTimer();
             }
 
         }, 1000);
 
+    }
+
+    damageMonster() {
+        this.monster.Health -= 50;
     }
 
 }
