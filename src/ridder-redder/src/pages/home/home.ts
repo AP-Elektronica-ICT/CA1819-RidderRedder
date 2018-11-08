@@ -125,7 +125,6 @@ export class HomePage {
       monster.marker = marker;
       this.monsters.push(monster);
       marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
-        //TODO trigger fight
         this.launchFight(monster);
       });
     }
