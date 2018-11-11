@@ -14,6 +14,7 @@ export class Combat {
     public player: Player;
 
     public combatState: CombatState = CombatState.ChoosingCombatStyle;
+    public experienceGained: number;
 
     public timer: number;
     public maxTime: number;
@@ -124,8 +125,8 @@ export class Combat {
         this.parent.setInfo();
     }
 
-    interactFooter(event){
-        if(this.combatState === CombatState.CombatMagic)
+    interactFooter(event) {
+        if (this.combatState === CombatState.CombatMagic)
             this.castSpell();
     }
 
@@ -135,7 +136,7 @@ export class Combat {
             .subscribe(
                 (matches: Array<string>) => {
                     console.log(matches);
-                    if(matches.indexOf("hocus pocus") > -1){
+                    if (matches.indexOf("hocus pocus") > -1) {
                         this.hitMonster();
                     }
                 },
@@ -155,12 +156,28 @@ export class Combat {
         }
         if (this.player.Health <= 0) {
             console.log("Player is defeated");
+            this.defeatedByMonster();
         }
     }
 
     defeatMonster() {
         this.inCombat = false;
-        this.player.Experience += this.monster.Difficulty * 50 + this.maxTime;
+        this.experienceGained = this.monster.Difficulty * 50 + this.maxTime;
+        this.player.Experience += this.experienceGained;
+        this.combatState = CombatState.CombatVictory;
+        this.parent.setInfo();
+    }
+
+    defeatedByMonster() {
+        this.inCombat = false;
+        this.experienceGained = this.monster.Difficulty * 20;
+        this.player.Experience += this.experienceGained;
+        this.combatState = CombatState.CombatDefeat;
+        this.parent.setInfo();
+    }
+
+    retry() {
+        this.combatState = CombatState.ChoosingCombatStyle;
     }
 
 }

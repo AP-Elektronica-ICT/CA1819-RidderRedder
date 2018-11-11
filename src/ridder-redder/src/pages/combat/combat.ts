@@ -33,7 +33,7 @@ export class CombatPage {
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
-        private deviceMotion: DeviceMotion, 
+        private deviceMotion: DeviceMotion,
         private speech: SpeechRecognition
     ) {
 
@@ -121,7 +121,15 @@ export class CombatPage {
                 break;
             case CombatState.CombatMagic:
                 this.infoHead = "Hocus Pocus"; //Replace with magic spell
-                this.infoParagraph = this.combat.monster.Health < this.combat.monster.MaxHealth ?  "Tap below to cast another spell!" : "Speak up! Call out this spell to deal damage";
+                this.infoParagraph = this.combat.monster.Health < this.combat.monster.MaxHealth ? "Tap below to cast another spell!" : "Speak up! Call out this spell to deal damage";
+                break;
+            case CombatState.CombatVictory:
+                this.infoHead = "Victory!"
+                this.infoParagraph = `You have defeated the monster!\nYou have gained ${this.combat.experienceGained} experience!`;
+                break;
+            case CombatState.CombatDefeat:
+                this.infoHead = "Defeat!"
+                this.infoParagraph = "You have been defeated by the monster!";
                 break;
         }
     }
