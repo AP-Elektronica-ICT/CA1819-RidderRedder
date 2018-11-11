@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { ModalController, NavParams, NavController } from 'ionic-angular';
 import { GoogleMaps, GoogleMap, GoogleMapOptions, GoogleMapsEvent, ILatLng, Marker, MarkerOptions } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs/Subscription';
 import { Monster } from '../../app/Monster';
+import { InventoryPage } from '../inventory/inventory';
 
 @Component({
   selector: 'page-home',
@@ -20,7 +21,7 @@ export class HomePage {
   // tfw static doesn't work
   monsterDistance:number = 0.005; // 0.005 ~ 250m?
 
-  constructor(public navCtrl: NavController, public geolocation: Geolocation) {
+  constructor(public navCtrl: NavController, public geolocation: Geolocation, public modalCtrl: ModalController) {
     this.monsters = new Array<Monster>();
     this.prevPos = { lat: 0, lng: 0};
   }
@@ -129,10 +130,17 @@ export class HomePage {
       });
     }
   }
-
+  
   // open the fight screen
   launchFight(monster: Monster){
     //TODO actually call the fight screen
     alert("starting fight");
+  }
+
+  // show inventory
+  presentInventory(){
+    alert("inventory");
+    let inventoryModal = this.modalCtrl.create(InventoryPage);
+    inventoryModal.present();
   }
 }
