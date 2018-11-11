@@ -13,6 +13,7 @@ import { ComponentsModule } from '../components/components.module';
 import { HomePageModule } from '../pages/home/home.module';
 import { CombatPageModule } from '../pages/combat/combat.module';
 import { DeviceMotion } from '@ionic-native/device-motion';
+import { SpeechRecognition } from '@ionic-native/speech-recognition';
 
 @NgModule({
     declarations: [
@@ -38,6 +39,7 @@ import { DeviceMotion } from '@ionic-native/device-motion';
         SplashScreen,
         DeviceMotion,
         ScreenOrientation,
+        SpeechRecognition,
         { provide: ErrorHandler, useClass: IonicErrorHandler }
     ],
     schemas: [
