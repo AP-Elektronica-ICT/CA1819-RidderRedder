@@ -2,6 +2,9 @@ import { Component, Input } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Monster } from '../../models/Monster';
 import { CombatState } from '../../models/CombatState';
+import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion';
+import { Combat } from '../../models/Combat';
+import { Player } from '../../models/Player';
 
 /**
  * Generated class for the CombatPage page.
@@ -18,16 +21,27 @@ import { CombatState } from '../../models/CombatState';
 export class CombatPage {
 
     @Input() monster: Monster;
+    private player: Player;
 
-    private combatState: CombatState = CombatState.ChoosingCombatStyle;
+    private combat: Combat;
+
     private infoHead: string;
     private infoParagraph: string;
 
-    private timer: number;
-    private maxTime: number;
-    private inCombat: boolean = false;
+    constructor(
+        public navCtrl: NavController,
+        public navParams: NavParams,
+        private deviceMotion: DeviceMotion
+    ) {
 
-    constructor(public navCtrl: NavController, public navParams: NavParams) {
+        var options = {
+            frequency: 100
+        }
+
+
+
+
+
         this.monster = {
             Difficulty: Math.floor(Math.random() * 4) + 1,
             Level: 5,
@@ -43,12 +57,23 @@ export class CombatPage {
                 MonsterTitle: "Baron ",
                 MonsterTitleId: 1
             },
-            Health: 500,
-            MaxHealth: 500
+            Health: 250,
+            MaxHealth: 250
         }
+
+        this.player = {
+            AuthId: "",
+            Experience: 0,
+            Health: 250,
+            MaxHealth: 250,
+            PlayerName: "Hans"
+        }
+
+        this.combat = new Combat(this.monster, this.player, this.deviceMotion);
+
         this.setInfo();
 
-        this.maxTime = 120 / this.monster.Difficulty;
+
     }
 
     ionViewDidLoad() {
@@ -60,7 +85,7 @@ export class CombatPage {
     }
 
     setInfo() {
-        switch (this.combatState) {
+        switch (this.combat.combatState) {
             case CombatState.ChoosingCombatStyle:
                 this.infoHead = "Battle time!";
                 this.infoParagraph = "Choose a combat style to start the fight";
@@ -80,52 +105,18 @@ export class CombatPage {
         }
     }
 
-    startCombat() {
-        console.log("Player has selected combat style, starting combat");
-        this.startTimer();
-    }
-
-    stopCombat() {
-        console.log("Combat has been stopped");
-        this.inCombat = false;
-        this.combatState = CombatState.ChoosingCombatStyle;
-        this.setInfo();
-    }
-
-    selectCombatStyle(e) {
-        switch (e.path[0].id) {
-            case "img-sword":
-                this.combatState = CombatState.CombatMelee;
-                break;
-            case "img-bow":
-                this.combatState = CombatState.CombatRanged;
-                break;
-            case "img-wand":
-                this.combatState = CombatState.CombatMagic;
-                break;
-        }
-        this.setInfo();
-        this.startCombat();
-    }
-
-    startTimer() {
-        this.inCombat = true;
-        this.timer = setTimeout(x => {
-            if (this.maxTime <= 0) {
-                
-            }
-            this.maxTime -= 1;
-
-            if (this.maxTime > 0 && this.inCombat) {
-                this.startTimer();
-            }
-
-        }, 1000);
-
-    }
-
     damageMonster() {
-        this.monster.Health -= 50;
+        this.combat.hitMonster();
     }
+
+    damagePlayer() {
+        this.combat.hitPlayer();
+    }
+
+    forfeit() {
+        this.combat.stopCombat();
+    }
+
+
 
 }

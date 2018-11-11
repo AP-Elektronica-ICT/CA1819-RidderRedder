@@ -19,11 +19,8 @@ iframe {
     position: fixed;
     left: 40%;
 }
-
-.btnForfeit {
-    position: absolute;
-    bottom: -50%;
-    left: 0;
-    height: 30px;
-    width: 60px;
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10%;
 }
