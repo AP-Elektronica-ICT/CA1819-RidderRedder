@@ -6,6 +6,8 @@ import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device
 import { Combat } from '../../models/Combat';
 import { Player } from '../../models/Player';
 
+import { SpeechRecognition } from '@ionic-native/speech-recognition';
+
 /**
  * Generated class for the CombatPage page.
  *
@@ -31,7 +33,8 @@ export class CombatPage {
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
-        private deviceMotion: DeviceMotion
+        private deviceMotion: DeviceMotion, 
+        private speech: SpeechRecognition
     ) {
 
         var options = {
@@ -69,7 +72,25 @@ export class CombatPage {
             PlayerName: "Hans"
         }
 
-        this.combat = new Combat(this.monster, this.player, this.deviceMotion);
+        // Check feature available
+        this.speech.isRecognitionAvailable().then((available: boolean) => {
+            console.log("Speech recognition available: " + available);
+            // Request permissions
+            // Check permission
+            this.speech.hasPermission()
+                .then((hasPermission: boolean) => {
+                    if (!hasPermission)
+                        this.speech.requestPermission()
+                            .then(
+                                () => console.log('Granted'),
+                                () => console.log('Denied')
+                            )
+                });
+
+        })
+
+
+        this.combat = new Combat(this, this.monster, this.player, this.deviceMotion, this.speech);
 
         this.setInfo();
 
@@ -100,7 +121,7 @@ export class CombatPage {
                 break;
             case CombatState.CombatMagic:
                 this.infoHead = "Hocus Pocus"; //Replace with magic spell
-                this.infoParagraph = "Speak up! Call out this spell to deal damage";
+                this.infoParagraph = this.combat.monster.Health < this.combat.monster.MaxHealth ?  "Tap below to cast another spell!" : "Speak up! Call out this spell to deal damage";
                 break;
         }
     }

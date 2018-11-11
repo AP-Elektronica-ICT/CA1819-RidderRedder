@@ -2,8 +2,13 @@ import { CombatState } from "./CombatState";
 import { Monster } from "./Monster";
 import { Player } from "./Player";
 import { DeviceMotion, DeviceMotionAccelerationData } from "@ionic-native/device-motion";
+import { SpeechRecognition } from '@ionic-native/speech-recognition';
+import { CombatPage } from "../pages/combat/combat";
+
 
 export class Combat {
+
+    public parent: CombatPage;
 
     public monster: Monster;
     public player: Player;
@@ -14,16 +19,27 @@ export class Combat {
     public maxTime: number;
     public inCombat: boolean = false;
 
-    private hitDebounce = 2500;
+    private hitDebounce = 1250;
     private monsterHittable = true;
 
     private deviceMotion: DeviceMotion;
     private deviceMotionSubscription;
 
-    constructor(private m: Monster, private p: Player, private dM: DeviceMotion) {
+    private speech: SpeechRecognition;
+    private speechListener;
+    private speechOptions;
+
+    constructor(private parentPage: CombatPage, private m: Monster, private p: Player, private dM: DeviceMotion, private s: SpeechRecognition) {
         this.monster = m;
         this.player = p;
         this.deviceMotion = dM;
+        this.speech = s;
+
+        this.parent = parentPage;
+
+        this.speechOptions = {
+            showPopup: false
+        }
 
         this.resetTimer();
     }
@@ -38,7 +54,11 @@ export class Combat {
         this.combatState = CombatState.ChoosingCombatStyle;
         this.player.Health = this.player.MaxHealth;
         this.monster.Health = this.monster.MaxHealth;
-        this.deviceMotionSubscription.unsubscribe();
+
+        if (this.deviceMotionSubscription)
+            this.deviceMotionSubscription.unsubscribe();
+
+        this.parent.setInfo();
         this.resetTimer();
     }
 
@@ -50,7 +70,7 @@ export class Combat {
         switch (e.path[0].id) {
             case "img-sword":
                 this.combatState = CombatState.CombatMelee;
-                this.deviceMotionSubscription = this.deviceMotion.watchAcceleration({frequency: 100}).subscribe((acc: DeviceMotionAccelerationData) => {
+                this.deviceMotionSubscription = this.deviceMotion.watchAcceleration({ frequency: 100 }).subscribe((acc: DeviceMotionAccelerationData) => {
                     /*
                         BETA formula, improve this
                     */
@@ -65,9 +85,10 @@ export class Combat {
                 break;
             case "img-wand":
                 this.combatState = CombatState.CombatMagic;
+                this.castSpell();
                 break;
         }
-
+        this.parent.setInfo();
         this.startCombat();
     }
 
@@ -100,7 +121,26 @@ export class Combat {
                 this.monsterHittable = true;
             }, this.hitDebounce);
         }
+        this.parent.setInfo();
+    }
 
+    interactFooter(event){
+        if(this.combatState === CombatState.CombatMagic)
+            this.castSpell();
+    }
+
+    castSpell() {
+        console.log("Listening for spellcast");
+        this.speechListener = this.speech.startListening(this.speechOptions)
+            .subscribe(
+                (matches: Array<string>) => {
+                    console.log(matches);
+                    if(matches.indexOf("hocus pocus") > -1){
+                        this.hitMonster();
+                    }
+                },
+                (onerror) => console.log('error:', onerror)
+            )
     }
 
     hitPlayer() {

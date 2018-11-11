@@ -68,11 +68,11 @@
                 <img src="assets/icons/wand.png" id="img-wand" width="80" height="80">
             </div>
 
-            <div class="combat-melee-container" *ngIf="combat.combatState === 1">
+            <div (click)="combat.interactFooter($event)" class="combat-melee-container" *ngIf="combat.combatState === 1">
                 <img src="assets/icons/sword-slash.png" id="img-sword-slash" width="100" height="100">
             </div>
 
-            <div class="combat-magic-container" *ngIf="combat.combatState === 3">
+            <div (click)="combat.interactFooter($event)" class="combat-magic-container" *ngIf="combat.combatState === 3">
                 <img src="assets/icons/speak-clean.png" id="img-magic-speak" width="100" height="100">
                 <img src="assets/icons/wand.png" id="img-magic-wand" width="100" height="100">
             </div>
