@@ -111,10 +111,16 @@ export class Combat {
     checkHealth() {
         if (this.monster.Health <= 0) {
             console.log("Monster is defeated");
+            this.defeatMonster();
         }
         if (this.player.Health <= 0) {
             console.log("Player is defeated");
         }
+    }
+
+    defeatMonster() {
+        this.inCombat = false;
+        this.player.Experience += this.monster.Difficulty * 50 + this.maxTime;
     }
 
 }
