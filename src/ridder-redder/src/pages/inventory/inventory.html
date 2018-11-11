@@ -15,14 +15,14 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item-sliding>
-      <ion-item>
-        <ion-card>
-          <ion-card-content>
-            <p> item yo</p>
-          </ion-card-content>
-        </ion-card>
-      </ion-item>
-    </ion-item-sliding>
+    <ion-item *ngFor="let knight of Knights">
+      <ion-card>
+        <ion-card-content >
+          <img src="assets/imgs/Knight_{{knight.colour}}.png" width="100" height="100">
+          <!--Knight by Hayden Kerrisk from the Noun Project-->
+          <p>level: {{knight.level}}, name: {{knight.name}} </p>
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
   </ion-list>
 </ion-content>

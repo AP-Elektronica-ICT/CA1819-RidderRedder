@@ -14,12 +14,24 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'inventory.html',
 })
 export class InventoryPage {
+  Knights: Array<IKnight>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.Knights = new Array<IKnight>();
+    this.Knights.push({colour: "red", level: 4, name: "john"});
+    this.Knights.push({colour: "blue", level: 6, name: "mike"});
+    this.Knights.push({colour: "black", level: 2, name: "frank"});
+    this.Knights.push({colour: "red", level: 5, name: "elsa"});
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad InventoryPage');
   }
 
+}
+
+export interface IKnight{
+  colour: string;
+  level: number;
+  name: string;
 }

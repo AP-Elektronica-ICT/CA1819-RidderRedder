@@ -45,7 +45,7 @@ export class HomePage {
               lat: resp.coords.latitude,
               lng: resp.coords.longitude
             },
-            zoom: 18,
+            zoom: 17,
             tilt: 30
           },
           gestures: {
@@ -139,7 +139,6 @@ export class HomePage {
 
   // show inventory
   presentInventory(){
-    alert("inventory");
     let inventoryModal = this.modalCtrl.create(InventoryPage);
     inventoryModal.present();
   }
