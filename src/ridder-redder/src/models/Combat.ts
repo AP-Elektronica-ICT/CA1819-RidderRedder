@@ -64,7 +64,7 @@ export class Combat {
     }
 
     resetTimer() {
-        this.maxTime = 120 / this.monster.Difficulty;
+        this.maxTime = 10 + (90/this.monster.Difficulty);
     }
 
     selectCombatStyle(e) {
@@ -96,17 +96,18 @@ export class Combat {
     startTimer() {
         this.inCombat = true;
         this.timer = setTimeout(x => {
+            console.log(this.maxTime);
+
             if (!this.inCombat)
                 return;
 
-            if (this.maxTime <= 0) {
-
-            }
             this.maxTime -= 1;
 
-            if (this.maxTime > 0) {
+            if (this.maxTime <= 0)
+                this.defeatedByMonster();
+
+            if (this.maxTime > 0)
                 this.startTimer();
-            }
 
         }, 1000);
 
@@ -164,7 +165,7 @@ export class Combat {
         this.inCombat = false;
         this.experienceGained = this.monster.Difficulty * 50 + this.maxTime;
         this.player.Experience += this.experienceGained;
-        this.combatState = CombatState.CombatVictory;
+        this.changeCombatState(CombatState.CombatVictory);
         this.parent.setInfo();
     }
 
@@ -172,12 +173,18 @@ export class Combat {
         this.inCombat = false;
         this.experienceGained = this.monster.Difficulty * 20;
         this.player.Experience += this.experienceGained;
-        this.combatState = CombatState.CombatDefeat;
+        this.changeCombatState(CombatState.CombatDefeat);
         this.parent.setInfo();
     }
 
     retry() {
         this.combatState = CombatState.ChoosingCombatStyle;
+        this.stopCombat();
+    }
+
+    changeCombatState(state: CombatState){
+        console.log("Changing combat state to " + state);
+        this.combatState = state;
     }
 
 }

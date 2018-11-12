@@ -19,7 +19,7 @@ export class RidderRedder {
         platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
-            this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+            // this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
 
             statusBar.styleDefault();
             splashScreen.hide();

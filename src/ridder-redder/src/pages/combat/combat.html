@@ -77,8 +77,9 @@
                 <img src="assets/icons/wand.png" id="img-magic-wand" width="100" height="100">
             </div>
 
-            <div (click)="combat.retry()" class="retry-container" *ngIf="combat.CombatState == 4 || combat.CombatState === 5">
-                <img src="assets/icons/retry.png" id="img-retry" width="100" height="100">
+            <div (click)="combat.retry()" class="retry-container" *ngIf="combat.combatState == 4 || combat.combatState === 5">
+                <img src="assets/icons/retry.png" id="img-retry" width="80" height="80">
+                <p>Retry</p>
             </div>
 
         </div>

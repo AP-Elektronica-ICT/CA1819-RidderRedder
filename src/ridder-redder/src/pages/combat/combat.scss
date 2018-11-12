@@ -73,6 +73,12 @@ page-combat {
         justify-content: space-around;
         padding: 24px;
     }
+    .retry-container {
+        position: fixed;
+        bottom: calc(40% - 40px);
+        left: calc(50% - 40px);
+        text-align: center;
+    }
     #img-bow {
 
     }
