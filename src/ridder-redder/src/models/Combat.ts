@@ -19,6 +19,7 @@ export class Combat {
     public timer: number;
     public maxTime: number;
     public inCombat: boolean = false;
+    public MAXTIME: number;
 
     private hitDebounce = 1250;
     private monsterHittable = true;
@@ -55,6 +56,8 @@ export class Combat {
         this.combatState = CombatState.ChoosingCombatStyle;
         this.player.Health = this.player.MaxHealth;
         this.monster.Health = this.monster.MaxHealth;
+        document.getElementById("playerbar").style.backgroundSize = "100% 100%";
+        document.getElementById("monsterbar").style.backgroundSize = "100% 100%";
 
         if (this.deviceMotionSubscription)
             this.deviceMotionSubscription.unsubscribe();
@@ -64,7 +67,8 @@ export class Combat {
     }
 
     resetTimer() {
-        this.maxTime = 10 + (90/this.monster.Difficulty);
+        this.maxTime = 10 + (90 / this.monster.Difficulty);
+        this.MAXTIME = this.maxTime;
     }
 
     selectCombatStyle(e) {
@@ -102,6 +106,8 @@ export class Combat {
                 return;
 
             this.maxTime -= 1;
+            let healthPercentage = (this.maxTime / this.MAXTIME) * 100;
+            document.getElementById("playerbar").style.backgroundSize = healthPercentage + "% 100%";
 
             if (this.maxTime <= 0)
                 this.defeatedByMonster();
@@ -119,6 +125,10 @@ export class Combat {
             this.monsterHittable = false;
             this.monster.Health -= 50;
             this.checkHealth();
+
+            let healthPercentage = (this.monster.Health / this.monster.MaxHealth) * 100;
+            document.getElementById("monsterbar").style.backgroundSize = healthPercentage + "% 100%";
+
             setTimeout(x => {
                 this.monsterHittable = true;
             }, this.hitDebounce);
@@ -148,6 +158,7 @@ export class Combat {
     hitPlayer() {
         this.player.Health -= 50;
         this.checkHealth();
+
     }
 
     checkHealth() {
@@ -182,7 +193,7 @@ export class Combat {
         this.stopCombat();
     }
 
-    changeCombatState(state: CombatState){
+    changeCombatState(state: CombatState) {
         console.log("Changing combat state to " + state);
         this.combatState = state;
     }

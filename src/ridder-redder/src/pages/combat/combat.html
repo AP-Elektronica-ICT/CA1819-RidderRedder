@@ -12,12 +12,10 @@
             </div>
             <div class="header-info">
                 <img src="assets/icons/fight.png" width="80" height="80" *ngIf="combatState === 0">
-                <div id="combat-timer" *ngIf="combatState != 0">
-                    <h1>Time left:</h1>
-                    <span>{{combat.maxTime}} sec</span>
-                </div>
-                <div id="combat-monstername">
+                <div class="combat-info" *ngIf="combatState != 0">
+                    <span id="playerbar" class="healthbar-container">{{combat.maxTime}} / {{combat.MAXTIME}}</span>
                     <h2>{{combat.monster.Title.MonsterTitle}}{{combat.monster.Name.MonsterName}}</h2>
+                    <span id="monsterbar" class="healthbar-container">{{combat.monster.Health}} / {{combat.monster.MaxHealth}}</span>
                 </div>
             </div>
             <div class="weakness">
