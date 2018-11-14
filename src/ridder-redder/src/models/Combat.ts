@@ -100,7 +100,6 @@ export class Combat {
     startTimer() {
         this.inCombat = true;
         this.timer = setTimeout(x => {
-            console.log(this.maxTime);
 
             if (!this.inCombat)
                 return;
@@ -128,12 +127,24 @@ export class Combat {
 
             let healthPercentage = (this.monster.Health / this.monster.MaxHealth) * 100;
             document.getElementById("monsterbar").style.backgroundSize = healthPercentage + "% 100%";
-
+            
             setTimeout(x => {
                 this.monsterHittable = true;
             }, this.hitDebounce);
         }
         this.parent.setInfo();
+    }
+
+    screenSplash(){
+        console.log("HIT! Splashing screen")
+        //FIX THIS 
+        let container = document.getElementsByName("screen-splash").item(0);
+        container.style.display = "block";
+        container.style.height = "100%";
+        container.style.opacity = "0.0";
+        setTimeout(x => {
+            container.style.display = "none";
+        }, 1000);
     }
 
     interactFooter(event) {

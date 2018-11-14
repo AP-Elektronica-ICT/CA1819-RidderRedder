@@ -33,6 +33,8 @@
             <div class="monster-container">
                 <!-- <img src="assets/imgs/monster.png" class="monsterImage"> -->
 
+                <!-- <span class="combat-splash">POW!</span> -->
+
             </div>
             <div class="button-container" *ngIf="combat.inCombat">
                 <button ion-button class="btnDamageMonster" (click)="damageMonster()">
@@ -41,7 +43,7 @@
                 <button ion-button class="btnForfeit" (click)="forfeit()">
                     Forfeit
                 </button>
-                <button ion-button class="btnDamagePlayer" (click)="damagePlayer()">
+                <button ion-button class="btnDamagePlayer" (click)="damagePlayer()" disabled>
                     Player {{combat.player.Health}}
                 </button>
             </div>
@@ -82,4 +84,5 @@
 
         </div>
     </div>
+    <span class="screen-splash"></span>
 </ion-content>
