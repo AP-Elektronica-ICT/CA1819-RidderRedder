@@ -1,0 +1,79 @@
+page-combat {
+
+}
+
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    height: 200px;
+
+    .difficulty {
+        ul {
+            list-style: none;
+            padding-inline-start: 0px;
+        }
+    }
+    .header-info {
+        text-align: center;
+        margin-top: 15px;
+
+        #combat-timer {
+            display: flex;
+            justify-content: space-around;
+            flex-direction: column;
+
+            span {
+                font-size: 24px;
+                font-weight: 400;
+                padding: 12px;
+            }
+        }
+        #combat-monstername {  
+
+        }
+        
+    }
+    .weakness {
+        img {
+            float: right;
+        }
+    }
+}
+
+.ar-container {
+    position: fixed;
+    height: 50%;
+    width: 100%;
+    border: 3px solid red;
+    left: 0;
+    top: 20%;
+}
+
+.footer-container {
+    position: fixed;
+    padding: 0;
+    width: 90%;
+    bottom: 0;
+
+    
+    .info-container {
+        text-align: center;
+        padding: 12px;
+    }
+    .combat-style-container {
+        display: flex;
+        justify-content: space-between;
+        padding: 24px;
+    }
+    .combat-melee-container,
+    .combat-magic-container,
+    .combat-ranged-container  {
+        display: flex;
+        justify-content: space-around;
+        padding: 24px;
+    }
+    #img-bow {
+
+    }
+}

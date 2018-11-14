@@ -1,27 +1,37 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 
-import { MyApp } from './app.component';
+import { RidderRedder } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { CombatPage } from '../pages/combat/combat';
+import { ArLauncherComponent } from '../components/ar-launcher/ar-launcher';
+import { ComponentsModule } from '../components/components.module';
+import { HomePageModule } from '../pages/home/home.module';
+import { CombatPageModule } from '../pages/combat/combat.module';
 
 @NgModule({
   declarations: [
-    MyApp,
-    HomePage
+    RidderRedder,
+    //HomePage,
+    //CombatPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    ComponentsModule,
+    HomePageModule,
+    CombatPageModule,
+    IonicModule.forRoot(RidderRedder)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    HomePage
+    RidderRedder,
+    //HomePage,
+    //CombatPage
   ],
   providers: [
     StatusBar,
@@ -29,6 +39,9 @@ import { HomePage } from '../pages/home/home';
     GoogleMaps,
     Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ]
 })
-export class AppModule {}
+export class AppModule { }

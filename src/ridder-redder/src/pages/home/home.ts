@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs/Subscription';
 import { Monster } from '../../app/Monster';
 
+// @IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
