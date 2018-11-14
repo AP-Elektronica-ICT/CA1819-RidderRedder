@@ -158,9 +158,12 @@ export class Combat {
             .subscribe(
                 (matches: Array<string>) => {
                     console.log(matches);
-                    if (matches.indexOf("hocus pocus") > -1) {
-                        this.hitMonster();
-                    }
+
+                    matches.forEach(element => {
+                        if(element.toLowerCase() == "hocus pocus"){
+                            this.hitMonster();
+                        }
+                    });
                 },
                 (onerror) => console.log('error:', onerror)
             )
