@@ -1,4 +1,5 @@
 ﻿using System;
+using RidderRedderApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace RidderRedderApi.Controllers {
@@ -16,8 +17,13 @@ namespace RidderRedderApi.Controllers {
         /// </summary>
         /// <returns>The monsters.</returns>
         [HttpGet]
-        public IActionResult GetMonsters() {
+        public IActionResult GetNewMonster() {
             return Ok("Monster");
+        }
+
+        [HttpPost]
+        public IActionResult KillMonster() {
+
         }
 
     }
