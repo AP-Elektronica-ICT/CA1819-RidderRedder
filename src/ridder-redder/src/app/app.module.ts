@@ -19,7 +19,7 @@ import { InventoryPage } from '../pages/inventory/inventory'
     RidderRedder,
     //HomePage,
     //CombatPage,    these are in seperate Module files
-    inventoryPage
+    InventoryPage
   ],
   imports: [
     BrowserModule,
