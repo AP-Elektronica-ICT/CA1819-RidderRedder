@@ -27,22 +27,23 @@ export class CombatPage {
     private maxTime: number;
 
     constructor(public navCtrl: NavController, public navParams: NavParams) {
-        this.monster = {
-            Difficulty: Math.floor(Math.random() * 4) + 1,
-            Level: 5,
-            Model: {
-                MonsterModelId: 1,
-                MonsterModelPath: ""
-            },
-            Name: {
-                MonsterName: "Charles",
-                MonsterNameId: 1
-            },
-            Title: {
-                MonsterTitle: "Baron ",
-                MonsterTitleId: 1
-            }
-        }
+      this.monster = navParams.get("monster");
+      //{
+      //      Difficulty: Math.floor(Math.random() * 4) + 1,
+      //      Level: 5,
+      //      Model: {
+      //          MonsterModelId: 1,
+      //          MonsterModelPath: ""
+      //      },
+      //      Name: {
+      //          MonsterName: "Charles",
+      //          MonsterNameId: 1
+      //      },
+      //      Title: {
+      //          MonsterTitle: "Baron ",
+      //          MonsterTitleId: 1
+      //      }
+      //  }
         this.setInfo();
 
         this.maxTime = 120 / this.monster.Difficulty;

@@ -13,6 +13,7 @@ import { ComponentsModule } from '../components/components.module';
 import { HomePageModule } from '../pages/home/home.module';
 import { CombatPageModule } from '../pages/combat/combat.module';
 import { InventoryPage } from '../pages/inventory/inventory'
+import { MonsterProvider } from '../providers/monster/monster';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { InventoryPage } from '../pages/inventory/inventory'
     SplashScreen,
     GoogleMaps,
     Geolocation,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    MonsterProvider
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

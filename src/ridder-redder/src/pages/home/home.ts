@@ -4,22 +4,11 @@ import { GoogleMaps, GoogleMap, GoogleMapOptions, GoogleMapsEvent, ILatLng, Mark
 import { Geolocation } from '@ionic-native/geolocation';
 import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs/Subscription';
-import { Monster } from '../../app/Monster';
+import { Monster } from '../../models/Monster';
+import { Landmark } from '../../models/Landmark';
 import { InventoryPage } from '../inventory/inventory';
-
-
-class Landmark {
-  name: string;
-  lat;
-  lng;
-  marker: Marker;
-
-  constructor(public iname: string, public ilat, public ilng){
-    this.name = iname;
-    this.lat = ilat;
-    this.lng = ilng;
-  }
-}
+import { CombatPage } from '../combat/combat';
+import { MonsterProvider } from '../../providers/monster/monster';
 
 // @IonicPage()
 @Component({
@@ -37,7 +26,7 @@ export class HomePage {
   // tfw static doesn't work
   monsterDistance:number = 0.005; // 0.005 ~ 250m?
 
-  constructor(public navCtrl: NavController, public geolocation: Geolocation, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public geolocation: Geolocation, public modalCtrl: ModalController, public monsterProvider: MonsterProvider) {
     this.monsters = new Array<Monster>();
     this.prevPos = { lat: 0, lng: 0};
 
@@ -162,10 +151,10 @@ export class HomePage {
       let rlng: number = (currPos.lng-this.monsterDistance)+(Math.random()*2*this.monsterDistance);
 
       //generate random monster, attach marker
-      let monster: Monster = Monster.random()
+      let monster: Monster = this.monsterProvider.getRandomMonster();
 
       let marker: Marker = this.map.addMarkerSync({
-        title: monster.name,
+        title: monster.Name.MonsterName,
         icon: 'blue',
         animation: 'DROP',
         position: {
@@ -184,8 +173,10 @@ export class HomePage {
 
   // open the fight screen
   launchFight(monster: Monster){
-    //TODO actually call the fight screen
-    alert("starting fight");
+    this.navCtrl.push(
+      CombatPage,
+      {monster: monster}
+    );
   }
 
   // show inventory
