@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -26,6 +27,7 @@ import { LandmarkProvider } from '../providers/landmark/landmark';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     ComponentsModule,
     HomePageModule,
     CombatPageModule,
