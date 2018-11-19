@@ -10,6 +10,7 @@ import { InventoryPage } from '../inventory/inventory';
 import { CombatPage } from '../combat/combat';
 import { MonsterProvider } from '../../providers/monster/monster';
 import { PlayerProvider } from '../../providers/player/player';
+import { LandmarkProvider } from '../../providers/landmark/landmark';
 
 // @IonicPage()
 @Component({
@@ -27,13 +28,11 @@ export class HomePage {
   // tfw static doesn't work
   monsterDistance:number = 0.005; // 0.005 ~ 250m?
 
-  constructor(public navCtrl: NavController, public geolocation: Geolocation, public modalCtrl: ModalController, public monsterProvider: MonsterProvider) {
+  constructor(public navCtrl: NavController, public geolocation: Geolocation, public modalCtrl: ModalController, public monsterProvider: MonsterProvider, public lmProvider: LandmarkProvider) {
     this.monsters = new Array<Monster>();
     this.prevPos = { lat: 0, lng: 0};
 
-    this.landmarks = new Array<Landmark>();
-    this.landmarks.push(new Landmark("Campus ELL", 51.230322, 4.416155));
-    this.landmarks.push(new Landmark("Campus NOO", 51.230309, 4.413604));
+    this.landmarks = lmProvider.getLandmarks();
   }
 
   ionViewDidLoad(){

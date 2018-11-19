@@ -15,6 +15,7 @@ import { CombatPageModule } from '../pages/combat/combat.module';
 import { InventoryPage } from '../pages/inventory/inventory'
 import { MonsterProvider } from '../providers/monster/monster';
 import { PlayerProvider } from '../providers/player/player';
+import { LandmarkProvider } from '../providers/landmark/landmark';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { PlayerProvider } from '../providers/player/player';
     Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     MonsterProvider,
-    PlayerProvider
+    PlayerProvider,
+    LandmarkProvider
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
