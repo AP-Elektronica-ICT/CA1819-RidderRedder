@@ -9,6 +9,7 @@ import { Landmark } from '../../models/Landmark';
 import { InventoryPage } from '../inventory/inventory';
 import { CombatPage } from '../combat/combat';
 import { MonsterProvider } from '../../providers/monster/monster';
+import { PlayerProvider } from '../../providers/player/player';
 
 // @IonicPage()
 @Component({
@@ -141,7 +142,7 @@ export class HomePage {
     }
     if( this.monsters.length > 5 ){
       // TODO add timestamp, remove after time
-      this.monsters[0].marker.remove();
+      this.monsters[0].Marker.remove();
       this.monsters.shift();
     }
     else{
@@ -163,7 +164,7 @@ export class HomePage {
         }
       });
 
-      monster.marker = marker;
+      monster.Marker = marker;
       this.monsters.push(monster);
       marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
         this.launchFight(monster);

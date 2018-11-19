@@ -14,6 +14,7 @@ import { HomePageModule } from '../pages/home/home.module';
 import { CombatPageModule } from '../pages/combat/combat.module';
 import { InventoryPage } from '../pages/inventory/inventory'
 import { MonsterProvider } from '../providers/monster/monster';
+import { PlayerProvider } from '../providers/player/player';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { MonsterProvider } from '../providers/monster/monster';
     GoogleMaps,
     Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    MonsterProvider
+    MonsterProvider,
+    PlayerProvider
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

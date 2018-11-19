@@ -22,6 +22,7 @@ export class MonsterProvider {
       Model: { MonsterModelId: 1, MonsterModelPath: "../../assets/imgs/black_night.png"},
       Difficulty: 2,
       Level: 4,
+      Marker: null,
     }
   }
 }
