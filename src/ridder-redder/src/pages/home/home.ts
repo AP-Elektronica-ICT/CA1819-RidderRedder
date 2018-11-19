@@ -28,7 +28,7 @@ export class HomePage {
   // tfw static doesn't work
   monsterDistance:number = 0.005; // 0.005 ~ 250m?
 
-  constructor(public navCtrl: NavController, public geolocation: Geolocation, public modalCtrl: ModalController, public monsterProvider: MonsterProvider, public lmProvider: LandmarkProvider) {
+  constructor(public navCtrl: NavController, public geolocation: Geolocation, public modalCtrl: ModalController, public monsterProvider: MonsterProvider, public lmProvider: LandmarkProvider, public pProvider: PlayerProvider) {
     this.monsters = new Array<Monster>();
     this.prevPos = { lat: 0, lng: 0};
 
@@ -99,10 +99,24 @@ export class HomePage {
   
   // add landmark markers to the map
   addLandmarks(){
-    for(let landmark of this.landmarks){ 
+    for(let landmark of this.landmarks){
+      var icon;
+      if(landmark.ownerId == null){
+        icon = {url: 'assets/',  //Castle by BGBOXXX Design from the Noun Project
+          size: {
+            width: 10,
+            height: 10}
+        }
+      }
+      else if(landmark.ownerId == pProvider.Id){
+      
+      }
+      else{
+      }
+
       let marker: Marker = this.map.addMarkerSync({
         title: landmark.name,
-        icon: 'green',
+        icon: icon,
         animation: 'DROP',
         position: {
           lat: landmark.lat,
