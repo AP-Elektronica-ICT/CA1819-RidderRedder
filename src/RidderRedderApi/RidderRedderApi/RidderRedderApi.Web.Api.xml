@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RidderRedderApi.Web.Api</name>
+    </assembly>
+    <members>
+        <member name="M:RidderRedderApi.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:RidderRedderApi.Startup"/> class.
+            </summary>
+            <param name="configuration">Configuration.</param>
+        </member>
+        <member name="P:RidderRedderApi.Startup.Configuration">
+            <summary>
+            Gets the configuration.
+            </summary>
+            <value>The configuration.</value>
+        </member>
+    </members>
+</doc>

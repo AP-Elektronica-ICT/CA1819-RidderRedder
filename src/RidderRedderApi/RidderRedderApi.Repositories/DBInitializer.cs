@@ -1,9 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace RidderRedderApi.Models {
-    public class DBInitializer {
-        public static void Initialize(RidderRedderContext context) {
+namespace RidderRedderApi.Repositories
+{
+    public class DBInitializer
+    {
+
+        public static void Initialize(ApplicationContext context)
+        {
             context.Database.EnsureCreated();
+
+          //  context.SaveChanges();
         }
     }
 }

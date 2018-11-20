@@ -14,17 +14,19 @@ using Microsoft.EntityFrameworkCore;
 using MySql.Data;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace RidderRedderApi {
-    /// <summary>
-    /// Startup.
-    /// </summary>
-    public class Startup {
+using RidderRedderApi.Repositories;
+
+namespace RidderRedderApi
+{
+    public class Startup
+    {
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:RidderRedderApi.Startup"/> class.
         /// </summary>
         /// <param name="configuration">Configuration.</param>
-        public Startup(IConfiguration configuration) {
+        public Startup(IConfiguration configuration)
+        {
             Configuration = configuration;
         }
 
@@ -34,18 +36,18 @@ namespace RidderRedderApi {
         /// <value>The configuration.</value>
         public IConfiguration Configuration { get; }
 
-        /// <summary>
-        /// Configures the services.
-        /// </summary>
-        /// <param name="services">Services.</param>
-        public void ConfigureServices(IServiceCollection services) {
+        // This method gets called by the runtime. Use this method to add services to the container.
+        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        public void ConfigureServices(IServiceCollection services)
+        {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddMvc();
 
             services.AddSwaggerGen(x => {
 
-                x.SwaggerDoc("v1.0", new Info {
+                x.SwaggerDoc("v1.0", new Info
+                {
                     Title = "Ridder Redder API",
                     Version = "v1.0",
                     Description = "Documentation for the Ridder Redder API"
@@ -57,7 +59,7 @@ namespace RidderRedderApi {
                 x.IncludeXmlComments(xmlPath);
             });
 
-            services.AddDbContext<RidderRedderContext>(
+            services.AddDbContext<ApplicationContext>(
                 options => options.UseMySQL(
                     Configuration.GetConnectionString("LocalMySQLConnection")
                 )
@@ -74,18 +76,12 @@ namespace RidderRedderApi {
             services.AddMvcCore().AddApiExplorer();
         }
 
-        /// <summary>
-        /// Configure app
-        /// </summary>
-        /// <param name="app"></param>
-        /// <param name="env"></param>
-        /// <param name="ctx"></param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, RidderRedderContext ctx) {
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ApplicationContext ctx) { 
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
             } else {
                 app.UseHsts();
-
             }
 
 
@@ -102,7 +98,6 @@ namespace RidderRedderApi {
 
 
             DBInitializer.Initialize(ctx);
-
         }
     }
 }

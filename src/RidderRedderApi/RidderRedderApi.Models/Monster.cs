@@ -8,22 +8,14 @@ namespace RidderRedderApi.Models {
         /// <summary>
         /// Initializes a new instance of the <see cref="T:RidderRedderApi.Models.Monster"/> class.
         /// </summary>
-        /// <param name="monsterId">Monster identifier.</param>
         /// <param name="monsterModel">Monster model.</param>
         /// <param name="monsterTitle">Monster title.</param>
         /// <param name="monsterName">Monster name.</param>
-        public Monster(int monsterId, MonsterModel monsterModel, MonsterTitle monsterTitle, MonsterName monsterName) {
-            this.MonsterId = monsterId;
+        public Monster(MonsterModel monsterModel, MonsterTitle monsterTitle, MonsterName monsterName) {
             this.MonsterModel = monsterModel;
             this.MonsterTitle = monsterTitle;
             this.MonsterName = monsterName;
         }
-
-        /// <summary>
-        /// Gets or sets the monster identifier.
-        /// </summary>
-        /// <value>The monster identifier.</value>
-        public int MonsterId { get; set; }
         /// <summary>
         /// Gets or sets the monster model.
         /// </summary>
