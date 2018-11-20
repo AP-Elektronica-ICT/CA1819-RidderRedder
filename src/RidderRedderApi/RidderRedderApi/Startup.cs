@@ -61,11 +61,11 @@ namespace RidderRedderApi {
 
             services.AddDbContext<RidderRedderContext>(
                 options => options.UseMySQL(
-                    Configuration.GetConnectionString("DefaultConnection")
+                    Configuration.GetConnectionString("LocalMySQLConnection")
                 )
             );
 
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder => {
+            services.AddCors(o => o.AddPolicy("CorsPolicy", builder => {
                 builder.AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader();
@@ -77,10 +77,11 @@ namespace RidderRedderApi {
         }
 
         /// <summary>
-        /// Configure the specified app and env.
+        /// Configure app
         /// </summary>
-        /// <param name="app">App.</param>
-        /// <param name="env">Env.</param>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
+        /// <param name="ctx"></param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, RidderRedderContext ctx) {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
@@ -98,7 +99,7 @@ namespace RidderRedderApi {
             });
 
 
-            app.UseCors("MyPolicy");
+            app.UseCors("CorsPolicy");
             app.UseMvc();
 
 

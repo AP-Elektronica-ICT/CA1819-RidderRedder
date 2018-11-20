@@ -23,7 +23,7 @@ namespace RidderRedderApi.Controllers {
 
         [HttpPost]
         public IActionResult KillMonster() {
-
+            return Ok("Monster killed");
         }
 
     }
