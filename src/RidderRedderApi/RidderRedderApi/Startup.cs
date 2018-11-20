@@ -14,8 +14,6 @@ using Microsoft.EntityFrameworkCore;
 using MySql.Data;
 using Swashbuckle.AspNetCore.Swagger;
 
-using RidderRedderApi.Models;
-
 namespace RidderRedderApi {
     /// <summary>
     /// Startup.

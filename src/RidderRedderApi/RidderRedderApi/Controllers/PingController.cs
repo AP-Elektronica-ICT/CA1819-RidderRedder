@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
-namespace RidderRedderApi.Controllers {
+namespace RidderRedderApi.Web.API {
 
     /// <summary>
     /// Ping controller.

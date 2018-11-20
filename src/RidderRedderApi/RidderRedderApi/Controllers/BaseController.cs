@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
-namespace RidderRedderApi.Controllers {
+namespace RidderRedderApi.Web.API {
 
     public class BaseController : Controller {
         public BaseController() {

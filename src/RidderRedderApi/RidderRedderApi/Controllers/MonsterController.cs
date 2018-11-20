@@ -1,8 +1,8 @@
 ﻿using System;
-using RidderRedderApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using RidderRedderApi.Models;
 
-namespace RidderRedderApi.Controllers {
+namespace RidderRedderApi.Web.API {
 
     /// <summary>
     /// Monster controller.
@@ -18,6 +18,8 @@ namespace RidderRedderApi.Controllers {
         /// <returns>The monsters.</returns>
         [HttpGet]
         public IActionResult GetNewMonster() {
+
+
             return Ok("Monster");
         }
 

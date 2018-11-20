@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace RidderRedderApi.Controllers {
+namespace RidderRedderApi.Web.API {
 
     [Route("api/[controller]")]
     [ApiController]
