@@ -61,7 +61,8 @@ export class CombatPage {
                 MonsterTitleId: 1
             },
             Health: 250,
-            MaxHealth: 250
+            MaxHealth: 250,
+            Marker: null
         }
 
         this.player = {
