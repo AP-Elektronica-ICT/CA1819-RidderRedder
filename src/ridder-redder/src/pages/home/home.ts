@@ -8,8 +8,8 @@ import { Monster } from '../../models/Monster';
 import { Landmark } from '../../models/Landmark';
 import { InventoryPage } from '../inventory/inventory';
 import { CombatPage } from '../combat/combat';
-import { MonsterProvider } from '../../providers/monster/monster';
-import { PlayerProvider } from '../../providers/player/player';
+import { MonsterProvider } from '../../providers/monster/MonsterProvider';
+import { PlayerProvider } from '../../providers/player/PlayerProvider';
 
 // @IonicPage()
 @Component({
