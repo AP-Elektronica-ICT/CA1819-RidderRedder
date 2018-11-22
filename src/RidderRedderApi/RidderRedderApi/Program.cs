@@ -20,6 +20,7 @@ namespace RidderRedderApi {
         public static void Main(string[] args) {
             CreateWebHostBuilder(args).Build().Run();
         }
+
         /// <summary>
         /// Creates the web host builder.
         /// </summary>
