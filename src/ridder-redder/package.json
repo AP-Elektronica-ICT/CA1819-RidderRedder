@@ -80,10 +80,8 @@
       "cordova-plugin-geolocation": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "browser"
     ]
   }
-      
-      
-      
 }

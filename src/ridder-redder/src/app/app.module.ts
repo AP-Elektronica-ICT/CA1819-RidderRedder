@@ -18,6 +18,7 @@ import { InventoryPage } from '../pages/inventory/inventory'
 import { MonsterProvider } from '../providers/monster/monster';
 import { PlayerProvider } from '../providers/player/player';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
+import { DeviceMotion } from '@ionic-native/device-motion';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,10 @@ import { SpeechRecognition } from '@ionic-native/speech-recognition';
     Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     MonsterProvider,
-    PlayerProvider
+    PlayerProvider,
+    DeviceMotion,
+    ScreenOrientation,
+    SpeechRecognition
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
