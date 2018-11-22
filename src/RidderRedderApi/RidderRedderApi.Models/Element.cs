@@ -6,6 +6,7 @@ namespace RidderRedderApi.Models {
     /// <summary>
     /// Element.
     /// </summary>
+    [Table("Element")]
     public class Element {
 
         /// <summary>

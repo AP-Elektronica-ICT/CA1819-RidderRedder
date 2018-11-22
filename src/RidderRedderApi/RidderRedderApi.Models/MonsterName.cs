@@ -5,6 +5,7 @@ namespace RidderRedderApi.Models {
     /// <summary>
     /// Monster name.
     /// </summary>
+
     public class MonsterName {
 
         /// <summary>

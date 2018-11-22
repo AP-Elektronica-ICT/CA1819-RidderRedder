@@ -25,15 +25,6 @@ namespace RidderRedderApi.Models {
         /// </summary>
         /// <value>The experience.</value>
         public int Experience { get; set; }
-        /// <summary>
-        /// Gets or sets the health.
-        /// </summary>
-        /// <value>The health.</value>
-        public int Health { get; set; }
-        /// <summary>
-        /// Gets or sets the max health.
-        /// </summary>
-        /// <value>The max health.</value>
-        public int MaxHealth { get; set; }
+
     }
 }

@@ -1,13 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RidderRedderApi.Models;
 
-namespace RidderRedderApi.Repositories
-{
-    public class ApplicationContext : DbContext
-    {
+namespace RidderRedderApi.Repositories {
+    public class ApplicationContext : DbContext {
 
-        public ApplicationContext(DbContextOptions<ApplicationContext> options)
-        {
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) {
 
         }
 
@@ -18,6 +15,28 @@ namespace RidderRedderApi.Repositories
         public DbSet<Element> Elements { get; set; }
         public DbSet<Monument> Monuments { get; set; }
         public DbSet<Player> Players { get; set; }
+        public DbSet<InventoryItem> InventoryItems { get; set; }
+        public DbSet<ItemImage> ItemImages { get; set; }
+        public DbSet<ItemType> ItemTypes { get; set; }
+        public DbSet<Knight> Knights { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
+            modelBuilder.HasDefaultSchema("RidderRedderAPI");
+            modelBuilder.Entity<MonsterTitle>().ToTable("MonsterTitle");
+            modelBuilder.Entity<MonsterName>().ToTable("MonsterName");
+            modelBuilder.Entity<MonsterModel>().ToTable("MonsterModel");
+            modelBuilder.Entity<Monument>().ToTable("Monument");
+            modelBuilder.Entity<Player>().ToTable("Player");
+            modelBuilder.Entity<Element>().ToTable("Element");
+            modelBuilder.Entity<InventoryItem>().ToTable("InventoryItem");
+            modelBuilder.Entity<ItemImage>().ToTable("ItemImage");
+            modelBuilder.Entity<ItemType>().ToTable("ItemType");
+            modelBuilder.Entity<Knight>().ToTable("Knight");
+
+
+            //modelBuilder.Entity<Monster>().HasOne<MonsterTitle>(s => s.MonsterTitle);
+
+        }
 
     }
 }

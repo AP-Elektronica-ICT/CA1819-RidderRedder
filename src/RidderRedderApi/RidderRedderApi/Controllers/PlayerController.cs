@@ -7,47 +7,71 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RidderRedderApi.Web.Api.Controllers
-{
+namespace RidderRedderApi.Web.Api.Controllers {
+    /// <summary>
+    /// Player controller.
+    /// </summary>
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class PlayerController : BaseController
-    {
+    public class PlayerController : BaseController {
         private PlayerService playerService;
 
-        public PlayerController(PlayerService playerService)
-        {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:RidderRedderApi.Web.Api.Controllers.PlayerController"/> class.
+        /// </summary>
+        /// <param name="playerService">Player service.</param>
+        public PlayerController(PlayerService playerService) {
             this.playerService = playerService;
         }
 
-        [HttpGet("{name:string}")]
-        public IActionResult GetList(string name = "")
-        {
-            return Ok(playerService.GetList(name));
+        /// <summary>
+        /// Gets all players
+        /// </summary>
+        /// <returns>The all.</returns>
+        [HttpGet]
+        public IActionResult GetAll() {
+            return Ok(playerService.GetAll());
         }
 
-        [HttpGet("{authid:string}")]
-        public IActionResult Get(string authId)
-        {
+        /// <summary>
+        /// Get the specified player with given userid
+        /// </summary>
+        /// <returns>The get.</returns>
+        /// <param name="authId">Auth identifier.</param>
+        [HttpGet("{authId}")]
+        public IActionResult Get(string authId) {
             return Ok(playerService.Get(authId));
         }
 
-        [HttpPut("{authid:string}")]
-        public IActionResult Update(string authid, [FromBody]Player p)
-        {
+        /// <summary>
+        /// Update the specified player with given authid
+        /// </summary>
+        /// <returns>The update.</returns>
+        /// <param name="authid">Authid.</param>
+        /// <param name="p">P.</param>
+        [HttpPut("{authid}")]
+        public IActionResult Update(string authid, [FromBody]Player p) {
             return Ok(playerService.Update(p));
         }
 
+        /// <summary>
+        /// Post the specified Player
+        /// </summary>
+        /// <returns>The post.</returns>
+        /// <param name="p">P.</param>
         [HttpPost]
-        public IActionResult Post([FromBody] Player p)
-        {
+        public IActionResult Post([FromBody] Player p) {
             return Ok(playerService.Post(p));
         }
 
-        [HttpDelete("{authid:string}")]
-        public IActionResult Delete([FromBody] Player p)
-        {
-            return Ok(playerService.Delete(p));
+        /// <summary>
+        /// Delete the specified player.
+        /// </summary>
+        /// <returns>The delete.</returns>
+        /// <param name="authId">Auth identifier.</param>
+        [HttpDelete("{authId}")]
+        public IActionResult Delete(string authId) {
+            return Ok(playerService.Delete(authId));
         }
 
 

@@ -4,83 +4,57 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RidderRedderApi.Repositories
-{
-    public class PlayerRepository
-    {
+namespace RidderRedderApi.Repositories {
+    public class PlayerRepository {
         private ApplicationContext context;
 
-        public PlayerRepository(ApplicationContext ctx)
-        {
+        public PlayerRepository(ApplicationContext ctx) {
             context = ctx;
         }
 
-        public List<Player> GetAll(string name)
-        {
-            try
-            {
-                IQueryable<Player> query = context.Players;
-
-                if (!string.IsNullOrEmpty(name))
-                {
-                    query = query.Where(d => d.PlayerName.Contains(name));
-                }
-
-                return query.ToList<Player>();
-            } catch (Exception e)
-            {
+        public List<Player> GetAll() {
+            try {
+                return this.context.Players.ToList();
+            } catch (Exception e) {
                 throw e;
             }
         }
 
-        public Player Get(string authId)
-        {
-            try
-            {
-                return context.Players.SingleOrDefault(d => d.AuthId == authId);
-            } catch (Exception e)
-            {
+        public Player Get(string authid) {
+            try {
+                return this.context.Players.Find(authid);
+            } catch (Exception e) {
                 throw e;
             }
-
         }
 
-        public Player Put(Player p)
-        {
-            try
-            {
+        public Player Put(Player p) {
+            try {
                 this.context.Players.Update(p);
                 this.context.SaveChanges();
                 return p;
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 throw e;
             }
         }
 
-        public Player Post(Player p)
-        {
-            try
-            {
+        public Player Post(Player p) {
+            try {
                 this.context.Add(p);
                 this.context.SaveChanges();
                 return p;
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 throw e;
             }
         }
 
-        public bool Delete(Player p)
-        {
-            try
-            {
-                this.context.Remove(p);
+        public bool Delete(string authId) {
+            try {
+                Player player = this.context.Players.Find(authId);
+                this.context.Remove(player);
                 this.context.SaveChanges();
                 return true;
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 throw e;
             }
         }

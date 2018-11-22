@@ -15,4 +15,7 @@
     <ProjectReference Include="..\RidderRedderApi.ViewModels\RidderRedderApi.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="InventoryItem.ts" />
+  </ItemGroup>
 </Project>

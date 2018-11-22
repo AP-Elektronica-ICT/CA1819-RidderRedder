@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace RidderRedderApi.Models {
     /// <summary>
     /// Monster.
@@ -8,14 +10,26 @@ namespace RidderRedderApi.Models {
         /// <summary>
         /// Initializes a new instance of the <see cref="T:RidderRedderApi.Models.Monster"/> class.
         /// </summary>
+        /// <param name="monsterId">Monster identifier.</param>
         /// <param name="monsterModel">Monster model.</param>
         /// <param name="monsterTitle">Monster title.</param>
         /// <param name="monsterName">Monster name.</param>
-        public Monster(MonsterModel monsterModel, MonsterTitle monsterTitle, MonsterName monsterName) {
-            this.MonsterModel = monsterModel;
-            this.MonsterTitle = monsterTitle;
-            this.MonsterName = monsterName;
+        public Monster(int monsterId, MonsterModel monsterModel, MonsterTitle monsterTitle, MonsterName monsterName) {
+            MonsterId = monsterId;
+            MonsterModel = monsterModel;
+            MonsterTitle = monsterTitle;
+            MonsterName = monsterName;
         }
+        public Monster() {
+
+        }
+
+        /// <summary>
+        /// Gets or sets the monster identifier.
+        /// </summary>
+        /// <value>The monster identifier.</value>
+        [Key]
+        public int MonsterId { get; set; }
         /// <summary>
         /// Gets or sets the monster model.
         /// </summary>

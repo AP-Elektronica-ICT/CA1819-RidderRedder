@@ -7,6 +7,7 @@ namespace RidderRedderApi {
     /// <summary>
     /// Monster title.
     /// </summary>
+    [Table("MonsterTitle")]
     public class MonsterTitle {
         /// <summary>
         /// Gets or sets the monster title identifier.

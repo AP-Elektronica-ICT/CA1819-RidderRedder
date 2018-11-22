@@ -6,6 +6,7 @@ namespace RidderRedderApi.Models {
     /// <summary>
     /// Monument.
     /// </summary>
+    [Table("Monument")]
     public class Monument {
         /// <summary>
         /// Gets or sets the monument identifier.

@@ -15,18 +15,19 @@ using MySql.Data;
 using Swashbuckle.AspNetCore.Swagger;
 
 using RidderRedderApi.Repositories;
+using RidderRedderApi.Services;
 
-namespace RidderRedderApi
-{
-    public class Startup
-    {
+namespace RidderRedderApi {
+    /// <summary>
+    /// Startup.
+    /// </summary>
+    public class Startup {
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:RidderRedderApi.Startup"/> class.
         /// </summary>
         /// <param name="configuration">Configuration.</param>
-        public Startup(IConfiguration configuration)
-        {
+        public Startup(IConfiguration configuration) {
             Configuration = configuration;
         }
 
@@ -36,18 +37,18 @@ namespace RidderRedderApi
         /// <value>The configuration.</value>
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
-        {
+        /// <summary>
+        /// Configures the services.
+        /// </summary>
+        /// <param name="services">Services.</param>
+        public void ConfigureServices(IServiceCollection services) {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddMvc();
 
             services.AddSwaggerGen(x => {
 
-                x.SwaggerDoc("v1.0", new Info
-                {
+                x.SwaggerDoc("v1.0", new Info {
                     Title = "Ridder Redder API",
                     Version = "v1.0",
                     Description = "Documentation for the Ridder Redder API"
@@ -74,10 +75,24 @@ namespace RidderRedderApi
             services.AddCors();
 
             services.AddMvcCore().AddApiExplorer();
+
+            //dependency injection
+            services.AddScoped<MonsterRepository>();
+            services.AddScoped<MonsterService>();
+            services.AddScoped<InventoryRepository>();
+            services.AddScoped<InventoryService>();
+            services.AddScoped<PlayerRepository>();
+            services.AddScoped<PlayerService>();
+
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ApplicationContext ctx) { 
+        /// <summary>
+        /// Configure the specified app, env and ctx.
+        /// </summary>
+        /// <param name="app">App.</param>
+        /// <param name="env">Env.</param>
+        /// <param name="ctx">Context.</param>
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ApplicationContext ctx) {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
             } else {

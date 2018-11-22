@@ -29,4 +29,12 @@
     <ProjectReference Include="..\RidderRedderApi.ViewModels\RidderRedderApi.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Remove="appsettings.Development.json" />
+    <Content Remove="appsettings.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="appsettings.Development.json" />
+    <None Include="appsettings.json" />
+  </ItemGroup>
 </Project>

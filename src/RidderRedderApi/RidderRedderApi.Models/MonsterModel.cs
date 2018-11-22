@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace RidderRedderApi.Models {
     /// <summary>
     /// Monster model.
     /// </summary>
+    [Table("MonsterModel")]
     public class MonsterModel {
 
         /// <summary>
