@@ -20,6 +20,7 @@ export class InventoryPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public playerProvider: PlayerProvider) {
     this.Knights = playerProvider.getInventory();
+    console.log(this.Knights);
   }
 
   ionViewDidLoad() {

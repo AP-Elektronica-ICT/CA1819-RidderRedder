@@ -18,8 +18,9 @@ export class LandmarkProvider {
     // connect to server, fetch all landmarks
 
     this.landmarks = new Array<Landmark>();
-    this.landmarks.push(new Landmark(0, "Campus ELL", 51.230322, 4.416155));
-    this.landmarks.push(new Landmark(1, "Campus NOO", 51.230309, 4.413604));
+    this.landmarks.push(new Landmark(0, "Campus ELL", 51.230322, 4.416155, null));
+    this.landmarks.push(new Landmark(1, "Campus NOO", 51.230309, 4.413604, 1));
+    this.landmarks.push(new Landmark(2, "Bar Noord", 21.230944, 4.422794, 2));
   }
 
   getLandmarks():Array<Landmark>{

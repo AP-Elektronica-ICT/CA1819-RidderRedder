@@ -102,16 +102,26 @@ export class HomePage {
     for(let landmark of this.landmarks){
       var icon;
       if(landmark.ownerId == null){
-        icon = {url: 'assets/',  //Castle by BGBOXXX Design from the Noun Project
+        icon = {url: 'assets/imgs/castle_black.png',  //Castle by BGBOXXX Design from the Noun Project
           size: {
-            width: 10,
-            height: 10}
+            width: 20,
+            height: 30}
         }
       }
-      else if(landmark.ownerId == pProvider.Id){
+      else if(landmark.ownerId == this.pProvider.Id){
+        icon = {url: 'assets/imgs/castle_green.png',  //Castle by BGBOXXX Design from the Noun Project
+          size: {
+            width: 20,
+            height: 30}
+        }
       
       }
       else{
+        icon = {url: 'assets/imgs/castle_red.png',  //Castle by BGBOXXX Design from the Noun Project
+          size: {
+            width: 20,
+            height: 30}
+        }
       }
 
       let marker: Marker = this.map.addMarkerSync({
