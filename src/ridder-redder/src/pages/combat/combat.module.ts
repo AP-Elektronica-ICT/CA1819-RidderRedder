@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { CombatPage } from './combat';
 import { ComponentsModule } from '../../components/components.module';
@@ -13,9 +13,6 @@ import { ComponentsModule } from '../../components/components.module';
     ],
     entryComponents: [
         CombatPage
-    ],
-    schemas: [
-      CUSTOM_ELEMENTS_SCHEMA
     ]
 })
 export class CombatPageModule { }

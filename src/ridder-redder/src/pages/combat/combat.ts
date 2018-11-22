@@ -1,7 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { IonicPage, NavController, NavParams, DateTime } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Monster } from '../../models/Monster';
 import { CombatState } from '../../models/CombatState';
+import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion';
+import { Combat } from '../../models/Combat';
+import { Player } from '../../models/Player';
+
+import { SpeechRecognition } from '@ionic-native/speech-recognition';
 
 /**
  * Generated class for the CombatPage page.
@@ -18,35 +23,78 @@ import { CombatState } from '../../models/CombatState';
 export class CombatPage {
 
     @Input() monster: Monster;
+    private player: Player;
 
-    private combatState: CombatState = CombatState.ChoosingCombatStyle;
+    private combat: Combat;
+
     private infoHead: string;
     private infoParagraph: string;
 
-    private timer: number;
-    private maxTime: number;
+    constructor(
+        public navCtrl: NavController,
+        public navParams: NavParams,
+        private deviceMotion: DeviceMotion,
+        private speech: SpeechRecognition
+    ) {
 
-    constructor(public navCtrl: NavController, public navParams: NavParams) {
-      this.monster = navParams.get("monster");
-      //{
-      //      Difficulty: Math.floor(Math.random() * 4) + 1,
-      //      Level: 5,
-      //      Model: {
-      //          MonsterModelId: 1,
-      //          MonsterModelPath: ""
-      //      },
-      //      Name: {
-      //          MonsterName: "Charles",
-      //          MonsterNameId: 1
-      //      },
-      //      Title: {
-      //          MonsterTitle: "Baron ",
-      //          MonsterTitleId: 1
-      //      }
-      //  }
+        var options = {
+            frequency: 100
+        }
+
+
+
+
+
+        this.monster = {
+            Difficulty: Math.floor(Math.random() * 4) + 1,
+            Level: 5,
+            Model: {
+                MonsterModelId: 1,
+                MonsterModelPath: ""
+            },
+            Name: {
+                MonsterName: "Charles",
+                MonsterNameId: 1
+            },
+            Title: {
+                MonsterTitle: "Baron ",
+                MonsterTitleId: 1
+            },
+            Health: 250,
+            MaxHealth: 250
+        }
+
+        this.player = {
+            AuthId: "",
+            Experience: 0,
+            Health: 250,
+            MaxHealth: 250,
+            PlayerName: "Hans"
+        }
+
+        // Check feature available
+        this.speech.isRecognitionAvailable().then((available: boolean) => {
+            console.log("Speech recognition available: " + available);
+            // Request permissions
+            // Check permission
+            this.speech.hasPermission()
+                .then((hasPermission: boolean) => {
+                    if (!hasPermission)
+                        this.speech.requestPermission()
+                            .then(
+                                () => console.log('Granted'),
+                                () => console.log('Denied')
+                            )
+                });
+
+        })
+
+
+        this.combat = new Combat(this, this.monster, this.player, this.deviceMotion, this.speech);
+
         this.setInfo();
 
-        this.maxTime = 120 / this.monster.Difficulty;
+
     }
 
     ionViewDidLoad() {
@@ -58,7 +106,7 @@ export class CombatPage {
     }
 
     setInfo() {
-        switch (this.combatState) {
+        switch (this.combat.combatState) {
             case CombatState.ChoosingCombatStyle:
                 this.infoHead = "Battle time!";
                 this.infoParagraph = "Choose a combat style to start the fight";
@@ -73,45 +121,31 @@ export class CombatPage {
                 break;
             case CombatState.CombatMagic:
                 this.infoHead = "Hocus Pocus"; //Replace with magic spell
-                this.infoParagraph = "Speak up! Call out this spell to deal damage";
+                this.infoParagraph = this.combat.monster.Health < this.combat.monster.MaxHealth ? "Tap below to cast another spell!" : "Speak up! Call out this spell to deal damage";
+                break;
+            case CombatState.CombatVictory:
+                this.infoHead = "Victory!"
+                this.infoParagraph = `You have defeated the monster!\nYou have gained ${this.combat.experienceGained} experience!`;
+                break;
+            case CombatState.CombatDefeat:
+                this.infoHead = "Defeat!"
+                this.infoParagraph = "You have been defeated by the monster!";
                 break;
         }
     }
 
-    startCombat() {
-        console.log("Player has selected combat style, starting combat");
-        this.startTimer();
+    damageMonster() {
+        this.combat.hitMonster();
     }
 
-    selectCombatStyle(e) {
-        switch (e.path[0].id) {
-            case "img-sword":
-                this.combatState = CombatState.CombatMelee;
-                break;
-            case "img-bow":
-                this.combatState = CombatState.CombatRanged;
-                break;
-            case "img-wand":
-                this.combatState = CombatState.CombatMagic;
-                break;
-        }
-        this.setInfo();
-        this.startCombat();
+    damagePlayer() {
+        this.combat.hitPlayer();
     }
 
-    startTimer() {
-        this.timer = setTimeout(x => {
-            if (this.maxTime <= 0) {
-                
-            }
-            this.maxTime -= 1;
-
-            if (this.maxTime > 0) {
-                this.startTimer();
-            }
-
-        }, 1000);
-
+    forfeit() {
+        this.combat.stopCombat();
     }
+
+
 
 }
