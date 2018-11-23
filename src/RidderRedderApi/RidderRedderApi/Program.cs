@@ -28,6 +28,7 @@ namespace RidderRedderApi {
         /// <param name="args">Arguments.</param>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .UseUrls("http://localhost:5000", "http://192.168.11.30:5000", "http://*");
     }
 }

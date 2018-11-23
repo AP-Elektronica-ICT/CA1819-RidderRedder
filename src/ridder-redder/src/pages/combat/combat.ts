@@ -5,8 +5,10 @@ import { CombatState } from '../../models/CombatState';
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion';
 import { Combat } from '../../models/Combat';
 import { Player } from '../../models/Player';
+import { MonsterDto } from '../../dtos/MonsterDto';
 
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
+import { MonsterProvider } from '../../providers/monster/MonsterProvider';
 
 /**
  * Generated class for the CombatPage page.
@@ -34,36 +36,14 @@ export class CombatPage {
         public navCtrl: NavController,
         public navParams: NavParams,
         private deviceMotion: DeviceMotion,
-        private speech: SpeechRecognition
+        private speech: SpeechRecognition,
+        private monsterProvider: MonsterProvider
     ) {
 
         var options = {
             frequency: 100
         }
 
-
-
-
-
-        this.monster = {
-            Difficulty: Math.floor(Math.random() * 4) + 1,
-            Level: 5,
-            Model: {
-                MonsterModelId: 1,
-                MonsterModelPath: ""
-            },
-            Name: {
-                MonsterName: "Charles",
-                MonsterNameId: 1
-            },
-            Title: {
-                MonsterTitle: "Baron ",
-                MonsterTitleId: 1
-            },
-            Health: 250,
-            MaxHealth: 250,
-            Marker: null
-        }
 
         this.player = {
             AuthId: "",
@@ -72,6 +52,32 @@ export class CombatPage {
             MaxHealth: 250,
             PlayerName: "Hans"
         }
+
+
+        this.monsterProvider.getMonster().subscribe(data => {
+            let m: MonsterDto = data;
+
+            this.monster = {
+                MonsterId: m.monsterId,
+                Model: m.monsterModel,
+                Name: m.monsterName,
+                Title: m.monsterTitle,
+                Difficulty: Math.floor(Math.random() * 4) + 1,
+                Level: 1,
+                Health: 250,
+                MaxHealth: 250,
+                Marker: null
+            }
+
+            this.combat = new Combat(this, this.monster, this.player, this.deviceMotion, this.speech);
+
+            this.setInfo();
+
+        }, error => {
+            console.log(error);
+        });
+
+       
 
         // Check feature available
         this.speech.isRecognitionAvailable().then((available: boolean) => {
@@ -91,9 +97,7 @@ export class CombatPage {
         })
 
 
-        this.combat = new Combat(this, this.monster, this.player, this.deviceMotion, this.speech);
 
-        this.setInfo();
 
 
     }

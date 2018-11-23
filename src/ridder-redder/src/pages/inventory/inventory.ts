@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Knight } from '../../models/Knight'
-import { PlayerProvider } from '../../providers/player/player';
+import { PlayerProvider } from '../../providers/player/PlayerProvider';
 
 /**
  * Generated class for the InventoryPage page.

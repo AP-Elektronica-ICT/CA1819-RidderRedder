@@ -1,6 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Monster } from '../../models/Monster';
+import { Observable } from "rxjs/Observable";
+import { AuthProvider } from '../auth/AuthProvider';
+import { MonsterDto } from '../../dtos/MonsterDto';
 
 /*
   Generated class for the MonsterProvider provider.
@@ -11,20 +14,36 @@ import { Monster } from '../../models/Monster';
 @Injectable()
 export class MonsterProvider {
 
-  constructor(public http: HttpClient) {
-    console.log('Hello MonsterProvider Provider');
-  }
-
-  getRandomMonster(): Monster{
-    return {
-      Name: { MonsterNameId: 1, MonsterName: "Johan"},
-      Title: { MonsterTitleId: 1, MonsterTitle: "Baron"},
-      Model: { MonsterModelId: 1, MonsterModelPath: "../../assets/imgs/black_night.png"},
-      Health: 500, 
-      MaxHealth: 500,
-      Difficulty: 2,
-      Level: 4,
-      Marker: null,
+    private baseUrl = "http://192.168.11.30:5000/api/v1";
+    private httpOptions = {
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            // 'Authorization': `Bearer ${this.auth.access_token}`
+        })
     }
-  }
+
+    constructor(public http: HttpClient, private auth: AuthProvider) {
+        console.log('Hello MonsterProvider Provider');
+    }
+
+    public getRandomMonster(): Monster {
+        return {
+            MonsterId: 1,
+            Name: { MonsterNameId: 1, MonsterName: "Johan" },
+            Title: { MonsterTitleId: 1, MonsterTitle: "Baron" },
+            Model: { MonsterModelId: 1, MonsterModelPath: "../../assets/imgs/black_night.png" },
+            Health: 500,
+            MaxHealth: 500,
+            Difficulty: 2,
+            Level: 4,
+            Marker: null,
+        }
+    }
+
+    public getMonster(): Observable<MonsterDto> {
+        let queryString = this.baseUrl;
+        queryString += "/Monster"
+
+        return this.http.get<MonsterDto>(queryString, this.httpOptions);
+    }
 }
