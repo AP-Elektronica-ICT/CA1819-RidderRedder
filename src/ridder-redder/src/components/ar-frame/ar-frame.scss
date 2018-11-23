@@ -1,0 +1,30 @@
+iframe {
+    width: 100%;
+    height: 100%;
+}
+.monster-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+
+
+    .monsterImg {
+        position: fixed;
+        margin: auto;
+        bottom: 35%;
+    }
+   
+}
+.monsterHealth {
+    position: fixed;
+    left: 40%;
+}
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10%;
+}
+
+.combat-splash {
+    // background: url("../../assets/icons/skull.png") no-repeat;
+}

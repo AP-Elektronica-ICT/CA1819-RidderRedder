@@ -7,6 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 import { RidderRedder } from './app.component';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { HomePage } from '../pages/home/home';
 import { CombatPage } from '../pages/combat/combat';
 import { ArLauncherComponent } from '../components/ar-launcher/ar-launcher';
@@ -17,6 +18,8 @@ import { InventoryPage } from '../pages/inventory/inventory'
 import { MonsterProvider } from '../providers/monster/monster';
 import { PlayerProvider } from '../providers/player/player';
 import { LandmarkProvider } from '../providers/landmark/landmark';
+import { SpeechRecognition } from '@ionic-native/speech-recognition';
+import { DeviceMotion } from '@ionic-native/device-motion';
 
 @NgModule({
   declarations: [
@@ -49,6 +52,9 @@ import { LandmarkProvider } from '../providers/landmark/landmark';
     MonsterProvider,
     PlayerProvider,
     LandmarkProvider
+    DeviceMotion,
+    ScreenOrientation,
+    SpeechRecognition
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

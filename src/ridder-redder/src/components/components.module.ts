@@ -1,22 +1,24 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ArLauncherComponent } from './ar-launcher/ar-launcher';
 import { IonicModule } from 'ionic-angular';
+import { ArFrameComponent } from './ar-frame/ar-frame';
+import { SpellbookComponent } from './spellbook/spellbook';
 
 @NgModule({
     declarations: [
-        ArLauncherComponent,
-    ],
-    entryComponents: [
-        ArLauncherComponent
+
+        ArFrameComponent,
+        SpellbookComponent,
     ],
     imports: [
         IonicModule
     ],
-    exports: [
-        ArLauncherComponent,
-    ],
     schemas: [
-      CUSTOM_ELEMENTS_SCHEMA
+        CUSTOM_ELEMENTS_SCHEMA
+    ],
+    exports: [
+
+        ArFrameComponent,
+        SpellbookComponent,
     ]
 })
 export class ComponentsModule { }

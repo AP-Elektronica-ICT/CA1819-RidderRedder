@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController, NavParams, NavController } from 'ionic-angular';
+import { ModalController, NavParams, NavController, IonicApp } from 'ionic-angular';
 import { GoogleMaps, GoogleMap, GoogleMapOptions, GoogleMapsEvent, ILatLng, Marker, MarkerOptions } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Observable } from 'rxjs/Rx';
@@ -18,7 +18,6 @@ import { LandmarkProvider } from '../../providers/landmark/landmark';
   templateUrl: 'home.html'
 })
 export class HomePage {
-
   map: GoogleMap;
   prevPos: ILatLng;
   mapUpdater: Subscription;
@@ -96,25 +95,25 @@ export class HomePage {
         console.log(error);
       });
   }
-  
+
   // add landmark markers to the map
   addLandmarks(){
     for(let landmark of this.landmarks){
       var icon;
-      if(landmark.ownerId == null){
+      if(landmark.owner == null){
         icon = {url: 'assets/imgs/castle_black.png',  //Castle by BGBOXXX Design from the Noun Project
           size: {
             width: 20,
             height: 30}
         }
       }
-      else if(landmark.ownerId == this.pProvider.Id){
+      else if(landmark.owner == this.pProvider.id){
         icon = {url: 'assets/imgs/castle_green.png',  //Castle by BGBOXXX Design from the Noun Project
           size: {
             width: 20,
             height: 30}
         }
-      
+
       }
       else{
         icon = {url: 'assets/imgs/castle_red.png',  //Castle by BGBOXXX Design from the Noun Project
@@ -136,19 +135,20 @@ export class HomePage {
       landmark.marker = marker;
     }
   }
-
   // move map centre to current location, if location is far enough from previous location
-  updateMap(){
+  updateMap() {
     this.geolocation.getCurrentPosition()
-      .then((resp) => {    
+      .then((resp) => {
         console.log("moving  map to " + resp);
 
         this.prevPos.lat = resp.coords.latitude;
         this.prevPos.lng = resp.coords.longitude;
 
         this.map.animateCamera(
-          {target:
-            {lat: resp.coords.latitude,
+          {
+            target:
+            {
+              lat: resp.coords.latitude,
               lng: resp.coords.longitude
             }
           });
@@ -159,20 +159,20 @@ export class HomePage {
   }
 
   // generate new monsters, and check if you're close enough to fight
-  updateMonsters(){
+  updateMonsters() {
     //if close enough
-    if( false ){
+    if (false) {
     }
-    if( this.monsters.length > 5 ){
+    if (this.monsters.length > 5) {
       // TODO add timestamp, remove after time
       this.monsters[0].Marker.remove();
       this.monsters.shift();
     }
-    else{
+    else {
       // generate new marker location
-      let currPos = this.map.getCameraPosition().target;       
-      let rlat: number = (currPos.lat-this.monsterDistance)+(Math.random()*2*this.monsterDistance);
-      let rlng: number = (currPos.lng-this.monsterDistance)+(Math.random()*2*this.monsterDistance);
+      let currPos = this.map.getCameraPosition().target;
+      let rlat: number = (currPos.lat - this.monsterDistance) + (Math.random() * 2 * this.monsterDistance);
+      let rlng: number = (currPos.lng - this.monsterDistance) + (Math.random() * 2 * this.monsterDistance);
 
       //generate random monster, attach marker
       let monster: Monster = this.monsterProvider.getRandomMonster();
@@ -196,15 +196,15 @@ export class HomePage {
   }
 
   // open the fight screen
-  launchFight(monster: Monster){
+  launchFight(monster: Monster) {
     this.navCtrl.push(
       CombatPage,
-      {monster: monster}
+      { monster: monster }
     );
   }
 
   // show inventory
-  presentInventory(){
+  presentInventory() {
     let inventoryModal = this.modalCtrl.create(InventoryPage);
     inventoryModal.present();
   }

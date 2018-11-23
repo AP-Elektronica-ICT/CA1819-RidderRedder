@@ -20,6 +20,8 @@ export class MonsterProvider {
       Name: { MonsterNameId: 1, MonsterName: "Johan"},
       Title: { MonsterTitleId: 1, MonsterTitle: "Baron"},
       Model: { MonsterModelId: 1, MonsterModelPath: "../../assets/imgs/black_night.png"},
+      Health: 500, 
+      MaxHealth: 500,
       Difficulty: 2,
       Level: 4,
       Marker: null,

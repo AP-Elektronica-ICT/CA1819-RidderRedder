@@ -14,7 +14,8 @@ using Microsoft.EntityFrameworkCore;
 using MySql.Data;
 using Swashbuckle.AspNetCore.Swagger;
 
-using RidderRedderApi.Models;
+using RidderRedderApi.Repositories;
+using RidderRedderApi.Services;
 
 namespace RidderRedderApi {
     /// <summary>
@@ -59,13 +60,13 @@ namespace RidderRedderApi {
                 x.IncludeXmlComments(xmlPath);
             });
 
-            services.AddDbContext<RidderRedderContext>(
+            services.AddDbContext<ApplicationContext>(
                 options => options.UseMySQL(
-                    Configuration.GetConnectionString("DefaultConnection")
+                    Configuration.GetConnectionString("LocalMySQLConnection")
                 )
             );
 
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder => {
+            services.AddCors(o => o.AddPolicy("CorsPolicy", builder => {
                 builder.AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader();
@@ -74,19 +75,28 @@ namespace RidderRedderApi {
             services.AddCors();
 
             services.AddMvcCore().AddApiExplorer();
+
+            //dependency injection
+            services.AddScoped<MonsterRepository>();
+            services.AddScoped<MonsterService>();
+            services.AddScoped<InventoryRepository>();
+            services.AddScoped<InventoryService>();
+            services.AddScoped<PlayerRepository>();
+            services.AddScoped<PlayerService>();
+
         }
 
         /// <summary>
-        /// Configure the specified app and env.
+        /// Configure the specified app, env and ctx.
         /// </summary>
         /// <param name="app">App.</param>
         /// <param name="env">Env.</param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, RidderRedderContext ctx) {
+        /// <param name="ctx">Context.</param>
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ApplicationContext ctx) {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
             } else {
                 app.UseHsts();
-
             }
 
 
@@ -98,12 +108,11 @@ namespace RidderRedderApi {
             });
 
 
-            app.UseCors("MyPolicy");
+            app.UseCors("CorsPolicy");
             app.UseMvc();
 
 
             DBInitializer.Initialize(ctx);
-
         }
     }
 }
