@@ -1,13 +1,15 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 
-namespace RidderRedderApi.Controllers {
+namespace RidderRedderApi.Web.Api.Controllers
+{
+    [ApiController]
+    public class BaseController : ControllerBase
+    {
 
-    public class BaseController : Controller {
-        public BaseController() {
-
-        }
     }
 }
