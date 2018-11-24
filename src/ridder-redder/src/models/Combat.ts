@@ -31,7 +31,7 @@ export class Combat {
     private speechListener;
     private speechOptions;
 
-    constructor(private parentPage: CombatPage, private m: Monster, private p: Player, private dM: DeviceMotion, private s: SpeechRecognition) {
+    public constructor(private parentPage: CombatPage, private m: Monster, private p: Player, private dM: DeviceMotion, private s: SpeechRecognition) {
         this.monster = m;
         this.player = p;
         this.deviceMotion = dM;
@@ -43,6 +43,8 @@ export class Combat {
             showPopup: false
         }
 
+        console.log(this.monster.Name.monsterNameText);
+        
         this.resetTimer();
     }
     startCombat() {

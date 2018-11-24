@@ -56,7 +56,6 @@ export class CombatPage {
 
         this.monsterProvider.getMonster().subscribe(data => {
             let m: MonsterDto = data;
-
             this.monster = {
                 MonsterId: m.monsterId,
                 Model: m.monsterModel,
@@ -65,9 +64,10 @@ export class CombatPage {
                 Difficulty: Math.floor(Math.random() * 4) + 1,
                 Level: 1,
                 Health: 250,
-                MaxHealth: 250,
+                MaxHealth: 500,
                 Marker: null
             }
+
 
             this.combat = new Combat(this, this.monster, this.player, this.deviceMotion, this.speech);
 
@@ -104,6 +104,7 @@ export class CombatPage {
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad CombatPage');
+        
     }
 
     difficulty(n: number): any[] {
@@ -111,6 +112,7 @@ export class CombatPage {
     }
 
     setInfo() {
+
         switch (this.combat.combatState) {
             case CombatState.ChoosingCombatStyle:
                 this.infoHead = "Battle time!";

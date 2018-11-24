@@ -29,9 +29,9 @@ export class MonsterProvider {
     public getRandomMonster(): Monster {
         return {
             MonsterId: 1,
-            Name: { MonsterNameId: 1, MonsterName: "Johan" },
-            Title: { MonsterTitleId: 1, MonsterTitle: "Baron" },
-            Model: { MonsterModelId: 1, MonsterModelPath: "../../assets/imgs/black_night.png" },
+            Name: { monsterNameId: 1, monsterNameText: "Johan" },
+            Title: { monsterTitleId: 1, monsterTitleText: "Baron" },
+            Model: { monsterModelId: 1, monsterModelPath: "../../assets/imgs/black_night.png" },
             Health: 500,
             MaxHealth: 500,
             Difficulty: 2,

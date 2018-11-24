@@ -163,7 +163,7 @@ export class HomePage {
             let monster: Monster = this.monsterProvider.getRandomMonster();
 
             let marker: Marker = this.map.addMarkerSync({
-                title: monster.Name.MonsterName,
+                title: monster.Name.monsterNameText,
                 icon: 'blue',
                 animation: 'DROP',
                 position: {

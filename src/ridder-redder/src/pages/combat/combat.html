@@ -14,8 +14,9 @@
                 <img src="assets/icons/fight.png" width="80" height="80" *ngIf="combatState === 0">
                 <div class="combat-info" *ngIf="combatState != 0">
                     <span id="playerbar" class="healthbar-container">{{combat.maxTime}} / {{combat.MAXTIME}}</span>
-                    <h2>{{combat.monster.Title.MonsterTitle}}{{combat.monster.Name.MonsterName}}</h2>
-                    <span id="monsterbar" class="healthbar-container">{{combat.monster.Health}} / {{combat.monster.MaxHealth}}</span>
+                    <h4>{{combat.monster.Title.monsterTitleText}} {{combat.monster.Name.monsterNameText}}</h4>
+                    <span id="monsterbar" class="healthbar-container">{{combat.monster.Health}} /
+                        {{combat.monster.MaxHealth}}</span>
                 </div>
             </div>
             <div class="weakness">
@@ -31,10 +32,10 @@
             <!-- <span class="monsterHealth">{{combat.monster.Health}} / {{combat.monster.MaxHealth}}</span> -->
 
             <div class="monster-container">
-                <!-- <img src="assets/imgs/monster.png" class="monsterImage"> -->
+                <img src="{{combat.monster.Model.monsterModelPath}}" class="monsterImage">
 
                 <!-- <span class="combat-splash">POW!</span> -->
-    
+
             </div>
             <div class="button-container" *ngIf="combat.inCombat">
                 <button ion-button class="btnDamageMonster" (click)="damageMonster()">

@@ -52,6 +52,9 @@ page-combat {
             }
             h2 {
                 // position: fixed;
+                width: 250px;
+                margin-left: -60px;
+                
                 margin-top: 15px;
                 margin-bottom: 0;
                 text-align: center;
@@ -86,6 +89,17 @@ page-combat {
     // border: 3px solid red;
     left: 0;
     top: 20%;
+
+    .monster-container {
+        height: 60%;
+        margin-top: 20%;
+
+        img {
+            width: auto;
+            height: 65%;
+        }
+    }
+    
 }
 
 .footer-container {
