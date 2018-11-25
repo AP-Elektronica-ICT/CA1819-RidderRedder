@@ -9,6 +9,8 @@ import { MonsterDto } from '../../dtos/MonsterDto';
 
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import { MonsterProvider } from '../../providers/monster/MonsterProvider';
+import { PlayerProvider } from '../../providers/player/PlayerProvider';
+import { AuthProvider } from '../../providers/auth/AuthProvider';
 
 /**
  * Generated class for the CombatPage page.
@@ -37,23 +39,38 @@ export class CombatPage {
         public navParams: NavParams,
         private deviceMotion: DeviceMotion,
         private speech: SpeechRecognition,
-        private monsterProvider: MonsterProvider
+        private monsterProvider: MonsterProvider,
+        private playerProvider: PlayerProvider,
+        private authProvider: AuthProvider
     ) {
 
         var options = {
             frequency: 100
         }
 
+        this.loadPlayer();
 
-        this.player = {
-            AuthId: "",
-            Experience: 0,
-            Health: 250,
-            MaxHealth: 250,
-            PlayerName: "Hans"
-        }
+    }
 
+    private loadPlayer() {
+        this.playerProvider.GetPlayer(this.authProvider.AuthId).subscribe(data => {
+            let p: Player = {
+                PlayerName: data.playerName,
+                Experience: data.experience,
+                AuthId: data.authId,
+                Health: 500,
+                MaxHealth: 500
+            }
+            this.player = p;
 
+            this.loadMonster();
+
+        }, failed => {
+            console.log(failed);
+        })
+    }
+
+    private loadMonster() {
         this.monsterProvider.getMonster().subscribe(data => {
             let m: MonsterDto = data;
             this.monster = {
@@ -64,21 +81,23 @@ export class CombatPage {
                 Difficulty: Math.floor(Math.random() * 4) + 1,
                 Level: 1,
                 Health: 250,
-                MaxHealth: 500,
+                MaxHealth: 250,
                 Marker: null
             }
 
 
-            this.combat = new Combat(this, this.monster, this.player, this.deviceMotion, this.speech);
+            this.combat = new Combat(this, this.monster, this.player, this.deviceMotion, this.speech, this.playerProvider);
 
             this.setInfo();
+
+            this.loadSpeech();
 
         }, error => {
             console.log(error);
         });
+    }
 
-       
-
+    private loadSpeech() {
         // Check feature available
         this.speech.isRecognitionAvailable().then((available: boolean) => {
             console.log("Speech recognition available: " + available);
@@ -94,17 +113,12 @@ export class CombatPage {
                             )
                 });
 
-        })
-
-
-
-
-
+        });
     }
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad CombatPage');
-        
+
     }
 
     difficulty(n: number): any[] {
@@ -112,7 +126,7 @@ export class CombatPage {
     }
 
     setInfo() {
-
+console.log("Setting info");
         switch (this.combat.combatState) {
             case CombatState.ChoosingCombatStyle:
                 this.infoHead = "Battle time!";

@@ -25,25 +25,18 @@ export class MonsterProvider {
     constructor(public http: HttpClient, private auth: AuthProvider) {
         console.log('Hello MonsterProvider Provider');
     }
-
-    public getRandomMonster(): Monster {
-        return {
-            MonsterId: 1,
-            Name: { monsterNameId: 1, monsterNameText: "Johan" },
-            Title: { monsterTitleId: 1, monsterTitleText: "Baron" },
-            Model: { monsterModelId: 1, monsterModelPath: "../../assets/imgs/black_night.png" },
-            Health: 500,
-            MaxHealth: 500,
-            Difficulty: 2,
-            Level: 4,
-            Marker: null,
-        }
-    }
-
+    
     public getMonster(): Observable<MonsterDto> {
         let queryString = this.baseUrl;
         queryString += "/Monster"
 
         return this.http.get<MonsterDto>(queryString, this.httpOptions);
+    }
+
+    public getMonsters(count: number): Observable<MonsterDto[]> {
+        let queryString = this.baseUrl;
+        queryString += "/Monster/" + count;
+
+        return this.http.get<MonsterDto[]>(queryString, this.httpOptions);
     }
 }

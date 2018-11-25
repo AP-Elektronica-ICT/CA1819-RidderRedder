@@ -10,6 +10,7 @@ import { InventoryPage } from '../inventory/inventory';
 import { CombatPage } from '../combat/combat';
 import { MonsterProvider } from '../../providers/monster/MonsterProvider';
 import { PlayerProvider } from '../../providers/player/PlayerProvider';
+import { MonsterDto } from '../../dtos/MonsterDto';
 
 // @IonicPage()
 @Component({
@@ -160,7 +161,25 @@ export class HomePage {
             let rlng: number = (currPos.lng - this.monsterDistance) + (Math.random() * 2 * this.monsterDistance);
 
             //generate random monster, attach marker
-            let monster: Monster = this.monsterProvider.getRandomMonster();
+            let monster: Monster;
+
+            this.monsterProvider.getMonster().subscribe(data => {
+                let m: MonsterDto = data;
+                monster = {
+                    MonsterId: m.monsterId,
+                    Model: m.monsterModel,
+                    Name: m.monsterName,
+                    Title: m.monsterTitle,
+                    Difficulty: Math.floor(Math.random() * 4) + 1,
+                    Level: 1,
+                    Health: 500,
+                    MaxHealth: 500,
+                    Marker: null
+                }
+                
+            }, error => {
+                console.log(error);
+            });
 
             let marker: Marker = this.map.addMarkerSync({
                 title: monster.Name.monsterNameText,

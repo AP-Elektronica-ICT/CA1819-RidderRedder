@@ -42,6 +42,7 @@ page-combat {
                 opacity: 0.9;
                 width: 120%;
                 margin-left: -10%;
+                margin-bottom: 8px;
                 height: 30px;
                 border-radius: 12px;
                 border: 1px solid black;
@@ -127,13 +128,19 @@ page-combat {
     }
     .retry-container {
         position: fixed;
-        bottom: calc(40% - 40px);
-        left: calc(50% - 40px);
+        bottom: calc(30% - 40px);
+        left: calc(50% - 20px);
         text-align: center;
     }
     #img-bow {
 
     }
+}
+
+.button-container {
+    position: fixed;
+    bottom: 0;
+    // left: 0
 }
 
 .screen-splash {
