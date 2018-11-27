@@ -7,14 +7,15 @@ export class Landmark {
   lng;
   marker: Marker;
   knights: Array<Knight>;
-  ownerId: number;
+  owner: string;
 
-  constructor(iid:number, iname: string, ilat, ilng, owner: number){
-    this.name = iname;
-    this.lat = ilat;
-    this.lng = ilng;
+  constructor(id:number, name: string, lat, lng, owner: string){
+    this.id = id;
+    this.name = name;
+    this.lat = lat;
+    this.lng = lng;
     this.knights = new Array<Knight>();
-    this.ownerId = owner;
+    this.owner = owner;
   }
 
   getKnights(){

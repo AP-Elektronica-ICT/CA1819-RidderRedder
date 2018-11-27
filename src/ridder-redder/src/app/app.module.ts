@@ -14,7 +14,8 @@ import { ArLauncherComponent } from '../components/ar-launcher/ar-launcher';
 import { ComponentsModule } from '../components/components.module';
 import { HomePageModule } from '../pages/home/home.module';
 import { CombatPageModule } from '../pages/combat/combat.module';
-import { InventoryPage } from '../pages/inventory/inventory'
+import { InventoryPage } from '../pages/inventory/inventory';
+import { LandmarkPage } from '../pages/landmark/landmark';
 import { MonsterProvider } from '../providers/monster/monster';
 import { PlayerProvider } from '../providers/player/player';
 import { LandmarkProvider } from '../providers/landmark/landmark';
@@ -26,7 +27,8 @@ import { DeviceMotion } from '@ionic-native/device-motion';
     RidderRedder,
     //HomePage,
     //CombatPage,    these are in seperate Module files
-    InventoryPage
+    InventoryPage,
+    LandmarkPage
   ],
   imports: [
     BrowserModule,
@@ -41,7 +43,8 @@ import { DeviceMotion } from '@ionic-native/device-motion';
     RidderRedder,
     //HomePage,
     //CombatPage
-    InventoryPage
+    InventoryPage,
+    LandmarkPage
   ],
   providers: [
     StatusBar,
@@ -51,7 +54,7 @@ import { DeviceMotion } from '@ionic-native/device-motion';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     MonsterProvider,
     PlayerProvider,
-    LandmarkProvider
+    LandmarkProvider,
     DeviceMotion,
     ScreenOrientation,
     SpeechRecognition

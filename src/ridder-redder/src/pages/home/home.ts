@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController, NavParams, NavController, IonicApp } from 'ionic-angular';
-import { GoogleMaps, GoogleMap, GoogleMapOptions, GoogleMapsEvent, ILatLng, Marker, MarkerOptions } from '@ionic-native/google-maps';
+import { GoogleMaps, GoogleMap, GoogleMapOptions, GoogleMapsEvent, ILatLng, Marker, MarkerOptions, HtmlInfoWindow } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs/Subscription';
@@ -8,6 +8,7 @@ import { Monster } from '../../models/Monster';
 import { Landmark } from '../../models/Landmark';
 import { InventoryPage } from '../inventory/inventory';
 import { CombatPage } from '../combat/combat';
+import { LandmarkPage } from '../landmark/landmark';
 import { MonsterProvider } from '../../providers/monster/monster';
 import { PlayerProvider } from '../../providers/player/player';
 import { LandmarkProvider } from '../../providers/landmark/landmark';
@@ -123,6 +124,7 @@ export class HomePage {
         }
       }
 
+      // create marker
       let marker: Marker = this.map.addMarkerSync({
         title: landmark.name,
         icon: icon,
@@ -132,9 +134,15 @@ export class HomePage {
           lng: landmark.lng
         }
       });
+      marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
+        this.presentLandmark(landmark);
+      });
+
+      // add refference to marker to landmark    
       landmark.marker = marker;
     }
   }
+
   // move map centre to current location, if location is far enough from previous location
   updateMap() {
     this.geolocation.getCurrentPosition()
@@ -207,5 +215,15 @@ export class HomePage {
   presentInventory() {
     let inventoryModal = this.modalCtrl.create(InventoryPage);
     inventoryModal.present();
+  }
+
+  // show landmark info
+  presentLandmark(landmark: Landmark){
+    console.log('opening landmark page');
+    console.log(landmark);
+    this.navCtrl.push(
+      LandmarkPage,
+      { landmark: landmark }
+    );
   }
 }
