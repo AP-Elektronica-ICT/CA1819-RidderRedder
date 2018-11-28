@@ -30,4 +30,8 @@ export class LandmarkProvider {
   getLandmarks():Array<Landmark>{
     return this.landmarks;
   }
+
+  addKnight(knight: Knight):Landmark {
+    
+  }
 }
