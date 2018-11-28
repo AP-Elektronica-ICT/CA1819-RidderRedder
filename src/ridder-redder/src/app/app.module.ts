@@ -15,10 +15,11 @@ import { ComponentsModule } from '../components/components.module';
 import { HomePageModule } from '../pages/home/home.module';
 import { CombatPageModule } from '../pages/combat/combat.module';
 import { InventoryPage } from '../pages/inventory/inventory'
-import { MonsterProvider } from '../providers/monster/monster';
-import { PlayerProvider } from '../providers/player/player';
+import { MonsterProvider } from '../providers/monster/MonsterProvider';
+import { PlayerProvider } from '../providers/player/PlayerProvider';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import { DeviceMotion } from '@ionic-native/device-motion';
+import { AuthProvider } from '../providers/auth/AuthProvider';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { DeviceMotion } from '@ionic-native/device-motion';
     PlayerProvider,
     DeviceMotion,
     ScreenOrientation,
-    SpeechRecognition
+    SpeechRecognition,
+    AuthProvider
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

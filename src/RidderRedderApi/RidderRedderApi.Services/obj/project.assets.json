@@ -6174,17 +6174,17 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/melvinb/Documents/Git Repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Services/RidderRedderApi.Services.csproj",
+      "projectUniqueName": "/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Services/RidderRedderApi.Services.csproj",
       "projectName": "RidderRedderApi.Services",
-      "projectPath": "/Users/melvinb/Documents/Git Repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Services/RidderRedderApi.Services.csproj",
+      "projectPath": "/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Services/RidderRedderApi.Services.csproj",
       "packagesPath": "/Users/melvinb/.nuget/packages/",
-      "outputPath": "/Users/melvinb/Documents/Git Repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Services/obj/",
+      "outputPath": "/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Services/obj",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "/Users/melvinb/.nuget/NuGet/NuGet.Config"
+        "/Users/melvinb/.config/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.1"
@@ -6195,11 +6195,11 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "/Users/melvinb/Documents/Git Repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Models/RidderRedderApi.Models.csproj": {
-              "projectPath": "/Users/melvinb/Documents/Git Repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Models/RidderRedderApi.Models.csproj"
+            "/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Models/RidderRedderApi.Models.csproj": {
+              "projectPath": "/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Models/RidderRedderApi.Models.csproj"
             },
-            "/Users/melvinb/Documents/Git Repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Repositories/RidderRedderApi.Repositories.csproj": {
-              "projectPath": "/Users/melvinb/Documents/Git Repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Repositories/RidderRedderApi.Repositories.csproj"
+            "/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Repositories/RidderRedderApi.Repositories.csproj": {
+              "projectPath": "/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Repositories/RidderRedderApi.Repositories.csproj"
             }
           }
         }
@@ -6213,27 +6213,27 @@
     "frameworks": {
       "netcoreapp2.1": {
         "dependencies": {
-          "EntityFramework": {
-            "target": "Package",
-            "version": "[6.2.0, )"
-          },
-          "Microsoft.EntityFrameworkCore": {
-            "target": "Package",
-            "version": "[2.1.4, )"
-          },
           "Microsoft.NETCore.App": {
             "suppressParent": "All",
             "target": "Package",
-            "version": "[2.1.0, )",
+            "version": "2.1",
             "autoReferenced": true
+          },
+          "EntityFramework": {
+            "target": "Package",
+            "version": "6.2.0"
+          },
+          "Microsoft.EntityFrameworkCore": {
+            "target": "Package",
+            "version": "2.1.4"
           },
           "MySql.Data.EntityFrameworkCore": {
             "target": "Package",
-            "version": "[8.0.13, )"
+            "version": "8.0.13"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
-            "version": "[4.0.1, )"
+            "version": "4.0.1"
           }
         },
         "imports": [

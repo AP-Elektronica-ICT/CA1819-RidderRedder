@@ -4,6 +4,7 @@ import { MonsterModel } from "./MonsterModel";
 import { Marker } from '@ionic-native/google-maps'
 
 export class Monster {
+    MonsterId: number;
     Name: MonsterName;
     Title: MonsterTitle;
     Model: MonsterModel;
