@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>RidderRedderApi.Web.API</name>
+        <name>RidderRedderApi.Web.Api</name>
     </assembly>
     <members>
         <member name="T:RidderRedderApi.Web.Api.Controllers.InventoryController">
@@ -67,6 +67,18 @@
             </summary>
             <returns>The list.</returns>
             <param name="count">Count.</param>
+        </member>
+        <member name="T:RidderRedderApi.Web.Api.Controllers.MonsterModelController">
+            <summary>
+            Monster model controller.
+            </summary>
+        </member>
+        <member name="M:RidderRedderApi.Web.Api.Controllers.MonsterModelController.GetMonsterModelImage(System.String)">
+            <summary>
+            Gets the monster model image.
+            </summary>
+            <returns>The monster model image.</returns>
+            <param name="monsterModelPath">Monster model path.</param>
         </member>
         <member name="T:RidderRedderApi.Web.Api.Controllers.PlayerController">
             <summary>

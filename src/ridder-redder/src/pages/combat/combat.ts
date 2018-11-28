@@ -27,7 +27,6 @@ import { AuthProvider } from '../../providers/auth/AuthProvider';
 export class CombatPage {
 
     @Input() monster: Monster;
-    private player: Player;
 
     private combat: Combat;
 
@@ -52,6 +51,8 @@ export class CombatPage {
 
     }
 
+
+
     private loadPlayer() {
         this.playerProvider.GetPlayer(this.authProvider.AuthId).subscribe(data => {
             let p: Player = {
@@ -61,32 +62,19 @@ export class CombatPage {
                 Health: 500,
                 MaxHealth: 500
             }
-            this.player = p;
 
-            this.loadMonster();
+            this.loadMonster(p);
 
         }, failed => {
             console.log(failed);
         })
     }
 
-    private loadMonster() {
+    private loadMonster(player: Player) {
         this.monsterProvider.getMonster().subscribe(data => {
-            let m: MonsterDto = data;
-            this.monster = {
-                MonsterId: m.monsterId,
-                Model: m.monsterModel,
-                Name: m.monsterName,
-                Title: m.monsterTitle,
-                Difficulty: Math.floor(Math.random() * 4) + 1,
-                Level: 1,
-                Health: 250,
-                MaxHealth: 250,
-                Marker: null
-            }
-
-
-            this.combat = new Combat(this, this.monster, this.player, this.deviceMotion, this.speech, this.playerProvider);
+            this.monster = data;
+        
+            this.combat = new Combat(this, this.monster, player, this.deviceMotion, this.speech, this.playerProvider, this.monsterProvider);
 
             this.setInfo();
 

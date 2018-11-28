@@ -6128,11 +6128,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/melvinb/Documents/Git Repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Models/RidderRedderApi.Models.csproj",
+      "projectUniqueName": "/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Models/RidderRedderApi.Models.csproj",
       "projectName": "RidderRedderApi.Models",
-      "projectPath": "/Users/melvinb/Documents/Git Repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Models/RidderRedderApi.Models.csproj",
+      "projectPath": "/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Models/RidderRedderApi.Models.csproj",
       "packagesPath": "/Users/melvinb/.nuget/packages/",
-      "outputPath": "/Users/melvinb/Documents/Git Repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Models/obj",
+      "outputPath": "/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Models/obj",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
@@ -6149,8 +6149,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "/Users/melvinb/Documents/Git Repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.ViewModels/RidderRedderApi.ViewModels.csproj": {
-              "projectPath": "/Users/melvinb/Documents/Git Repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.ViewModels/RidderRedderApi.ViewModels.csproj"
+            "/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.ViewModels/RidderRedderApi.ViewModels.csproj": {
+              "projectPath": "/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.ViewModels/RidderRedderApi.ViewModels.csproj"
             }
           }
         }

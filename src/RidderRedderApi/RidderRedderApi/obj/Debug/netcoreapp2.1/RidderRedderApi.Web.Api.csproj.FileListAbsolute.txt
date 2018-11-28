@@ -46,3 +46,26 @@ C:/Users/Melvin/Documents/Git Repositories/CA1819-RidderRedder/src/RidderRedderA
 /Users/melvinb/Documents/Git Repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/obj/Debug/netcoreapp2.1/RidderRedderApi.Web.API.RazorAssemblyInfo.cs
 /Users/melvinb/Documents/Git Repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/obj/Debug/netcoreapp2.1/RidderRedderApi.Web.API.RazorTargetAssemblyInfo.cache
 /Users/melvinb/Documents/Git Repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/obj/Debug/netcoreapp2.1/RidderRedderApi.Web.API.csproj.CopyComplete
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/bin/Debug/netcoreapp2.1/RidderRedderApi.Web.API.deps.json
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/bin/Debug/netcoreapp2.1/RidderRedderApi.Web.API.runtimeconfig.json
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/bin/Debug/netcoreapp2.1/RidderRedderApi.Web.API.runtimeconfig.dev.json
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/bin/Debug/netcoreapp2.1/RidderRedderApi.Web.API.dll
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/bin/Debug/netcoreapp2.1/RidderRedderApi.Web.API.pdb
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/bin/Debug/netcoreapp2.1/RidderRedderApi.Web.Api.xml
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/bin/Debug/netcoreapp2.1/RidderRedderApi.Models.dll
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/bin/Debug/netcoreapp2.1/RidderRedderApi.Repositories.dll
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/bin/Debug/netcoreapp2.1/RidderRedderApi.Services.dll
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/bin/Debug/netcoreapp2.1/RidderRedderApi.ViewModels.dll
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/bin/Debug/netcoreapp2.1/RidderRedderApi.Models.pdb
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/bin/Debug/netcoreapp2.1/RidderRedderApi.Repositories.pdb
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/bin/Debug/netcoreapp2.1/RidderRedderApi.Services.pdb
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/bin/Debug/netcoreapp2.1/RidderRedderApi.ViewModels.pdb
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/obj/Debug/netcoreapp2.1/RidderRedderApi.Web.API.csproj.CoreCompileInputs.cache
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/obj/Debug/netcoreapp2.1/RidderRedderApi.Web.API.RazorAssemblyInfo.cache
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/obj/Debug/netcoreapp2.1/RidderRedderApi.Web.API.RazorAssemblyInfo.cs
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/obj/Debug/netcoreapp2.1/RidderRedderApi.Web.API.AssemblyInfoInputs.cache
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/obj/Debug/netcoreapp2.1/RidderRedderApi.Web.API.AssemblyInfo.cs
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/obj/Debug/netcoreapp2.1/RidderRedderApi.Web.API.RazorTargetAssemblyInfo.cache
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/obj/Debug/netcoreapp2.1/RidderRedderApi.Web.API.dll
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/obj/Debug/netcoreapp2.1/RidderRedderApi.Web.API.pdb
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/obj/Debug/netcoreapp2.1/RidderRedderApi.Web.Api.csprojResolveAssemblyReference.cache

@@ -1,5 +1,5 @@
-<ion-content class="background" padding>
-    <div class="combat-container" *ngIf="monster">
+<ion-content class="background" padding *ngIf="combat">
+    <div class="combat-container" *ngIf="monster && !combat.loading">
         <div class="header-container">
             <div class="difficulty">
                 <p>Difficulty</p>
@@ -13,7 +13,7 @@
             <div class="header-info">
                 <img src="assets/icons/fight.png" width="80" height="80" *ngIf="combatState === 0">
                 <div class="combat-info" *ngIf="combatState != 0">
-                    <span id="playerbar" class="healthbar-container">{{player.PlayerName}}</span>
+                    <span id="playerbar" class="healthbar-container">{{combat.player.PlayerName}}</span>
                     <span id="monsterbar" class="healthbar-container">{{combat.monster.Title.monsterTitleText}}
                         {{combat.monster.Name.monsterNameText}}</span>
                 </div>
@@ -46,7 +46,7 @@
             <div class="info-container">
                 <h1>{{infoHead}}</h1>
                 <p>{{infoParagraph}}</p>
-                <p>Total experience {{player.Experience}}</p>
+                <p>Total experience {{combat.player.Experience}}</p>
             </div>
 
             <div (click)="combat.selectCombatStyle($event)" class="combat-style-container" *ngIf="combat.combatState === 0">
@@ -82,6 +82,9 @@
                 Player {{combat.player.Health}}
             </button>
         </div>
+    </div>
+    <div class="loading-container" *ngIf="combat.loading">
+        LOADING
     </div>
     <span class="screen-splash"></span>
 </ion-content>

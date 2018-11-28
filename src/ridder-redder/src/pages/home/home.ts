@@ -41,8 +41,8 @@ export class HomePage {
         console.log("ionViewDidLoad");
         this.loadMap();
         this.mapUpdater = Observable.interval(5000).subscribe(() => {
-            this.updateMap();
-            this.updateMonsters();
+            // this.updateMap();
+            // this.updateMonsters();
         });
 
     }
@@ -148,7 +148,9 @@ export class HomePage {
     updateMonsters() {
         //if close enough
         if (false) {
+
         }
+
         if (this.monsters.length > 5) {
             // TODO add timestamp, remove after time
             this.monsters[0].Marker.remove();
@@ -164,18 +166,7 @@ export class HomePage {
             let monster: Monster;
 
             this.monsterProvider.getMonster().subscribe(data => {
-                let m: MonsterDto = data;
-                monster = {
-                    MonsterId: m.monsterId,
-                    Model: m.monsterModel,
-                    Name: m.monsterName,
-                    Title: m.monsterTitle,
-                    Difficulty: Math.floor(Math.random() * 4) + 1,
-                    Level: 1,
-                    Health: 500,
-                    MaxHealth: 500,
-                    Marker: null
-                }
+                monster = data;
                 
             }, error => {
                 console.log(error);

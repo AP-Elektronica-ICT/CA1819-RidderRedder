@@ -6106,11 +6106,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/melvinb/Documents/Git Repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.ViewModels/RidderRedderApi.ViewModels.csproj",
+      "projectUniqueName": "/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.ViewModels/RidderRedderApi.ViewModels.csproj",
       "projectName": "RidderRedderApi.ViewModels",
-      "projectPath": "/Users/melvinb/Documents/Git Repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.ViewModels/RidderRedderApi.ViewModels.csproj",
+      "projectPath": "/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.ViewModels/RidderRedderApi.ViewModels.csproj",
       "packagesPath": "/Users/melvinb/.nuget/packages/",
-      "outputPath": "/Users/melvinb/Documents/Git Repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.ViewModels/obj",
+      "outputPath": "/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.ViewModels/obj",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
