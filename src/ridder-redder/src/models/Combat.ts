@@ -8,6 +8,7 @@ import { PlayerProvider } from "../providers/player/PlayerProvider";
 import { PlayerDto } from "../dtos/PlayerDto";
 import { MonsterProvider } from "../providers/monster/MonsterProvider";
 import { MonsterDto } from "../dtos/MonsterDto";
+import { ElementRef } from "@angular/core";
 
 
 export class Combat {
@@ -27,6 +28,7 @@ export class Combat {
 
     private hitDebounce = 1250;
     private monsterHittable = true;
+    private monsterPos: number;
 
     private deviceMotion: DeviceMotion;
     private deviceMotionSubscription;
@@ -53,15 +55,41 @@ export class Combat {
 
         this.parent = parentPage;
 
-        this.speechOptions = {
-            showPopup: false
-        }
-
         this.resetTimer();
     }
+
+    moveMonster() {
+        let obj: ElementRef = this.parent.monsterObject;
+        setTimeout(d => {
+            console.log("Moving left!");
+            this.moveMonsterLeft(obj);
+            setTimeout(d => {
+                console.log("Moving right!");
+                this.moveMonsterRight(obj);
+
+                if (this.inCombat)
+                    this.moveMonster();
+            }, 3000);
+        }, 3000);
+
+
+    }
+
+    moveMonsterRight(obj: ElementRef) {
+        obj.nativeElement.setAttribute("style", "padding-left: 60%;");
+    }
+
+    moveMonsterLeft(obj: ElementRef) {
+        obj.nativeElement.setAttribute("style", "padding-right: 60%;");
+    }
+
     startCombat() {
         console.log("Player has selected combat style, starting combat");
+
         this.startTimer();
+
+        this.moveMonsterLeft(this.parent.monsterObject);
+        this.moveMonster();
     }
 
     stopCombat() {
@@ -122,6 +150,9 @@ export class Combat {
             let healthPercentage = (this.maxTime / this.MAXTIME) * 100;
             document.getElementById("playerbar").style.backgroundSize = healthPercentage + "% 100%";
 
+            console.log(this.parent.monsterObject.nativeElement.style.paddingLeft);
+            console.log(this.parent.monsterObject.nativeElement.style.paddingRight);
+
             if (this.maxTime <= 0)
                 this.defeatedByMonster();
 
@@ -132,13 +163,13 @@ export class Combat {
 
     }
 
-    hitMonster() {
+    hitMonster(damage: number = 50) {
         if (!this.monsterHittable)
             return;
 
         console.log("Hitting monster");
         this.monsterHittable = false;
-        this.monster.Health -= 50;
+        this.monster.Health -= damage;
         this.checkHealth();
         this.updateMonsterHealthbar();
 
@@ -173,7 +204,7 @@ export class Combat {
 
     castSpell() {
         console.log("Listening for spellcast");
-        this.speechListener = this.speech.startListening(this.speechOptions)
+        this.speechListener = this.speech.startListening({ showPopup: false })
             .subscribe(
                 (matches: Array<string>) => {
                     console.log(matches);
@@ -186,12 +217,6 @@ export class Combat {
                 },
                 (onerror) => console.log('error:', onerror)
             )
-    }
-
-    hitPlayer() {
-        this.player.Health -= 50;
-        this.checkHealth();
-
     }
 
     checkHealth() {
@@ -222,11 +247,13 @@ export class Combat {
     }
 
     retry() {
-        if (this.combatState == CombatState.CombatVictory)
+        if (this.combatState == CombatState.CombatVictory) {
+            this.loading = true;
             this.monsterProvider.getMonster().subscribe(m => {
                 this.monster = m;
+                this.loading = false;
             });
-
+        }
         this.combatState = CombatState.ChoosingCombatStyle;
         this.stopCombat();
     }

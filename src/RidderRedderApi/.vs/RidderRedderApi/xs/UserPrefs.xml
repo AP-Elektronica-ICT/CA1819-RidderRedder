@@ -1,7 +1,8 @@
 ﻿<Properties StartupConfiguration="{7D4BD548-5B55-45E8-85BD-7ADF815E6273}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="RidderRedderApi/Properties/launchSettings.json">
+  <MonoDevelop.Ide.Workbench ActiveDocument="RidderRedderApi.Models/Monument.cs">
     <Files>
-      <File FileName="RidderRedderApi/Properties/launchSettings.json" Line="25" Column="6" />
+      <File FileName="RidderRedderApi/Properties/launchSettings.json" Line="11" Column="21" />
+      <File FileName="RidderRedderApi.Models/Monument.cs" Line="32" Column="22" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

@@ -1,16 +1,18 @@
-import { Component, Input } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Monster } from '../../models/Monster';
-import { CombatState } from '../../models/CombatState';
-import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion';
-import { Combat } from '../../models/Combat';
-import { Player } from '../../models/Player';
-import { MonsterDto } from '../../dtos/MonsterDto';
-
+import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion';
+
 import { MonsterProvider } from '../../providers/monster/MonsterProvider';
 import { PlayerProvider } from '../../providers/player/PlayerProvider';
 import { AuthProvider } from '../../providers/auth/AuthProvider';
+
+import { Combat } from '../../models/Combat';
+import { Player } from '../../models/Player';
+import { Monster } from '../../models/Monster';
+import { CombatState } from '../../models/CombatState';
+
+import { MonsterDto } from '../../dtos/MonsterDto';
 
 /**
  * Generated class for the CombatPage page.
@@ -27,8 +29,10 @@ import { AuthProvider } from '../../providers/auth/AuthProvider';
 export class CombatPage {
 
     @Input() monster: Monster;
+    @ViewChild('monsterObject') monsterObject: ElementRef;
 
     private combat: Combat;
+
 
     private infoHead: string;
     private infoParagraph: string;
@@ -43,15 +47,12 @@ export class CombatPage {
         private authProvider: AuthProvider
     ) {
 
-        var options = {
-            frequency: 100
-        }
-
         this.loadPlayer();
-
     }
 
-
+    ionViewDidLoad() {
+        
+    }
 
     private loadPlayer() {
         this.playerProvider.GetPlayer(this.authProvider.AuthId).subscribe(data => {
@@ -73,11 +74,9 @@ export class CombatPage {
     private loadMonster(player: Player) {
         this.monsterProvider.getMonster().subscribe(data => {
             this.monster = data;
-        
             this.combat = new Combat(this, this.monster, player, this.deviceMotion, this.speech, this.playerProvider, this.monsterProvider);
 
             this.setInfo();
-
             this.loadSpeech();
 
         }, error => {
@@ -104,17 +103,12 @@ export class CombatPage {
         });
     }
 
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad CombatPage');
-
-    }
-
     difficulty(n: number): any[] {
         return Array(n);
     }
 
     setInfo() {
-console.log("Setting info");
+        console.log("Setting info");
         switch (this.combat.combatState) {
             case CombatState.ChoosingCombatStyle:
                 this.infoHead = "Battle time!";
@@ -147,14 +141,12 @@ console.log("Setting info");
         this.combat.hitMonster();
     }
 
-    damagePlayer() {
-        this.combat.hitPlayer();
+    killMonster() {
+        this.combat.hitMonster(this.monster.Health);
     }
 
     forfeit() {
         this.combat.stopCombat();
     }
-
-
 
 }

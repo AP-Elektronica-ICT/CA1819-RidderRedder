@@ -25,5 +25,11 @@ namespace RidderRedderApi.Models {
         /// <value>The position y.</value>
         public int PosY { get; set; }
 
+        /// <summary>
+        /// Gets or sets the owner.
+        /// </summary>
+        /// <value>The owner.</value>
+        public Player Owner { get; set; }
+
     }
 }
