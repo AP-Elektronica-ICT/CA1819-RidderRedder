@@ -19,19 +19,20 @@ export class LandmarkProvider {
     // connect to server, fetch all landmarks
 
     this.landmarks = new Array<Landmark>();
-    this.landmarks.push(new Landmark(0, "Campus ELL", 51.230322, 4.416155, null));
-    this.landmarks.push(new Landmark(1, "Campus NOO", 51.230309, 4.413604, "1"));
-    this.landmarks[1].addKnight(new Knight(0, "1", "red", 14));
-    this.landmarks.push(new Landmark(2, "Bar Noord", 21.230944, 4.422794, "2"));
-    this.landmarks[2].addKnight(new Knight(1, "2", "blue", 18));
-    this.landmarks.push(new Landmark(3, "Maria met kind", 51.227181, 4.454838, null));
+    this.landmarks.push(new Landmark(0, "Campus ELL", 51.230322, 4.416155, null, null));
+    this.landmarks.push(new Landmark(1, "Campus NOO", 51.230309, 4.413604, "admin", "adminName"));
+    this.landmarks[1].addKnight(new Knight(0, "admin", "red", 14));
+    this.landmarks.push(new Landmark(2, "Bar Noord", 21.230944, 4.422794, "notadmin", "notadminName"));
+    this.landmarks[2].addKnight(new Knight(1, "notadmin", "blue", 18));
+    this.landmarks.push(new Landmark(3, "Maria met kind", 51.227181, 4.454838, null, null));
   }
 
   getLandmarks():Array<Landmark>{
     return this.landmarks;
   }
 
-  addKnight(knight: Knight):Landmark {
-    
+  addKnight(landmark: Landmark, knight: Knight):Landmark {
+    //TODO push to DB
+    return landmark;
   }
 }

@@ -4,6 +4,10 @@ import { Player } from "./Player";
 import { DeviceMotion, DeviceMotionAccelerationData } from "@ionic-native/device-motion";
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import { CombatPage } from "../pages/combat/combat";
+import { PlayerProvider } from "../providers/player/PlayerProvider";
+import { PlayerDto } from "../dtos/PlayerDto";
+import { MonsterProvider } from "../providers/monster/MonsterProvider";
+import { MonsterDto } from "../dtos/MonsterDto";
 
 
 export class Combat {
@@ -31,7 +35,17 @@ export class Combat {
     private speechListener;
     private speechOptions;
 
-    constructor(private parentPage: CombatPage, private m: Monster, private p: Player, private dM: DeviceMotion, private s: SpeechRecognition) {
+    private loading: boolean = false;
+
+    public constructor(
+        private parentPage: CombatPage,
+        private m: Monster,
+        private p: Player,
+        private dM: DeviceMotion,
+        private s: SpeechRecognition,
+        private playerProvider: PlayerProvider,
+        private monsterProvider: MonsterProvider
+    ) {
         this.monster = m;
         this.player = p;
         this.deviceMotion = dM;
@@ -119,23 +133,28 @@ export class Combat {
     }
 
     hitMonster() {
-        if (this.monsterHittable) {
-            console.log("Hitting monster");
-            this.monsterHittable = false;
-            this.monster.Health -= 50;
-            this.checkHealth();
+        if (!this.monsterHittable)
+            return;
 
-            let healthPercentage = (this.monster.Health / this.monster.MaxHealth) * 100;
-            document.getElementById("monsterbar").style.backgroundSize = healthPercentage + "% 100%";
-            
-            setTimeout(x => {
-                this.monsterHittable = true;
-            }, this.hitDebounce);
-        }
+        console.log("Hitting monster");
+        this.monsterHittable = false;
+        this.monster.Health -= 50;
+        this.checkHealth();
+        this.updateMonsterHealthbar();
+
+        setTimeout(x => {
+            this.monsterHittable = true;
+        }, this.hitDebounce);
+
         this.parent.setInfo();
     }
 
-    screenSplash(){
+    updateMonsterHealthbar() {
+        let healthPercentage = (this.monster.Health / this.monster.MaxHealth) * 100;
+        document.getElementById("monsterbar").style.backgroundSize = healthPercentage + "% 100%";
+    }
+
+    screenSplash() {
         console.log("HIT! Splashing screen")
         //FIX THIS 
         let container = document.getElementsByName("screen-splash").item(0);
@@ -160,7 +179,7 @@ export class Combat {
                     console.log(matches);
 
                     matches.forEach(element => {
-                        if(element.toLowerCase() == "hocus pocus"){
+                        if (element.toLowerCase() == "hocus pocus") {
                             this.hitMonster();
                         }
                     });
@@ -203,6 +222,11 @@ export class Combat {
     }
 
     retry() {
+        if (this.combatState == CombatState.CombatVictory)
+            this.monsterProvider.getMonster().subscribe(m => {
+                this.monster = m;
+            });
+
         this.combatState = CombatState.ChoosingCombatStyle;
         this.stopCombat();
     }
@@ -210,6 +234,24 @@ export class Combat {
     changeCombatState(state: CombatState) {
         console.log("Changing combat state to " + state);
         this.combatState = state;
+
+        if (this.combatState == CombatState.CombatDefeat || this.combatState == CombatState.CombatVictory) {
+            this.loading = true;
+            this.playerProvider.UpdatePlayer(this.player).subscribe(data => {
+                let p: Player = {
+                    PlayerName: data.PlayerName,
+                    Experience: data.Experience,
+                    AuthId: data.AuthId,
+                    Health: 500,
+                    MaxHealth: 500
+                }
+                this.player = p;
+
+                this.loading = false;
+            }, error => {
+                console.log(error);
+            });
+        }
     }
 
 }

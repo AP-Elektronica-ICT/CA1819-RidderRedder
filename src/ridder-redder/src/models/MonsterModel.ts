@@ -1,4 +1,4 @@
-export class MonsterModel {
-    MonsterModelId: number;
-    MonsterModelPath: string;
+export interface MonsterModel {
+    monsterModelId: number;
+    monsterModelPath: string;
 }

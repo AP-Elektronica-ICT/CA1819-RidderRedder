@@ -1,5 +1,5 @@
-<ion-content padding>
-    <div class="combat-container" *ngIf="monster">
+<ion-content class="background" padding *ngIf="combat">
+    <div class="combat-container" *ngIf="monster && !combat.loading">
         <div class="header-container">
             <div class="difficulty">
                 <p>Difficulty</p>
@@ -13,9 +13,9 @@
             <div class="header-info">
                 <img src="assets/icons/fight.png" width="80" height="80" *ngIf="combatState === 0">
                 <div class="combat-info" *ngIf="combatState != 0">
-                    <span id="playerbar" class="healthbar-container">{{combat.maxTime}} / {{combat.MAXTIME}}</span>
-                    <h2>{{combat.monster.Title.MonsterTitle}}{{combat.monster.Name.MonsterName}}</h2>
-                    <span id="monsterbar" class="healthbar-container">{{combat.monster.Health}} / {{combat.monster.MaxHealth}}</span>
+                    <span id="playerbar" class="healthbar-container">{{combat.player.PlayerName}}</span>
+                    <span id="monsterbar" class="healthbar-container">{{combat.monster.Title.monsterTitleText}}
+                        {{combat.monster.Name.monsterNameText}}</span>
                 </div>
             </div>
             <div class="weakness">
@@ -31,25 +31,11 @@
             <!-- <span class="monsterHealth">{{combat.monster.Health}} / {{combat.monster.MaxHealth}}</span> -->
 
             <div class="monster-container">
-                <!-- <img src="assets/imgs/monster.png" class="monsterImage"> -->
+                <img src="{{combat.monster.Model.monsterModelPath}}" class="monsterImage">
 
                 <!-- <span class="combat-splash">POW!</span> -->
-    
+
             </div>
-            <div class="button-container" *ngIf="combat.inCombat">
-                <button ion-button class="btnDamageMonster" (click)="damageMonster()">
-                    Monster {{combat.monster.Health}}
-                </button>
-                <button ion-button class="btnForfeit" (click)="forfeit()">
-                    Forfeit
-                </button>
-                <button ion-button class="btnDamagePlayer" (click)="damagePlayer()" disabled>
-                    Player {{combat.player.Health}}
-                </button>
-            </div>
-
-
-
         </div>
         <div class="footer-container">
 
@@ -60,6 +46,7 @@
             <div class="info-container">
                 <h1>{{infoHead}}</h1>
                 <p>{{infoParagraph}}</p>
+                <p>Total experience {{combat.player.Experience}}</p>
             </div>
 
             <div (click)="combat.selectCombatStyle($event)" class="combat-style-container" *ngIf="combat.combatState === 0">
@@ -78,11 +65,26 @@
             </div>
 
             <div (click)="combat.retry()" class="retry-container" *ngIf="combat.combatState == 4 || combat.combatState === 5">
-                <img src="assets/icons/retry.png" id="img-retry" width="80" height="80">
+                <img src="assets/icons/retry.png" id="img-retry" width="40" height="40">
                 <p>Retry</p>
             </div>
 
         </div>
+
+        <div class="button-container" *ngIf="combat.inCombat">
+            <button ion-button class="btnDamageMonster" (click)="damageMonster()">
+                Monster {{combat.monster.Health}}
+            </button>
+            <button ion-button class="btnForfeit" (click)="forfeit()">
+                Forfeit
+            </button>
+            <button ion-button class="btnDamagePlayer" (click)="damagePlayer()" disabled>
+                Player {{combat.player.Health}}
+            </button>
+        </div>
+    </div>
+    <div class="loading-container" *ngIf="combat.loading">
+        LOADING
     </div>
     <span class="screen-splash"></span>
 </ion-content>

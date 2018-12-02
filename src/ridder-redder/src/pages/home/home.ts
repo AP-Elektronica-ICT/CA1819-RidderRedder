@@ -9,9 +9,11 @@ import { Landmark } from '../../models/Landmark';
 import { InventoryPage } from '../inventory/inventory';
 import { CombatPage } from '../combat/combat';
 import { LandmarkPage } from '../landmark/landmark';
-import { MonsterProvider } from '../../providers/monster/monster';
-import { PlayerProvider } from '../../providers/player/player';
-import { LandmarkProvider } from '../../providers/landmark/landmark';
+import { LandmarkProvider } from '../../providers/landmark/LandmarkProvider';
+import { MonsterProvider } from '../../providers/monster/MonsterProvider';
+import { PlayerProvider } from '../../providers/player/PlayerProvider';
+import { MonsterDto } from '../../dtos/MonsterDto';
+import { AuthProvider } from '../../providers/auth/AuthProvider';
 
 // @IonicPage()
 @Component({
@@ -28,7 +30,7 @@ export class HomePage {
   // tfw static doesn't work
   monsterDistance:number = 0.005; // 0.005 ~ 250m?
 
-  constructor(public navCtrl: NavController, public geolocation: Geolocation, public modalCtrl: ModalController, public monsterProvider: MonsterProvider, public lmProvider: LandmarkProvider, public pProvider: PlayerProvider) {
+  constructor(public navCtrl: NavController, public geolocation: Geolocation, public modalCtrl: ModalController, public monsterProvider: MonsterProvider, public lmProvider: LandmarkProvider, public pProvider: PlayerProvider, public authProvider: AuthProvider) {
     this.monsters = new Array<Monster>();
     this.prevPos = { lat: 0, lng: 0};
 
@@ -46,8 +48,10 @@ export class HomePage {
 
   // create new GoogleMap
   loadMap(){
+    console.log("Loading map");
     this.geolocation.getCurrentPosition()
       .then((resp) => {    
+        console.log("Got current position");
         let mapOptions: GoogleMapOptions = {
           controls: {
             "myLocation": true,  // the blue location dot
@@ -101,14 +105,14 @@ export class HomePage {
   addLandmarks(){
     for(let landmark of this.landmarks){
       var icon;
-      if(landmark.owner == null){
+      if(landmark.ownerId == null){
         icon = {url: 'assets/imgs/castle_black.png',  //Castle by BGBOXXX Design from the Noun Project
           size: {
             width: 20,
             height: 30}
         }
       }
-      else if(landmark.owner == this.pProvider.id){
+      else if(landmark.ownerId == this.authProvider.AuthId){
         icon = {url: 'assets/imgs/castle_green.png',  //Castle by BGBOXXX Design from the Noun Project
           size: {
             width: 20,
@@ -168,11 +172,7 @@ export class HomePage {
 
   // generate new monsters, and check if you're close enough to fight
   updateMonsters() {
-    //if close enough
-    if (false) {
-    }
     if (this.monsters.length > 5) {
-      // TODO add timestamp, remove after time
       this.monsters[0].Marker.remove();
       this.monsters.shift();
     }
@@ -183,22 +183,25 @@ export class HomePage {
       let rlng: number = (currPos.lng - this.monsterDistance) + (Math.random() * 2 * this.monsterDistance);
 
       //generate random monster, attach marker
-      let monster: Monster = this.monsterProvider.getRandomMonster();
+      this.monsterProvider.getMonster().subscribe(data => {
 
-      let marker: Marker = this.map.addMarkerSync({
-        title: monster.Name.MonsterName,
-        icon: 'blue',
-        animation: 'DROP',
-        position: {
-          lat: rlat,
-          lng: rlng
-        }
-      });
+        let monster: Monster = data;
 
-      monster.Marker = marker;
-      this.monsters.push(monster);
-      marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
-        this.launchFight(monster);
+        let marker: Marker = this.map.addMarkerSync({
+          title: monster.Name.monsterNameText,
+          icon: 'blue',
+          animation: 'DROP',
+          position: {
+            lat: rlat,
+            lng: rlng
+          }
+        });
+
+        monster.Marker = marker;
+        this.monsters.push(monster);
+        marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
+          this.launchFight(monster);
+        });
       });
     }
   }

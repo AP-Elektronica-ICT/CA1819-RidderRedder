@@ -22,7 +22,7 @@
   },
   "targets": {
     ".NETCoreApp,Version=v2.1": {
-      "RidderRedderApi.Web.API/1.0.0": {
+      "RidderRedderApi.Web.Api/1.0.0": {
         "dependencies": {
           "EntityFramework": "6.2.0",
           "Microsoft.AspNetCore.App": "2.1.1",
@@ -38,10 +38,10 @@
           "Swashbuckle.AspNetCore": "4.0.1"
         },
         "runtime": {
-          "RidderRedderApi.Web.API.dll": {}
+          "RidderRedderApi.Web.Api.dll": {}
         },
         "compile": {
-          "RidderRedderApi.Web.API.dll": {}
+          "RidderRedderApi.Web.Api.dll": {}
         }
       },
       "EntityFramework/6.2.0": {
@@ -3713,7 +3713,7 @@
     }
   },
   "libraries": {
-    "RidderRedderApi.Web.API/1.0.0": {
+    "RidderRedderApi.Web.Api/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

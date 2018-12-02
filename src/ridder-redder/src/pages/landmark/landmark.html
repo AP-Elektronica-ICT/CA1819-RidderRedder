@@ -16,8 +16,8 @@
 <ion-content padding>
   <ion-card *ngIf="landmark">
     <h3>{{landmark.name}}</h3>
-    <div *ngIf='landmark.owner; else notClaimed'>
-      <p>owner: {{ownerName}}</p>
+    <div *ngIf='landmark.ownerId; else notClaimed'>
+      <p>owner: {{landmark.ownerName}}</p>
     </div>
     <ng-template #notClaimed>  
       <h4>neutral landmark</h4>

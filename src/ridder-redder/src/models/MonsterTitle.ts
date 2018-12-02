@@ -1,4 +1,4 @@
-export class MonsterTitle {
-    MonsterTitleId: number;
-    MonsterTitle: string;
+export interface MonsterTitle {
+    monsterTitleId: number;
+    monsterTitleText: string;
 }
