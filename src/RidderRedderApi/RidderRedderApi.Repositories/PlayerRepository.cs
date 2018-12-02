@@ -28,11 +28,20 @@ namespace RidderRedderApi.Repositories {
             }
         }
 
-        public Player Put(Player p) {
+        public Player Put(Player p, string authId) {
             try {
-                this.context.Players.Update(p);
+                Player player = this.context.Players.Find(authId);
+
+                if (player == null)
+                    return null;
+
+                player.Experience = p.Experience;
+                player.PlayerName = p.PlayerName;
+
+                this.context.Players.Update(player);
                 this.context.SaveChanges();
-                return p;
+
+                return player;
             } catch (Exception e) {
                 throw e;
             }
@@ -51,6 +60,10 @@ namespace RidderRedderApi.Repositories {
         public bool Delete(string authId) {
             try {
                 Player player = this.context.Players.Find(authId);
+
+                if (player == null)
+                    return false;
+
                 this.context.Remove(player);
                 this.context.SaveChanges();
                 return true;

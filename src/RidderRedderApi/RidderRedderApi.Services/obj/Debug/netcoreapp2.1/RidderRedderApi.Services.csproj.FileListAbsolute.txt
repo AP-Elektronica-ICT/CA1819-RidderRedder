@@ -39,9 +39,9 @@ C:/Users/Melvin/Documents/Git Repositories/CA1819-RidderRedder/src/RidderRedderA
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Services/bin/Debug/netcoreapp2.1/RidderRedderApi.Models.pdb
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Services/bin/Debug/netcoreapp2.1/RidderRedderApi.Repositories.pdb
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Services/bin/Debug/netcoreapp2.1/RidderRedderApi.ViewModels.pdb
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Services/obj/Debug/netcoreapp2.1/RidderRedderApi.Services.csprojResolveAssemblyReference.cache
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Services/obj/Debug/netcoreapp2.1/RidderRedderApi.Services.csproj.CoreCompileInputs.cache
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Services/obj/Debug/netcoreapp2.1/RidderRedderApi.Services.AssemblyInfoInputs.cache
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Services/obj/Debug/netcoreapp2.1/RidderRedderApi.Services.AssemblyInfo.cs
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Services/obj/Debug/netcoreapp2.1/RidderRedderApi.Services.dll
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Services/obj/Debug/netcoreapp2.1/RidderRedderApi.Services.pdb
-/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Services/obj/Debug/netcoreapp2.1/RidderRedderApi.Services.csprojResolveAssemblyReference.cache

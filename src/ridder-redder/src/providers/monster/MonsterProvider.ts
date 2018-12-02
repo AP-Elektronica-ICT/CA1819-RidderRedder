@@ -14,8 +14,8 @@ import { MonsterDto } from '../../dtos/MonsterDto';
 @Injectable()
 export class MonsterProvider {
 
-    // private baseUrl = "http://192.168.11.30:5000/api/v1";
-    private baseUrl = "http://192.168.43.143:5000/api/v1";
+    private baseUrl = "http://192.168.11.30:5000/api/v1";
+    // private baseUrl = "http://192.168.43.143:5000/api/v1";
     private httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',

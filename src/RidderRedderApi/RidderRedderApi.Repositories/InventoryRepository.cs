@@ -23,13 +23,32 @@ namespace RidderRedderApi.Repositories {
             }
         }
 
-        public InventoryItem PostInventoryItem(AddInventoryItemDto itemDto) {
+        public InventoryItem GetInventoryItem(int itemId) {
             try {
-                ItemImage img = context.ItemImages.Find(itemDto.ItemImageId);
-                ItemType type = context.ItemTypes.Find(itemDto.ItemTypeId);
+                return this.context.InventoryItems.Find(itemId);
+            } catch (Exception e) {
+                throw e;
+            }
+        }
 
-                InventoryItem item = new InventoryItem(itemDto.AuthId, img, type, itemDto.Amount);
+        public ItemImage GetItemImage(int itemImageId) {
+            try {
+                return this.context.ItemImages.Find(itemImageId);
+            } catch (Exception e) {
+                throw e;
+            }
+        }
 
+        public ItemType GetItemType(int itemTypeId) {
+            try {
+                return this.context.ItemTypes.Find(itemTypeId);
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+
+        public InventoryItem PostInventoryItem(InventoryItem item) {
+            try {
                 this.context.InventoryItems.Add(item);
                 this.context.SaveChanges();
 
@@ -40,26 +59,8 @@ namespace RidderRedderApi.Repositories {
             }
         }
 
-        public InventoryItem UpdateInventoryItem(UpdateInventoryItemDto itemDto, int itemid) {
+        public InventoryItem UpdateInventoryItem(InventoryItem item, int itemid) {
             try {
-                InventoryItem item = this.context.InventoryItems.Find(itemid);
-                ItemImage img = context.ItemImages.Find(itemDto.ItemImageId);
-                ItemType type = context.ItemTypes.Find(itemDto.ItemTypeId);
-
-                if (item == null)
-                    return null;
-
-                if (img == null)
-                    img = item.ItemImage;
-
-                if (type == null)
-                    type = item.ItemType;
-
-                item.Amount = itemDto.Amount;
-                item.ItemType = type;
-                item.ItemImage = img;
-
-
                 this.context.InventoryItems.Update(item);
                 this.context.SaveChanges();
                 return item;
@@ -75,6 +76,7 @@ namespace RidderRedderApi.Repositories {
 
                 if (item == null)
                     return false;
+
                 this.context.InventoryItems.Remove(item);
                 this.context.SaveChanges();
                 return true;

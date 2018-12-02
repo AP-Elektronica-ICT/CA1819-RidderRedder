@@ -73,9 +73,14 @@
             Monster model controller.
             </summary>
         </member>
+        <member name="M:RidderRedderApi.Web.Api.Controllers.MonsterModelController.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:RidderRedderApi.Web.Api.Controllers.MonsterModelController"/> class.
+            </summary>
+        </member>
         <member name="M:RidderRedderApi.Web.Api.Controllers.MonsterModelController.GetMonsterModelImage(System.String)">
             <summary>
-            Gets the monster model image.
+            Gets the monster model image stored on the server saved in PNG format
             </summary>
             <returns>The monster model image.</returns>
             <param name="monsterModelPath">Monster model path.</param>

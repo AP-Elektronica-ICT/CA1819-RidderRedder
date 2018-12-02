@@ -1,8 +1,12 @@
 ﻿<Properties StartupConfiguration="{7D4BD548-5B55-45E8-85BD-7ADF815E6273}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="RidderRedderApi.Models/Monument.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="RidderRedderApi/Controllers/MonsterModelController.cs">
     <Files>
-      <File FileName="RidderRedderApi/Properties/launchSettings.json" Line="11" Column="21" />
-      <File FileName="RidderRedderApi.Models/Monument.cs" Line="32" Column="22" />
+      <File FileName="RidderRedderApi.Services/InventoryService.cs" Line="48" Column="13" />
+      <File FileName="RidderRedderApi.Repositories/InventoryRepository.cs" Line="64" Column="17" />
+      <File FileName="RidderRedderApi.Repositories/PlayerRepository.cs" Line="59" Column="9" />
+      <File FileName="RidderRedderApi/Controllers/PlayerController.cs" Line="74" Column="41" />
+      <File FileName="RidderRedderApi.Services/PlayerService.cs" Line="9" Column="30" />
+      <File FileName="RidderRedderApi/Controllers/MonsterModelController.cs" Line="23" Column="13" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
