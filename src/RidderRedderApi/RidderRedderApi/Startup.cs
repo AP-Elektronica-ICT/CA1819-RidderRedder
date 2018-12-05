@@ -83,7 +83,8 @@ namespace RidderRedderApi {
             services.AddScoped<InventoryService>();
             services.AddScoped<PlayerRepository>();
             services.AddScoped<PlayerService>();
-
+			services.AddScoped<LandmarkRepository>();
+			services.AddScoped<LandmarkService>();
         }
 
         /// <summary>

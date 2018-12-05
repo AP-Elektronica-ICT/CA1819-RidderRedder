@@ -30,7 +30,8 @@ namespace RidderRedderApi.Web.Api.Controllers {
         /// <returns>The all.</returns>
         [HttpGet]
         public IActionResult GetAll() {
-            return Ok(playerService.GetAll());
+			Console.Out.WriteLine("get landmarks");
+			return Ok(playerService.GetAll());
         }
 
         /// <summary>

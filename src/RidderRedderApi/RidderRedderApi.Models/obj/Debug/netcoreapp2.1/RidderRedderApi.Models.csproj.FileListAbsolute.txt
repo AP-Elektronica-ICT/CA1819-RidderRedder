@@ -33,3 +33,15 @@ C:/Users/Melvin/Documents/Git Repositories/CA1819-RidderRedder/src/RidderRedderA
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Models/obj/Debug/netcoreapp2.1/RidderRedderApi.Models.dll
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Models/obj/Debug/netcoreapp2.1/RidderRedderApi.Models.pdb
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Models/obj/Debug/netcoreapp2.1/RidderRedderApi.Models.csprojResolveAssemblyReference.cache
+C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Models\bin\Debug\netcoreapp2.1\RidderRedderApi.Models.deps.json
+C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Models\bin\Debug\netcoreapp2.1\RidderRedderApi.Models.dll
+C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Models\bin\Debug\netcoreapp2.1\RidderRedderApi.Models.pdb
+C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Models\bin\Debug\netcoreapp2.1\RidderRedderApi.ViewModels.dll
+C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Models\bin\Debug\netcoreapp2.1\RidderRedderApi.ViewModels.pdb
+C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Models\obj\Debug\netcoreapp2.1\RidderRedderApi.Models.csprojAssemblyReference.cache
+C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Models\obj\Debug\netcoreapp2.1\RidderRedderApi.Models.csproj.CoreCompileInputs.cache
+C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Models\obj\Debug\netcoreapp2.1\RidderRedderApi.Models.AssemblyInfoInputs.cache
+C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Models\obj\Debug\netcoreapp2.1\RidderRedderApi.Models.AssemblyInfo.cs
+C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Models\obj\Debug\netcoreapp2.1\RidderRedderApi.Models.csproj.CopyComplete
+C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Models\obj\Debug\netcoreapp2.1\RidderRedderApi.Models.dll
+C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Models\obj\Debug\netcoreapp2.1\RidderRedderApi.Models.pdb
