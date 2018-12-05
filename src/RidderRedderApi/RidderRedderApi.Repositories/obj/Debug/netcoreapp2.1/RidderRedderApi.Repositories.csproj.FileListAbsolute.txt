@@ -39,17 +39,3 @@ C:/Users/Melvin/Documents/Git Repositories/CA1819-RidderRedder/src/RidderRedderA
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Repositories/obj/Debug/netcoreapp2.1/RidderRedderApi.Repositories.dll
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Repositories/obj/Debug/netcoreapp2.1/RidderRedderApi.Repositories.pdb
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.Repositories/obj/Debug/netcoreapp2.1/RidderRedderApi.Repositories.csprojResolveAssemblyReference.cache
-C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Repositories\bin\Debug\netcoreapp2.1\RidderRedderApi.Repositories.deps.json
-C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Repositories\bin\Debug\netcoreapp2.1\RidderRedderApi.Repositories.dll
-C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Repositories\bin\Debug\netcoreapp2.1\RidderRedderApi.Repositories.pdb
-C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Repositories\bin\Debug\netcoreapp2.1\RidderRedderApi.Models.dll
-C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Repositories\bin\Debug\netcoreapp2.1\RidderRedderApi.ViewModels.dll
-C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Repositories\bin\Debug\netcoreapp2.1\RidderRedderApi.Models.pdb
-C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Repositories\bin\Debug\netcoreapp2.1\RidderRedderApi.ViewModels.pdb
-C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Repositories\obj\Debug\netcoreapp2.1\RidderRedderApi.Repositories.csprojAssemblyReference.cache
-C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Repositories\obj\Debug\netcoreapp2.1\RidderRedderApi.Repositories.csproj.CoreCompileInputs.cache
-C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Repositories\obj\Debug\netcoreapp2.1\RidderRedderApi.Repositories.AssemblyInfoInputs.cache
-C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Repositories\obj\Debug\netcoreapp2.1\RidderRedderApi.Repositories.AssemblyInfo.cs
-C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Repositories\obj\Debug\netcoreapp2.1\RidderRedderApi.Repositories.csproj.CopyComplete
-C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Repositories\obj\Debug\netcoreapp2.1\RidderRedderApi.Repositories.dll
-C:\Users\joeri\gits\CA1819-RidderRedder\src\RidderRedderApi\RidderRedderApi.Repositories\obj\Debug\netcoreapp2.1\RidderRedderApi.Repositories.pdb
