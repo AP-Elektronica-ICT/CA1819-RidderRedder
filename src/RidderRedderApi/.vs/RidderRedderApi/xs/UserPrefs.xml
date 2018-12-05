@@ -6,7 +6,7 @@
       <File FileName="RidderRedderApi.Repositories/PlayerRepository.cs" Line="59" Column="9" />
       <File FileName="RidderRedderApi/Controllers/PlayerController.cs" Line="74" Column="41" />
       <File FileName="RidderRedderApi.Services/PlayerService.cs" Line="9" Column="30" />
-      <File FileName="RidderRedderApi/Controllers/MonsterModelController.cs" Line="23" Column="13" />
+      <File FileName="RidderRedderApi/Controllers/MonsterModelController.cs" Line="29" Column="82" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

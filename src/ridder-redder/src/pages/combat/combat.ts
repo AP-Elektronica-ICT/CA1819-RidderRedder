@@ -51,6 +51,7 @@ export class CombatPage {
     }
 
     ionViewDidLoad() {
+
         
     }
 
@@ -87,7 +88,7 @@ export class CombatPage {
     private loadSpeech() {
         // Check feature available
         this.speech.isRecognitionAvailable().then((available: boolean) => {
-            console.log("Speech recognition available: " + available);
+            // console.log("Speech recognition available: " + available);
             // Request permissions
             // Check permission
             this.speech.hasPermission()
@@ -108,7 +109,7 @@ export class CombatPage {
     }
 
     setInfo() {
-        console.log("Setting info");
+        // console.log("Setting info");
         switch (this.combat.combatState) {
             case CombatState.ChoosingCombatStyle:
                 this.infoHead = "Battle time!";

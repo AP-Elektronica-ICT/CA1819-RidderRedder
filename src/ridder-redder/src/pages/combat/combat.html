@@ -1,5 +1,9 @@
-<ion-content class="background" padding *ngIf="combat">
-    <div class="combat-container" *ngIf="monster && !combat.loading">
+<ion-content class="background" *ngIf="combat">
+
+    <!-- RANGED CONTAINER, HIGHER THAN THE OTHERS -->
+    <img src="assets/icons/bow-straight.png" id="img-ranged-bow" bow-drag [combat]="this.combat" width="100" height="100"  *ngIf="combat.combatState === 2">
+
+    <div class="combat-container" padding *ngIf="monster && !combat.loading">
         <div class="header-container">
 
             <!-- DIFFICULTY CONTAINER, SHOWS SKULLS BASED ON DIFFICULTY-->
@@ -42,11 +46,6 @@
         </div>
         <!-- FOOTER CONTAINER -->
         <div class="footer-container">
-
-            <!-- RANGED CONTAINER, HIGHER THAN THE OTHERS -->
-            <div class="combat-ranged-container" *ngIf="combatState === 2">
-                <img draggabilly src="assets/icons/bow-straight.png" id="img-ranged-bow" width="100" height="100">
-            </div>
 
             <!-- INFO CONTAINER-->
             <div class="info-container">

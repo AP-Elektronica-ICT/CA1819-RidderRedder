@@ -24,3 +24,4 @@ C:/Users/Melvin/Documents/Git Repositories/CA1819-RidderRedder/src/RidderRedderA
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.ViewModels/obj/Debug/netcoreapp2.1/RidderRedderApi.ViewModels.AssemblyInfo.cs
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.ViewModels/obj/Debug/netcoreapp2.1/RidderRedderApi.ViewModels.dll
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.ViewModels/obj/Debug/netcoreapp2.1/RidderRedderApi.ViewModels.pdb
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi.ViewModels/obj/Debug/netcoreapp2.1/RidderRedderApi.ViewModels.csprojAssemblyReference.cache

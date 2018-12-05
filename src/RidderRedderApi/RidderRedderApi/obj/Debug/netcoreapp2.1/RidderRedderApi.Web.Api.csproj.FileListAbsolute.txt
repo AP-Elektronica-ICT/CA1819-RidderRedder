@@ -60,7 +60,6 @@ C:/Users/Melvin/Documents/Git Repositories/CA1819-RidderRedder/src/RidderRedderA
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/bin/Debug/netcoreapp2.1/RidderRedderApi.Repositories.pdb
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/bin/Debug/netcoreapp2.1/RidderRedderApi.Services.pdb
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/bin/Debug/netcoreapp2.1/RidderRedderApi.ViewModels.pdb
-/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/obj/Debug/netcoreapp2.1/RidderRedderApi.Web.Api.csprojResolveAssemblyReference.cache
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/obj/Debug/netcoreapp2.1/RidderRedderApi.Web.Api.csproj.CoreCompileInputs.cache
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/obj/Debug/netcoreapp2.1/RidderRedderApi.Web.Api.RazorAssemblyInfo.cache
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/obj/Debug/netcoreapp2.1/RidderRedderApi.Web.Api.RazorAssemblyInfo.cs
@@ -69,3 +68,5 @@ C:/Users/Melvin/Documents/Git Repositories/CA1819-RidderRedder/src/RidderRedderA
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/obj/Debug/netcoreapp2.1/RidderRedderApi.Web.Api.RazorTargetAssemblyInfo.cache
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/obj/Debug/netcoreapp2.1/RidderRedderApi.Web.Api.dll
 /Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/obj/Debug/netcoreapp2.1/RidderRedderApi.Web.Api.pdb
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/obj/Debug/netcoreapp2.1/RidderRedderApi.Web.API.csprojAssemblyReference.cache
+/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/obj/Debug/netcoreapp2.1/RidderRedderApi.Web.API.csproj.CopyComplete

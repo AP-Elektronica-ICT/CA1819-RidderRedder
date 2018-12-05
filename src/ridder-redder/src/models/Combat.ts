@@ -28,7 +28,8 @@ export class Combat {
 
     private hitDebounce = 1250;
     private monsterHittable = true;
-    private monsterPos: number;
+    private monsterPosX: number;
+    private monsterMovingLeft = true;
 
     private deviceMotion: DeviceMotion;
     private deviceMotionSubscription;
@@ -60,46 +61,84 @@ export class Combat {
 
     moveMonster() {
         let obj: ElementRef = this.parent.monsterObject;
-        setTimeout(d => {
-            console.log("Moving left!");
+
+        if (!this.inCombat) {
+            this.resetMonsterPosition(obj);
+            return;
+        }
+
+        if (this.monsterMovingLeft)
             this.moveMonsterLeft(obj);
-            setTimeout(d => {
-                console.log("Moving right!");
-                this.moveMonsterRight(obj);
 
-                if (this.inCombat)
-                    this.moveMonster();
-            }, 3000);
-        }, 3000);
+        if (!this.monsterMovingLeft)
+            this.moveMonsterRight(obj);
 
+        setTimeout(() => {
+            this.moveMonster();
+        }, 300);
 
     }
 
     moveMonsterRight(obj: ElementRef) {
-        obj.nativeElement.setAttribute("style", "padding-left: 60%;");
+        // console.log("Moving monster to the right")
+        this.monsterPosX += 10;
+        obj.nativeElement.setAttribute("style", "left:" + this.monsterPosX + "%");
+        if (this.monsterPosX > 70)
+            this.monsterMovingLeft = true;
     }
 
     moveMonsterLeft(obj: ElementRef) {
-        obj.nativeElement.setAttribute("style", "padding-right: 60%;");
+        // console.log("Moving monster to the left")
+        this.monsterPosX -= 10;
+        obj.nativeElement.setAttribute("style", "left:" + this.monsterPosX + "%");
+        if (this.monsterPosX < 0)
+            this.monsterMovingLeft = false;
+    }
+
+    resetMonsterPosition(obj: ElementRef) {
+        // console.log("Resetting monster position");
+        this.monsterPosX = 50;
+        obj.nativeElement.setAttribute("style", "left: calc(" + this.monsterPosX + "% - 50px)");
+    }
+
+    checkArrowHit(arrowX: number) {
+        console.log("Checking arrow collision at " + arrowX);
+
+        //Hit left
+        if (arrowX < 60 && this.monsterPosX < 25)
+            this.hitMonster();
+
+        //Hit middle
+        if (arrowX > 60 && arrowX < 120 && this.monsterPosX > 25 && this.monsterPosX < 50)
+            this.hitMonster();
+
+        //Hit right
+        if (arrowX > 120 && this.monsterPosX > 50)
+            this.hitMonster();
+
+
     }
 
     startCombat() {
-        console.log("Player has selected combat style, starting combat");
+        // console.log("Player has selected combat style, starting combat");
 
         this.startTimer();
 
+        this.resetMonsterPosition(this.parent.monsterObject);
         this.moveMonsterLeft(this.parent.monsterObject);
         this.moveMonster();
     }
 
     stopCombat() {
-        console.log("Combat has been stopped");
+        // console.log("Combat has been stopped");
         this.inCombat = false;
         this.combatState = CombatState.ChoosingCombatStyle;
         this.player.Health = this.player.MaxHealth;
         this.monster.Health = this.monster.MaxHealth;
         document.getElementById("playerbar").style.backgroundSize = "100% 100%";
         document.getElementById("monsterbar").style.backgroundSize = "100% 100%";
+
+        this.resetMonsterPosition(this.parent.monsterObject);
 
         if (this.deviceMotionSubscription)
             this.deviceMotionSubscription.unsubscribe();
@@ -150,8 +189,8 @@ export class Combat {
             let healthPercentage = (this.maxTime / this.MAXTIME) * 100;
             document.getElementById("playerbar").style.backgroundSize = healthPercentage + "% 100%";
 
-            console.log(this.parent.monsterObject.nativeElement.style.paddingLeft);
-            console.log(this.parent.monsterObject.nativeElement.style.paddingRight);
+            // console.log(this.parent.monsterObject.nativeElement.style.paddingLeft);
+            // console.log(this.parent.monsterObject.nativeElement.style.paddingRight);
 
             if (this.maxTime <= 0)
                 this.defeatedByMonster();
@@ -167,7 +206,7 @@ export class Combat {
         if (!this.monsterHittable)
             return;
 
-        console.log("Hitting monster");
+        // console.log("Hitting monster");
         this.monsterHittable = false;
         this.monster.Health -= damage;
         this.checkHealth();
@@ -203,7 +242,7 @@ export class Combat {
     }
 
     castSpell() {
-        console.log("Listening for spellcast");
+        // console.log("Listening for spellcast");
         this.speechListener = this.speech.startListening({ showPopup: false })
             .subscribe(
                 (matches: Array<string>) => {
@@ -221,12 +260,8 @@ export class Combat {
 
     checkHealth() {
         if (this.monster.Health <= 0) {
-            console.log("Monster is defeated");
+            // console.log("Monster is defeated");
             this.defeatMonster();
-        }
-        if (this.player.Health <= 0) {
-            console.log("Player is defeated");
-            this.defeatedByMonster();
         }
     }
 
@@ -259,7 +294,7 @@ export class Combat {
     }
 
     changeCombatState(state: CombatState) {
-        console.log("Changing combat state to " + state);
+        // console.log("Changing combat state to " + state);
         this.combatState = state;
 
         if (this.combatState == CombatState.CombatDefeat || this.combatState == CombatState.CombatVictory) {
