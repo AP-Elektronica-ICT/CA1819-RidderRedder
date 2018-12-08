@@ -19,19 +19,21 @@ namespace RidderRedderApi.Models {
         /// Gets or sets the position x.
         /// </summary>
         /// <value>The position x.</value>
-        public int PosX { get; set; }
+        public float PosX { get; set; }
         /// <summary>
         /// Gets or sets the position y.
         /// </summary>
         /// <value>The position y.</value>
-        public int PosY { get; set; }
+        public float PosY { get; set; }
+
+		public string Name { get; set; }
 
 		/// <summary>
 		/// Gets or sets the owner of the landmark.
 		/// </summary>
 		/// <value>owner Id.</value>
 		[ForeignKey("Player")]
-		public int Owner { get; set; }
+		public string Owner { get; set; }
 
 		[ForeignKey("LandmarkId")]
 		public ICollection<Knight> Knights { get; set; }

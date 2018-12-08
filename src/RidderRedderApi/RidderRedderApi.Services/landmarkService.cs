@@ -5,7 +5,7 @@ using RidderRedderApi.Models;
 using RidderRedderApi.Repositories;
 
 namespace RidderRedderApi.Services {
-	class LandmarkService {
+	public class LandmarkService {
 		private LandmarkRepository landmarkRepo;
 
 		public LandmarkService(LandmarkRepository landmarkRepository) {
