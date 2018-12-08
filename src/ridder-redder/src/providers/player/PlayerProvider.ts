@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { AuthProvider } from '../auth/AuthProvider';
 import { query } from '@angular/core/src/render3/instructions';
 import { PlayerDto } from '../../dtos/PlayerDto';
+import { RootUrl } from '../RootUrl'; 
+
 /*
   Generated class for the PlayerProvider provider.
 
@@ -16,7 +18,6 @@ import { PlayerDto } from '../../dtos/PlayerDto';
 export class PlayerProvider {
 
     // private baseUrl = "http://192.168.11.30:5000/api/v1";
-    private baseUrl = "http://192.168.43.143:5000/api/v1";
     private httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
@@ -49,9 +50,9 @@ export class PlayerProvider {
     }
 
     public GetPlayer(authid: string): Observable<Player> {
-        let queryString = this.baseUrl;
-        queryString += "/Player";
-        queryString += "/" + authid;
+        let queryString = RootUrl;
+        queryString += "Player/";
+        queryString += authid;
 
         return this.http.get<PlayerDto>(queryString, this.httpOptions).map(data => {
             let p: Player = {
@@ -66,9 +67,9 @@ export class PlayerProvider {
     }
 
     public UpdatePlayer(p: Player): Observable<Player> {
-        let queryString = this.baseUrl;
-        queryString += "/Player";
-        queryString += "/" + this.auth.AuthId;
+        let queryString = RootUrl;
+        queryString += "Player/";
+        queryString +=  this.auth.AuthId;
 
         let playerDto: PlayerDto = {
             authId: p.AuthId,

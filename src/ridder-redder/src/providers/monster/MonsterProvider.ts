@@ -4,7 +4,7 @@ import { Monster } from '../../models/Monster';
 import { Observable } from "rxjs/Observable";
 import { AuthProvider } from '../auth/AuthProvider';
 import { MonsterDto } from '../../dtos/MonsterDto';
-
+import { RootUrl } from '../RootUrl';
 /*
   Generated class for the MonsterProvider provider.
 
@@ -15,7 +15,6 @@ import { MonsterDto } from '../../dtos/MonsterDto';
 export class MonsterProvider {
 
     // private baseUrl = "http://192.168.11.30:5000/api/v1";
-    private baseUrl = "http://192.168.43.143:5000/api/v1";
     private httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
@@ -28,8 +27,8 @@ export class MonsterProvider {
     }
 
     public getMonster(): Observable<Monster> {
-        let queryString = this.baseUrl;
-        queryString += "/Monster"
+        let queryString = RootUrl;
+        queryString += "Monster"
 
 
 
@@ -51,8 +50,8 @@ export class MonsterProvider {
     }
 
     public getMonsters(count: number): Observable<MonsterDto[]> {
-        let queryString = this.baseUrl;
-        queryString += "/Monster/" + count;
+        let queryString = RootUrl;
+        queryString += "Monster/" + count;
 
         return this.http.get<MonsterDto[]>(queryString, this.httpOptions);
     }

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from "rxjs/Observable";
 import { Landmark } from '../../models/Landmark';
 import { Knight } from '../../models/Knight';
-
+import { RootUrl } from '../RootUrl';
 
 /*
   Generated class for the LandmarkProvider provider.
@@ -13,7 +13,7 @@ import { Knight } from '../../models/Knight';
 */
 @Injectable()
 export class LandmarkProvider {
-  queryUrl = "http://192.168.1.52:5000/api/v1/landmark/";
+  queryUrl = RootUrl + "landmark/";
   httpOptions = { headers: 
     new HttpHeaders({
       'Content-Type': 'application/json'
@@ -26,6 +26,9 @@ export class LandmarkProvider {
   }
 
   getLandmarks():Observable<Array<Landmark>>{
+    console.log('in getLandmarks');
+    console.log(this.queryUrl);
+    console.log(this.httpOptions);
     return this.http.get<Array<Landmark>>(this.queryUrl, this.httpOptions)
   }
 

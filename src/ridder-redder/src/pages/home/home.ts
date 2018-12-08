@@ -43,7 +43,10 @@ export class HomePage {
       this.updateMap();
       this.updateMonsters();
     });
+    console.log('subscribed to get landmarks');
     this.lmProvider.getLandmarks().subscribe((landmarks) => {
+      console.log('got landmarks');
+      console.log(landmarks);
       this.landmarks = landmarks;
       this.addLandmarks();
     });
