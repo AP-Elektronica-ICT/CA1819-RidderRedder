@@ -13,7 +13,7 @@ namespace RidderRedderApi.Repositories {
         public DbSet<MonsterName> MonsterNames { get; set; }
         public DbSet<Monster> Monsters { get; set; }
         public DbSet<Element> Elements { get; set; }
-        public DbSet<Monument> Monuments { get; set; }
+        public DbSet<Landmark> Landmarks { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<InventoryItem> InventoryItems { get; set; }
         public DbSet<ItemImage> ItemImages { get; set; }
@@ -25,7 +25,7 @@ namespace RidderRedderApi.Repositories {
             modelBuilder.Entity<MonsterTitle>().ToTable("MonsterTitle");
             modelBuilder.Entity<MonsterName>().ToTable("MonsterName");
             modelBuilder.Entity<MonsterModel>().ToTable("MonsterModel");
-            modelBuilder.Entity<Monument>().ToTable("Monument");
+            modelBuilder.Entity<Landmark>().ToTable("Landmark");
             modelBuilder.Entity<Player>().ToTable("Player");
             modelBuilder.Entity<Element>().ToTable("Element");
             modelBuilder.Entity<InventoryItem>().ToTable("InventoryItem");
