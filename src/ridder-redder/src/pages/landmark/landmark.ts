@@ -21,6 +21,7 @@ export class LandmarkPage {
   @Input() landmark: Landmark;
   pId: string;
   knights: Array<Knight>;
+  loading: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public pProv: PlayerProvider, public lmProvider: LandmarkProvider, public authProvider: AuthProvider) {
     this.pId = authProvider.AuthId;
@@ -37,11 +38,10 @@ export class LandmarkPage {
     console.log("adding knight to landmark:");
     console.log(knight);
     console.log(this.landmark);
-    this.landmark = this.lmProvider.addKnight(this.landmark, knight);
-    this.refreshPage();
-  }
-
-  refreshPage(){
-    console.log("refreshing landmark page");
+    this.loading = true;
+    this.lmProvider.addKnight(this.landmark, knight).subscribe((landmark) => {
+      this.landmark = landmark;
+      this.loading = false;
+    });
   }
 }

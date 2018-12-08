@@ -34,7 +34,6 @@ export class HomePage {
     this.monsters = new Array<Monster>();
     this.prevPos = { lat: 0, lng: 0};
 
-    this.landmarks = lmProvider.getLandmarks();
   }
 
   ionViewDidLoad(){
@@ -43,6 +42,10 @@ export class HomePage {
     this.mapUpdater = Observable.interval(5000).subscribe(() => {
       this.updateMap();
       this.updateMonsters();
+    });
+    this.lmProvider.getLandmarks().subscribe((landmarks) => {
+      this.landmarks = landmarks;
+      this.addLandmarks();
     });
   }
 
@@ -94,8 +97,6 @@ export class HomePage {
         this.prevPos.lng = resp.coords.longitude;
 
         this.map = GoogleMaps.create('map_canvas', mapOptions);
-        this.addLandmarks();
-
       }).catch((error) => {
         console.log(error);
       });
@@ -184,7 +185,8 @@ export class HomePage {
 
       //generate random monster, attach marker
       this.monsterProvider.getMonster().subscribe(data => {
-
+        console.log("adding monster");
+        console.log(data);
         let monster: Monster = data;
 
         let marker: Marker = this.map.addMarkerSync({

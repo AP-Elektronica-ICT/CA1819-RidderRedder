@@ -14,7 +14,10 @@
 
 
 <ion-content padding>
-  <ion-card *ngIf="landmark">
+  <ion-card *ngIf="loading">
+    <p>LOADING</p>
+  </ion-card>
+  <ion-card *ngIf="!loading">
     <h3>{{landmark.name}}</h3>
     <div *ngIf='landmark.ownerId; else notClaimed'>
       <p>owner: {{landmark.ownerName}}</p>
