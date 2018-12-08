@@ -44,6 +44,26 @@
             <returns><c>true</c>, if inventory item was deleted, <c>false</c> otherwise.</returns>
             <param name="itemid">Itemid.</param>
         </member>
+        <member name="M:RidderRedderApi.Web.Api.Controllers.LandmarkController.#ctor(RidderRedderApi.Services.LandmarkService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:RidderRedderApi.Web.Api.Controllers.LandmarkController"/> class.
+            </summary>
+            <param name="landmarkService">Landmark service.</param>
+        </member>
+        <member name="M:RidderRedderApi.Web.Api.Controllers.LandmarkController.GetAll">
+            <summary>
+            Gets all landmarks
+            </summary>
+            <returns>The all.</returns>
+        </member>
+        <member name="M:RidderRedderApi.Web.Api.Controllers.LandmarkController.Update(System.String,RidderRedderApi.Models.Landmark)">
+            <summary>
+            Update the specified landmark with given landmarkId
+            </summary>
+            <returns>The update.</returns>
+            <param name="landmarkId">LandmarkId.</param>
+            <param name="l">L.</param>
+        </member>
         <member name="T:RidderRedderApi.Web.Api.Controllers.MonsterController">
             <summary>
             Monster controller.
