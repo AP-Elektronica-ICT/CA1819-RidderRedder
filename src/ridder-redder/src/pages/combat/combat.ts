@@ -13,6 +13,7 @@ import { Monster } from '../../models/Monster';
 import { CombatState } from '../../models/CombatState';
 
 import { MonsterDto } from '../../dtos/MonsterDto';
+import { InventoryProvider } from '../../providers/inventory/InventoryProvider';
 
 /**
  * Generated class for the CombatPage page.
@@ -44,7 +45,8 @@ export class CombatPage {
         private speech: SpeechRecognition,
         private monsterProvider: MonsterProvider,
         private playerProvider: PlayerProvider,
-        private authProvider: AuthProvider
+        private authProvider: AuthProvider,
+        private invProvider: InventoryProvider
     ) {
 
         this.loadPlayer();
@@ -60,9 +62,7 @@ export class CombatPage {
             let p: Player = {
                 PlayerName: data.playerName,
                 Experience: data.experience,
-                AuthId: data.authId,
-                Health: 500,
-                MaxHealth: 500
+                AuthId: data.authId
             }
 
             this.loadMonster(p);
@@ -75,7 +75,7 @@ export class CombatPage {
     private loadMonster(player: Player) {
         this.monsterProvider.getMonster().subscribe(data => {
             this.monster = data;
-            this.combat = new Combat(this, this.monster, player, this.deviceMotion, this.speech, this.playerProvider, this.monsterProvider);
+            this.combat = new Combat(this, this.monster, player, this.deviceMotion, this.speech, this.playerProvider, this.monsterProvider, this.authProvider, this.invProvider);
 
             this.setInfo();
             this.loadSpeech();

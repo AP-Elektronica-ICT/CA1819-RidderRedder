@@ -31,6 +31,23 @@ namespace RidderRedderApi.Repositories {
             }
         }
 
+        public List<ItemImage> GetAllItemImages() {
+            try {
+                return this.context.ItemImages.ToList();
+            } catch (Exception e) {
+                throw e;
+            }
+
+        }
+
+        public List<ItemType> GetAllItemTypes() {
+            try {
+                return this.context.ItemTypes.ToList();
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+
         public ItemImage GetItemImage(int itemImageId) {
             try {
                 return this.context.ItemImages.Find(itemImageId);

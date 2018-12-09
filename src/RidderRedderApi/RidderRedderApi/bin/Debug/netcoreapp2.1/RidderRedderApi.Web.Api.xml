@@ -44,6 +44,18 @@
             <returns><c>true</c>, if inventory item was deleted, <c>false</c> otherwise.</returns>
             <param name="itemid">Itemid.</param>
         </member>
+        <member name="M:RidderRedderApi.Web.Api.Controllers.InventoryController.GetAllItemTypes">
+            <summary>
+            Gets all item types.
+            </summary>
+            <returns>The all item types.</returns>
+        </member>
+        <member name="M:RidderRedderApi.Web.Api.Controllers.InventoryController.GetAllItemImages">
+            <summary>
+            Gets all item images.
+            </summary>
+            <returns>The all item images.</returns>
+        </member>
         <member name="T:RidderRedderApi.Web.Api.Controllers.MonsterController">
             <summary>
             Monster controller.

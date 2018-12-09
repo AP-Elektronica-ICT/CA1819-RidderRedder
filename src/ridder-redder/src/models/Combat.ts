@@ -9,6 +9,11 @@ import { PlayerDto } from "../dtos/PlayerDto";
 import { MonsterProvider } from "../providers/monster/MonsterProvider";
 import { MonsterDto } from "../dtos/MonsterDto";
 import { ElementRef } from "@angular/core";
+import { Knight } from "./Knight";
+import { AuthProvider } from "../providers/auth/AuthProvider";
+import { InventoryItem } from "./InventoryItem";
+import { InventoryProvider } from '../providers/inventory/InventoryProvider';
+import { AddInventoryItemDto } from "../dtos/AddInventoryItemDto";
 
 
 export class Combat {
@@ -20,6 +25,7 @@ export class Combat {
 
     public combatState: CombatState = CombatState.ChoosingCombatStyle;
     public experienceGained: number;
+    public lootGained: InventoryItem[];
 
     public timer: number;
     public maxTime: number;
@@ -47,7 +53,9 @@ export class Combat {
         private dM: DeviceMotion,
         private s: SpeechRecognition,
         private playerProvider: PlayerProvider,
-        private monsterProvider: MonsterProvider
+        private monsterProvider: MonsterProvider,
+        private authProvider: AuthProvider,
+        private invProvider: InventoryProvider
     ) {
         this.monster = m;
         this.player = p;
@@ -57,6 +65,10 @@ export class Combat {
         this.parent = parentPage;
 
         this.resetTimer();
+    }
+
+    ngAfterViewInit() {
+
     }
 
     moveMonster() {
@@ -82,7 +94,9 @@ export class Combat {
     moveMonsterRight(obj: ElementRef) {
         // console.log("Moving monster to the right")
         this.monsterPosX += 10;
-        obj.nativeElement.setAttribute("style", "left:" + this.monsterPosX + "%");
+        if (obj)
+            obj.nativeElement.setAttribute("style", "left:" + this.monsterPosX + "%");
+
         if (this.monsterPosX > 70)
             this.monsterMovingLeft = true;
     }
@@ -90,7 +104,9 @@ export class Combat {
     moveMonsterLeft(obj: ElementRef) {
         // console.log("Moving monster to the left")
         this.monsterPosX -= 10;
-        obj.nativeElement.setAttribute("style", "left:" + this.monsterPosX + "%");
+        if (obj)
+            obj.nativeElement.setAttribute("style", "left:" + this.monsterPosX + "%");
+
         if (this.monsterPosX < 0)
             this.monsterMovingLeft = false;
     }
@@ -98,11 +114,12 @@ export class Combat {
     resetMonsterPosition(obj: ElementRef) {
         // console.log("Resetting monster position");
         this.monsterPosX = 50;
-        obj.nativeElement.setAttribute("style", "left: calc(" + this.monsterPosX + "% - 50px)");
+        if (obj)
+            obj.nativeElement.setAttribute("style", "left: calc(" + this.monsterPosX + "% - 50px)");
     }
 
     checkArrowHit(arrowX: number) {
-        console.log("Checking arrow collision at " + arrowX);
+        // console.log("Checking arrow collision at " + arrowX);
 
         //Hit left
         if (arrowX < 60 && this.monsterPosX < 25)
@@ -133,7 +150,6 @@ export class Combat {
         // console.log("Combat has been stopped");
         this.inCombat = false;
         this.combatState = CombatState.ChoosingCombatStyle;
-        this.player.Health = this.player.MaxHealth;
         this.monster.Health = this.monster.MaxHealth;
         document.getElementById("playerbar").style.backgroundSize = "100% 100%";
         document.getElementById("monsterbar").style.backgroundSize = "100% 100%";
@@ -265,12 +281,14 @@ export class Combat {
         }
     }
 
+
     defeatMonster() {
         this.inCombat = false;
         this.experienceGained = this.monster.Difficulty * 50 + this.maxTime;
         this.player.Experience += this.experienceGained;
         this.changeCombatState(CombatState.CombatVictory);
         this.parent.setInfo();
+        this.generateLoot();
     }
 
     defeatedByMonster() {
@@ -289,6 +307,7 @@ export class Combat {
                 this.loading = false;
             });
         }
+        this.lootGained = [];
         this.combatState = CombatState.ChoosingCombatStyle;
         this.stopCombat();
     }
@@ -303,9 +322,7 @@ export class Combat {
                 let p: Player = {
                     PlayerName: data.playerName,
                     Experience: data.experience,
-                    AuthId: data.authId,
-                    Health: 500,
-                    MaxHealth: 500
+                    AuthId: data.authId
                 }
                 this.player = p;
 
@@ -313,6 +330,28 @@ export class Combat {
             }, error => {
                 console.log(error);
             });
+        }
+    }
+
+    generateLoot() {
+        let items: AddInventoryItemDto[] = [];
+        this.lootGained = [];
+
+        let random = Math.random() * 3;
+
+        for (let i = 0; i < random; i++) {
+            let item: AddInventoryItemDto = {
+                authId: this.authProvider.AuthId,
+                itemImageId: this.invProvider.getRandomImage().itemImageId,
+                itemTypeId: 1,
+                amount: 1
+            }
+            this.invProvider.addToInventory(item).subscribe(data => {
+                this.lootGained.push(data);
+                console.log("Added new " + data.itemType.itemTypeName + " to inventory");
+            }, err => {
+                console.log(err);
+            })
         }
     }
 

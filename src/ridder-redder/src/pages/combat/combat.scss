@@ -48,7 +48,7 @@ page-combat {
                 border: 1px solid black;
                 text-align: center;
 
-                transition: all linear 1s;
+                transition: all ease-in-out 500ms;
 
             }
             h2 {
@@ -121,6 +121,28 @@ page-combat {
         padding: 12px;
         padding-bottom: 18px;
     }
+    .loot-container {
+        position: fixed;
+        bottom: calc(30%);
+        width: 90%;
+        text-align: center;
+       .loot-content {
+           width: 100%;
+            display: flex;
+            justify-content: space-around;
+
+            .loot-item {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                text-align: center;
+                img {
+                    width: 50px;
+                    height: auto;
+                }
+            }
+       }
+    }
     .combat-style-container {
         display: flex;
         justify-content: space-between;
@@ -134,7 +156,7 @@ page-combat {
     }
     .retry-container {
         position: fixed;
-        bottom: calc(30% - 40px);
+        bottom: calc(70% - 40px);
         left: calc(50% - 20px);
         text-align: center;
     }

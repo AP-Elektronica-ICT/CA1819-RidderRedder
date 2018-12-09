@@ -34,9 +34,7 @@ export class PlayerProvider {
             let p: Player = {
                 PlayerName: data.playerName,
                 Experience: data.experience,
-                AuthId: data.authId,
-                Health: 500,
-                MaxHealth: 500
+                AuthId: data.authId
             }
             this.player = p;
         }, error => {
@@ -44,10 +42,10 @@ export class PlayerProvider {
         });
 
         this.Inventory = new Array<Knight>();
-        this.Inventory.push({ colour: "red", level: 4 });
-        this.Inventory.push({ colour: "blue", level: 6 });
-        this.Inventory.push({ colour: "black", level: 2 });
-        this.Inventory.push({ colour: "red", level: 5 });
+        this.Inventory.push({ colour: "red", level: 4, authId: this.auth.AuthId, monumentId: 0 });
+        this.Inventory.push({ colour: "blue", level: 6, authId: this.auth.AuthId, monumentId: 0  });
+        this.Inventory.push({ colour: "black", level: 2, authId: this.auth.AuthId, monumentId: 0  });
+        this.Inventory.push({ colour: "red", level: 5, authId: this.auth.AuthId, monumentId: 0  });
     }
 
     getInventory() {
@@ -72,7 +70,6 @@ export class PlayerProvider {
             experience: parseInt(p.Experience.toFixed(0)),
             playerName: p.PlayerName
         }
-        console.log(playerDto);
         
         return this.http.put<PlayerDto>(queryString, playerDto, this.httpOptions);
     }

@@ -18,6 +18,7 @@ import { PlayerProvider } from '../providers/player/PlayerProvider';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import { DeviceMotion } from '@ionic-native/device-motion';
 import { AuthProvider } from '../providers/auth/AuthProvider';
+import { InventoryProvider } from '../providers/inventory/InventoryProvider';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { AuthProvider } from '../providers/auth/AuthProvider';
     DeviceMotion,
     ScreenOrientation,
     SpeechRecognition,
-    AuthProvider
+    AuthProvider,
+    InventoryProvider
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

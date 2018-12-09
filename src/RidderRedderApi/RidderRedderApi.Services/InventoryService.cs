@@ -52,5 +52,13 @@ namespace RidderRedderApi.Services {
         public bool DeleteInventoryItem(int itemid) {
             return this.inventoryRepository.DeleteInventoryItem(itemid);
         }
+
+        public List<ItemImage> GetAllItemImages() {
+            return this.inventoryRepository.GetAllItemImages();
+        }
+
+        public List<ItemType> GetAllItemTypes() {
+            return this.inventoryRepository.GetAllItemTypes();
+        }
     }
 }
