@@ -12779,17 +12779,17 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/RidderRedderApi.Web.API.csproj",
-      "projectName": "RidderRedderApi.Web.API",
-      "projectPath": "/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/RidderRedderApi.Web.API.csproj",
+      "projectUniqueName": "/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/RidderRedderApi.Web.Api.csproj",
+      "projectName": "RidderRedderApi.Web.Api",
+      "projectPath": "/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/RidderRedderApi.Web.Api.csproj",
       "packagesPath": "/Users/melvinb/.nuget/packages/",
-      "outputPath": "/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/obj/",
+      "outputPath": "/Users/melvinb/Documents/git_repos/CA1819-RidderRedder/src/RidderRedderApi/RidderRedderApi/obj",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "/Users/melvinb/.nuget/NuGet/NuGet.Config"
+        "/Users/melvinb/.config/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.1"
@@ -12824,41 +12824,41 @@
     "frameworks": {
       "netcoreapp2.1": {
         "dependencies": {
+          "Microsoft.NETCore.App": {
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "2.1",
+            "autoReferenced": true
+          },
           "EntityFramework": {
             "target": "Package",
-            "version": "[6.2.0, )"
+            "version": "6.2.0"
           },
           "Microsoft.AspNetCore.App": {
             "suppressParent": "All",
             "target": "Package",
-            "version": "[2.1.1, )",
-            "autoReferenced": true
+            "version": "2.1.1"
           },
           "Microsoft.AspNetCore.Razor.Design": {
             "suppressParent": "All",
             "target": "Package",
-            "version": "[2.1.2, )"
+            "version": "2.1.2"
           },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",
-            "version": "[2.1.4, )"
-          },
-          "Microsoft.NETCore.App": {
-            "target": "Package",
-            "version": "[2.1.0, )",
-            "autoReferenced": true
+            "version": "2.1.4"
           },
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
-            "version": "[2.1.1, )"
+            "version": "2.1.1"
           },
           "MySql.Data.EntityFrameworkCore": {
             "target": "Package",
-            "version": "[8.0.13, )"
+            "version": "8.0.13"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
-            "version": "[4.0.1, )"
+            "version": "4.0.1"
           }
         },
         "imports": [

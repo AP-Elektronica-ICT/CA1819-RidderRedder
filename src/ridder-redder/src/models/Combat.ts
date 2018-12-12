@@ -277,7 +277,9 @@ export class Combat {
     checkHealth() {
         if (this.monster.Health <= 0) {
             // console.log("Monster is defeated");
-            this.defeatMonster();
+            setTimeout(() => {
+                this.defeatMonster();
+            }, 1000);
         }
     }
 

@@ -1,10 +1,11 @@
 ﻿<Properties StartupConfiguration="{7D4BD548-5B55-45E8-85BD-7ADF815E6273}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="RidderRedderApi.ViewModels/AddInventoryItemDto.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="RidderRedderApi/Program.cs">
     <Files>
       <File FileName="RidderRedderApi.Services/InventoryService.cs" Line="61" Column="63" />
       <File FileName="RidderRedderApi/Controllers/InventoryController.cs" Line="46" Column="65" />
       <File FileName="RidderRedderApi.ViewModels/ItemImageDto.cs" Line="1" Column="1" />
       <File FileName="RidderRedderApi.ViewModels/AddInventoryItemDto.cs" Line="7" Column="18" />
+      <File FileName="RidderRedderApi/Program.cs" Line="21" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
