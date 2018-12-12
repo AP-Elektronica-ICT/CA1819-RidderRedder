@@ -12,7 +12,7 @@ import { CombatPage } from '../pages/combat/combat';
 })
 export class RidderRedder {
     
-  rootPage:any = HomePage;
+  rootPage:any = CombatPage;
 
 
     constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private screenOrientation: ScreenOrientation) {

@@ -322,9 +322,9 @@ export class Combat {
             this.loading = true;
             this.playerProvider.UpdatePlayer(this.player).subscribe(data => {
                 let p: Player = {
-                    PlayerName: data.playerName,
-                    Experience: data.experience,
-                    AuthId: data.authId
+                    PlayerName: data.PlayerName,
+                    Experience: data.Experience,
+                    AuthId: data.AuthId
                 }
                 this.player = p;
 

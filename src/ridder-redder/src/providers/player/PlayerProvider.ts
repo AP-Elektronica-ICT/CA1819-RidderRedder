@@ -32,9 +32,9 @@ export class PlayerProvider {
         // connect to server, get data
         this.GetPlayer(auth.AuthId).subscribe(data => {
             let p: Player = {
-                PlayerName: data.playerName,
-                Experience: data.experience,
-                AuthId: data.authId
+                PlayerName: data.PlayerName,
+                Experience: data.Experience,
+                AuthId: data.AuthId
             }
             this.player = p;
         }, error => {
@@ -61,9 +61,7 @@ export class PlayerProvider {
             let p: Player = {
                 PlayerName: data.playerName,
                 Experience: data.experience,
-                AuthId: data.authId,
-                Health: 500,
-                MaxHealth: 500
+                AuthId: data.authId
             };
             return p;
         });

@@ -60,9 +60,9 @@ export class CombatPage {
     private loadPlayer() {
         this.playerProvider.GetPlayer(this.authProvider.AuthId).subscribe(data => {
             let p: Player = {
-                PlayerName: data.playerName,
-                Experience: data.experience,
-                AuthId: data.authId
+                PlayerName: data.PlayerName,
+                Experience: data.Experience,
+                AuthId: data.AuthId
             }
 
             this.loadMonster(p);
