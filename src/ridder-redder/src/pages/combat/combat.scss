@@ -103,7 +103,7 @@ page-combat {
             // border: 1px solid red;
 
 
-            transition: 300ms linear all;
+            transition: 300ms ease-in all;
         }
     }
     
@@ -137,6 +137,8 @@ page-combat {
                 justify-content: space-around;
                 text-align: center;
                 img {
+                    margin: auto;
+                    text-align: center;
                     width: 50px;
                     height: auto;
                 }
