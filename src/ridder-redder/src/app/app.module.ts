@@ -8,9 +8,7 @@ import { GoogleMaps } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 import { RidderRedder } from './app.component';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { HomePage } from '../pages/home/home';
-import { CombatPage } from '../pages/combat/combat';
-import { ArLauncherComponent } from '../components/ar-launcher/ar-launcher';
+
 import { ComponentsModule } from '../components/components.module';
 import { HomePageModule } from '../pages/home/home.module';
 import { CombatPageModule } from '../pages/combat/combat.module';
@@ -22,6 +20,7 @@ import { PlayerProvider } from '../providers/player/PlayerProvider';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import { DeviceMotion } from '@ionic-native/device-motion';
 import { AuthProvider } from '../providers/auth/AuthProvider';
+import { InventoryProvider } from '../providers/inventory/InventoryProvider';
 
 @NgModule({
   declarations: [
@@ -37,6 +36,7 @@ import { AuthProvider } from '../providers/auth/AuthProvider';
     ComponentsModule,
     HomePageModule,
     CombatPageModule,
+    // DirectivesModule,
     IonicModule.forRoot(RidderRedder)
   ],
   bootstrap: [IonicApp],
@@ -59,7 +59,8 @@ import { AuthProvider } from '../providers/auth/AuthProvider';
     DeviceMotion,
     ScreenOrientation,
     SpeechRecognition,
-    AuthProvider
+    AuthProvider,
+    InventoryProvider
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

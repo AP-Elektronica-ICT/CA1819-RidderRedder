@@ -30,9 +30,13 @@ export class PlayerProvider {
 
     constructor(public http: HttpClient, private auth: AuthProvider) {
         // connect to server, get data
-        console.log("Hello PlayerProvider");
-        this.GetPlayer(auth.AuthId).subscribe(player => {
-            this.player = player;
+        this.GetPlayer(auth.AuthId).subscribe(data => {
+            let p: Player = {
+                PlayerName: data.playerName,
+                Experience: data.experience,
+                AuthId: data.authId
+            }
+            this.player = p;
         }, error => {
             console.log(error);
         });
@@ -82,8 +86,6 @@ export class PlayerProvider {
                 PlayerName: data.playerName,
                 Experience: data.experience,
                 AuthId: data.authId,
-                Health: 500,
-                MaxHealth: 500
             };
             return p;
         });

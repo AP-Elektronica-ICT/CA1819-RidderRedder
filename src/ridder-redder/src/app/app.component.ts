@@ -4,10 +4,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
-
-
 import { HomePage } from '../pages/home/home';
 import { CombatPage } from '../pages/combat/combat';
+
 @Component({
     templateUrl: 'app.html'
 })

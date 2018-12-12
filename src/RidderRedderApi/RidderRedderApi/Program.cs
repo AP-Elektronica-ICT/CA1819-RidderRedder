@@ -31,5 +31,6 @@ namespace RidderRedderApi {
                 .UseStartup<Startup>()
                    //.UseUrls("http://localhost:5000", "http://192.168.11.30:5000", "http://*");
                    .UseUrls("http://localhost:5000", "http://192.168.43.143:5000", "http://*");
+        //    .UseUrls("http://localhost:5000", "http://192.168.11.27:5000", "http://*");
     }
 }

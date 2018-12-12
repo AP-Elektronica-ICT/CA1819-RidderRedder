@@ -1,7 +1,12 @@
 ﻿<Properties StartupConfiguration="{7D4BD548-5B55-45E8-85BD-7ADF815E6273}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="RidderRedderApi/Properties/launchSettings.json">
+  <MonoDevelop.Ide.Workbench ActiveDocument="RidderRedderApi.Models/Knight.cs">
     <Files>
-      <File FileName="RidderRedderApi/Properties/launchSettings.json" Line="25" Column="6" />
+      <File FileName="RidderRedderApi.Services/InventoryService.cs" Line="1" Column="1" />
+      <File FileName="RidderRedderApi/Controllers/InventoryController.cs" Line="1" Column="1" />
+      <File FileName="RidderRedderApi.ViewModels/ItemImageDto.cs" Line="1" Column="1" />
+      <File FileName="RidderRedderApi.ViewModels/AddInventoryItemDto.cs" Line="7" Column="18" />
+      <File FileName="RidderRedderApi/Program.cs" Line="1" Column="1" />
+      <File FileName="RidderRedderApi.Models/Knight.cs" Line="12" Column="27" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

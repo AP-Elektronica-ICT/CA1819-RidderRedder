@@ -48,7 +48,7 @@ page-combat {
                 border: 1px solid black;
                 text-align: center;
 
-                transition: all 1s;
+                transition: all ease-in-out 500ms;
 
             }
             h2 {
@@ -96,8 +96,14 @@ page-combat {
         margin-top: 20%;
 
         img {
-            width: auto;
-            height: 65%;
+            position: absolute;
+            left: calc(50% - 50px);
+            top: 30%;
+            height: 100px;
+            // border: 1px solid red;
+
+
+            transition: 300ms linear all;
         }
     }
     
@@ -113,6 +119,29 @@ page-combat {
     .info-container {
         text-align: center;
         padding: 12px;
+        padding-bottom: 18px;
+    }
+    .loot-container {
+        position: fixed;
+        bottom: calc(30%);
+        width: 90%;
+        text-align: center;
+       .loot-content {
+           width: 100%;
+            display: flex;
+            justify-content: space-around;
+
+            .loot-item {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                text-align: center;
+                img {
+                    width: 50px;
+                    height: auto;
+                }
+            }
+       }
     }
     .combat-style-container {
         display: flex;
@@ -120,27 +149,43 @@ page-combat {
         padding: 24px;
     }
     .combat-melee-container,
-    .combat-magic-container,
-    .combat-ranged-container  {
+    .combat-magic-container {
         display: flex;
         justify-content: space-around;
         padding-bottom: 24px;
     }
     .retry-container {
         position: fixed;
-        bottom: calc(30% - 40px);
+        bottom: calc(70% - 40px);
         left: calc(50% - 20px);
         text-align: center;
     }
-    #img-bow {
+}
 
-    }
+#img-ranged-bow {
+    z-index:1100;
+    // transition: 100ms all;
+}
+#ranged-target {
+    position: absolute;
+    left: calc(50% - 6px);
+    top: calc(65% - 50px);
 }
 
 .button-container {
     position: fixed;
-    bottom: 0;
-    // left: 0
+    left: 12px;
+    bottom: 12px;
+    
+    width: calc(100% - 24px);
+    // display: flex;
+    // justify-content: space-between;
+    .chicken-img {
+        float: left;
+    }
+    .kill-img {
+        float: right;
+    }
 }
 
 .screen-splash {
@@ -154,9 +199,7 @@ page-combat {
     transition: all 0.1s;
 }
 .loading-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    margin: auto;
+    position: fixed;
+    top: calc(50% - 45px);
+    left: calc(50% - 45px);
 }

@@ -51,7 +51,7 @@ namespace RidderRedderApi.Web.Api.Controllers {
         /// <param name="p">P.</param>
         [HttpPut("{authid}")]
         public IActionResult Update(string authid, [FromBody]Player p) {
-            return Ok(playerService.Update(p));
+            return Ok(playerService.Update(p, authid));
         }
 
         /// <summary>

@@ -20,8 +20,8 @@ namespace RidderRedderApi.Services {
             return this.playerRepo.Get(authid);
         }
 
-        public Player Update(Player p) {
-            return this.playerRepo.Put(p);
+        public Player Update(Player p, string authId) {
+            return this.playerRepo.Put(p, authId);
         }
 
         public Player Post(Player p) {
