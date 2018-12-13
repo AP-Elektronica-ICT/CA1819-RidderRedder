@@ -19,15 +19,6 @@ export class InventoryProvider {
     public ItemTypes: ItemType[];
     public ItemImages: ItemImage[];
 
-    // private baseUrl = "http://192.168.11.30:5000/api/v1";
-    private baseUrl = "http://192.168.43.143:5000/api/v1";
-    private httpOptions = {
-        headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            // 'Authorization': `Bearer ${this.auth.access_token}`
-        })
-    }
-
     constructor(public http: HttpClient, private auth: AuthProvider) {
         console.log('Hello InventoryProvider Provider');
 
@@ -96,28 +87,28 @@ export class InventoryProvider {
 
     public getItemImages(): Observable<ItemImage[]> {
         // console.log(`${this.baseUrl}/inventory/images`);
-        return this.http.get<ItemImage[]>(`${this.baseUrl}/inventory/images`, this.httpOptions);
+        return this.http.get<ItemImage[]>(`/inventory/images`);
     }
 
     public getItemTypes(): Observable<ItemType[]> {
         // console.log(`${this.baseUrl}/inventory/types`);
-        return this.http.get<ItemType[]>(`${this.baseUrl}/inventory/types`, this.httpOptions);
+        return this.http.get<ItemType[]>(`/inventory/types`);
     }
 
     public getInventory(): Observable<InventoryItem[]> {
-        return this.http.get<InventoryItem[]>(`${this.baseUrl}/inventory/${this.auth.AuthId}`, this.httpOptions);
+        return this.http.get<InventoryItem[]>(`/inventory/${this.auth.AuthId}`);
     }
 
     public addToInventory(item: AddInventoryItemDto): Observable<InventoryItem> {
-        return this.http.post<InventoryItem>(`${this.baseUrl}/inventory`, item, this.httpOptions);
+        return this.http.post<InventoryItem>(`/inventory`, item);
     }
 
     public updateInventoryItem(itemId: number, item: InventoryItem): Observable<InventoryItem> {
-        return this.http.put<InventoryItem>(`${this.baseUrl}/inventory/${itemId}`, item, this.httpOptions);
+        return this.http.put<InventoryItem>(`/inventory/${itemId}`, item);
     }
 
     public deleteInventoryItem(itemId: number): Observable<Boolean> {
-        return this.http.delete<Boolean>(`${this.baseUrl}/inventory/${itemId}`, this.httpOptions);
+        return this.http.delete<Boolean>(`/inventory/${itemId}`);
     }
 
 }

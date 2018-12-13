@@ -49,12 +49,13 @@ export class CombatPage {
         private invProvider: InventoryProvider
     ) {
 
-        this.loadPlayer();
+        
     }
 
     ionViewDidLoad() {
 
-        
+        this.loadPlayer();
+
     }
 
     private loadPlayer() {
@@ -110,6 +111,7 @@ export class CombatPage {
 
     setInfo() {
         // console.log("Setting info");
+        this.resetInfoContainerPosition();
         switch (this.combat.combatState) {
             case CombatState.ChoosingCombatStyle:
                 this.infoHead = "Battle time!";
@@ -122,6 +124,7 @@ export class CombatPage {
             case CombatState.CombatRanged:
                 this.infoHead = "Shoot him!"
                 this.infoParagraph = "Aim and drag the bow to shoot";
+                this.setInfoContainerPosition(0);
                 break;
             case CombatState.CombatMagic:
                 this.infoHead = "Hocus Pocus"; //Replace with magic spell
@@ -129,13 +132,28 @@ export class CombatPage {
                 break;
             case CombatState.CombatVictory:
                 this.infoHead = "Victory!"
-                this.infoParagraph = `You have defeated the monster!\nYou have gained ${this.combat.experienceGained} experience!`;
+                this.infoParagraph = "";
+                this.setInfoContainerPosition(40);
+                // this.infoParagraph = `You have defeated the monster!\nYou have gained ${this.combat.experienceGained} experience!`;
                 break;
             case CombatState.CombatDefeat:
                 this.infoHead = "Defeat!"
-                this.infoParagraph = "You have been defeated by the monster!";
+                this.infoParagraph = "";
+                this.setInfoContainerPosition(40);
+                // this.infoParagraph = "You have been defeated by the monster!";
                 break;
         }
+    }
+
+    private resetInfoContainerPosition() {
+        let el = document.getElementById('infoContainer');
+        if(el)
+            el.style.bottom = "calc(18%)";
+    }
+    private setInfoContainerPosition(bottom: number) {
+        let el = document.getElementById('infoContainer');
+        if(el)
+            el.style.bottom = `calc(${bottom}%)`;
     }
 
     damageMonster() {

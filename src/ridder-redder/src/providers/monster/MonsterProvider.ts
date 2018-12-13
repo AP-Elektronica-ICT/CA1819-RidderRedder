@@ -14,26 +14,12 @@ import { MonsterDto } from '../../dtos/MonsterDto';
 @Injectable()
 export class MonsterProvider {
 
-    // private baseUrl = "http://192.168.11.30:5000/api/v1";
-    private baseUrl = "http://192.168.43.143:5000/api/v1";
-    private httpOptions = {
-        headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            // 'Authorization': `Bearer ${this.auth.access_token}`
-        })
-    }
-
     constructor(public http: HttpClient, private auth: AuthProvider) {
         console.log('Hello MonsterProvider Provider');
     }
 
     public getMonster(): Observable<Monster> {
-        let queryString = this.baseUrl;
-        queryString += "/Monster"
-
-
-
-        return this.http.get<MonsterDto>(queryString, this.httpOptions).map(m => {
+        return this.http.get<MonsterDto>(`/monster`).map(m => {
             let monster = {
                 MonsterId: m.monsterId,
                 Model: m.monsterModel,
@@ -51,9 +37,7 @@ export class MonsterProvider {
     }
 
     public getMonsters(count: number): Observable<MonsterDto[]> {
-        let queryString = this.baseUrl;
-        queryString += "/Monster/" + count;
 
-        return this.http.get<MonsterDto[]>(queryString, this.httpOptions);
+        return this.http.get<MonsterDto[]>(`/monster/${count}`);
     }
 }

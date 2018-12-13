@@ -15,15 +15,6 @@ import { PlayerDto } from '../../dtos/PlayerDto';
 @Injectable()
 export class PlayerProvider {
 
-    // private baseUrl = "http://192.168.11.30:5000/api/v1";
-    private baseUrl = "http://192.168.43.143:5000/api/v1";
-    private httpOptions = {
-        headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            // 'Authorization': `Bearer ${this.auth.access_token}`
-        })
-    }
-
     private player: Player;
 
     Inventory: Array<Knight>;
@@ -53,11 +44,7 @@ export class PlayerProvider {
     }
 
     public GetPlayer(authid: string): Observable<Player> {
-        let queryString = this.baseUrl;
-        queryString += "/Player";
-        queryString += "/" + authid;
-
-        return this.http.get<PlayerDto>(queryString, this.httpOptions).map(data => {
+        return this.http.get<PlayerDto>(`/player/${authid}`).map(data => {
             let p: Player = {
                 PlayerName: data.playerName,
                 Experience: data.experience,
@@ -68,10 +55,6 @@ export class PlayerProvider {
     }
 
     public UpdatePlayer(p: Player): Observable<Player> {
-        let queryString = this.baseUrl;
-        queryString += "/Player";
-        queryString += "/" + this.auth.AuthId;
-
         let playerDto: PlayerDto = {
             authId: p.AuthId,
             experience: parseInt(p.Experience.toFixed(0)),
@@ -79,7 +62,7 @@ export class PlayerProvider {
         }
         console.log(playerDto);
 
-        return this.http.put<PlayerDto>(queryString, playerDto, this.httpOptions).map(data => {
+        return this.http.put<PlayerDto>(`/player/${this.auth.AuthId}`, playerDto).map(data => {
             let p: Player = {
                 PlayerName: data.playerName,
                 Experience: data.experience,

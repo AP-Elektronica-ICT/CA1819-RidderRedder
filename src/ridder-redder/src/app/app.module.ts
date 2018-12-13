@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorHandler, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -21,6 +21,7 @@ import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import { DeviceMotion } from '@ionic-native/device-motion';
 import { AuthProvider } from '../providers/auth/AuthProvider';
 import { InventoryProvider } from '../providers/inventory/InventoryProvider';
+import { InterceptorProvider } from '../providers/interceptor/Interceptor';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,13 @@ import { InventoryProvider } from '../providers/inventory/InventoryProvider';
     ScreenOrientation,
     SpeechRecognition,
     AuthProvider,
-    InventoryProvider
+    InventoryProvider,
+    InterceptorProvider,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorProvider,
+      multi: true
+  }
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
