@@ -319,7 +319,7 @@ export class Combat {
         this.combatState = state;
 
         if (this.combatState == CombatState.CombatDefeat || this.combatState == CombatState.CombatVictory) {
-            this.loading = true;
+            // this.loading = true;
             this.playerProvider.UpdatePlayer(this.player).subscribe(data => {
                 let p: Player = {
                     PlayerName: data.PlayerName,
@@ -328,7 +328,7 @@ export class Combat {
                 }
                 this.player = p;
 
-                this.loading = false;
+                // this.loading = false;
             }, error => {
                 console.log(error);
             });

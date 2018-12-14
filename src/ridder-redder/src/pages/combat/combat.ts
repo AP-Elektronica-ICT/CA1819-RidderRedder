@@ -34,7 +34,6 @@ export class CombatPage {
 
     private combat: Combat;
 
-
     private infoHead: string;
     private infoParagraph: string;
 
@@ -49,7 +48,7 @@ export class CombatPage {
         private invProvider: InventoryProvider
     ) {
 
-        
+
     }
 
     ionViewDidLoad() {
@@ -133,13 +132,13 @@ export class CombatPage {
             case CombatState.CombatVictory:
                 this.infoHead = "Victory!"
                 this.infoParagraph = "";
-                this.setInfoContainerPosition(40);
+                this.setInfoContainerPosition(43);
                 // this.infoParagraph = `You have defeated the monster!\nYou have gained ${this.combat.experienceGained} experience!`;
                 break;
             case CombatState.CombatDefeat:
                 this.infoHead = "Defeat!"
                 this.infoParagraph = "";
-                this.setInfoContainerPosition(40);
+                this.setInfoContainerPosition(43);
                 // this.infoParagraph = "You have been defeated by the monster!";
                 break;
         }
@@ -147,13 +146,15 @@ export class CombatPage {
 
     private resetInfoContainerPosition() {
         let el = document.getElementById('infoContainer');
-        if(el)
-            el.style.bottom = "calc(18%)";
+        if (el)
+            el.style.bottom = '18% !important';
+        
     }
     private setInfoContainerPosition(bottom: number) {
         let el = document.getElementById('infoContainer');
-        if(el)
-            el.style.bottom = `calc(${bottom}%)`;
+        if (el) 
+            el.style.bottom = bottom + '% !important';
+        
     }
 
     damageMonster() {
