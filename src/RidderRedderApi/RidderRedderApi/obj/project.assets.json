@@ -12952,23 +12952,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\joeri\\.nuget\\packages\\": {},
+    "C:\\Users\\The_Rat\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\joeri\\gits\\CA1819-RidderRedder\\src\\RidderRedderApi\\RidderRedderApi\\RidderRedderApi.Web.Api.csproj",
+      "projectUniqueName": "D:\\gits\\CA1819-RidderRedder\\src\\RidderRedderApi\\RidderRedderApi\\RidderRedderApi.Web.Api.csproj",
       "projectName": "RidderRedderApi.Web.Api",
-      "projectPath": "C:\\Users\\joeri\\gits\\CA1819-RidderRedder\\src\\RidderRedderApi\\RidderRedderApi\\RidderRedderApi.Web.Api.csproj",
-      "packagesPath": "C:\\Users\\joeri\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\joeri\\gits\\CA1819-RidderRedder\\src\\RidderRedderApi\\RidderRedderApi\\obj\\",
+      "projectPath": "D:\\gits\\CA1819-RidderRedder\\src\\RidderRedderApi\\RidderRedderApi\\RidderRedderApi.Web.Api.csproj",
+      "packagesPath": "C:\\Users\\The_Rat\\.nuget\\packages\\",
+      "outputPath": "D:\\gits\\CA1819-RidderRedder\\src\\RidderRedderApi\\RidderRedderApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\joeri\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\The_Rat\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -12981,17 +12981,17 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "C:\\Users\\joeri\\gits\\CA1819-RidderRedder\\src\\RidderRedderApi\\RidderRedderApi.Models\\RidderRedderApi.Models.csproj": {
-              "projectPath": "C:\\Users\\joeri\\gits\\CA1819-RidderRedder\\src\\RidderRedderApi\\RidderRedderApi.Models\\RidderRedderApi.Models.csproj"
+            "D:\\gits\\CA1819-RidderRedder\\src\\RidderRedderApi\\RidderRedderApi.Models\\RidderRedderApi.Models.csproj": {
+              "projectPath": "D:\\gits\\CA1819-RidderRedder\\src\\RidderRedderApi\\RidderRedderApi.Models\\RidderRedderApi.Models.csproj"
             },
-            "C:\\Users\\joeri\\gits\\CA1819-RidderRedder\\src\\RidderRedderApi\\RidderRedderApi.Repositories\\RidderRedderApi.Repositories.csproj": {
-              "projectPath": "C:\\Users\\joeri\\gits\\CA1819-RidderRedder\\src\\RidderRedderApi\\RidderRedderApi.Repositories\\RidderRedderApi.Repositories.csproj"
+            "D:\\gits\\CA1819-RidderRedder\\src\\RidderRedderApi\\RidderRedderApi.Repositories\\RidderRedderApi.Repositories.csproj": {
+              "projectPath": "D:\\gits\\CA1819-RidderRedder\\src\\RidderRedderApi\\RidderRedderApi.Repositories\\RidderRedderApi.Repositories.csproj"
             },
-            "C:\\Users\\joeri\\gits\\CA1819-RidderRedder\\src\\RidderRedderApi\\RidderRedderApi.Services\\RidderRedderApi.Services.csproj": {
-              "projectPath": "C:\\Users\\joeri\\gits\\CA1819-RidderRedder\\src\\RidderRedderApi\\RidderRedderApi.Services\\RidderRedderApi.Services.csproj"
+            "D:\\gits\\CA1819-RidderRedder\\src\\RidderRedderApi\\RidderRedderApi.Services\\RidderRedderApi.Services.csproj": {
+              "projectPath": "D:\\gits\\CA1819-RidderRedder\\src\\RidderRedderApi\\RidderRedderApi.Services\\RidderRedderApi.Services.csproj"
             },
-            "C:\\Users\\joeri\\gits\\CA1819-RidderRedder\\src\\RidderRedderApi\\RidderRedderApi.ViewModels\\RidderRedderApi.ViewModels.csproj": {
-              "projectPath": "C:\\Users\\joeri\\gits\\CA1819-RidderRedder\\src\\RidderRedderApi\\RidderRedderApi.ViewModels\\RidderRedderApi.ViewModels.csproj"
+            "D:\\gits\\CA1819-RidderRedder\\src\\RidderRedderApi\\RidderRedderApi.ViewModels\\RidderRedderApi.ViewModels.csproj": {
+              "projectPath": "D:\\gits\\CA1819-RidderRedder\\src\\RidderRedderApi\\RidderRedderApi.ViewModels\\RidderRedderApi.ViewModels.csproj"
             }
           }
         }
