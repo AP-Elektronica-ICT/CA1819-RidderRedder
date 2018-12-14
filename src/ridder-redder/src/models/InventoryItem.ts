@@ -1,0 +1,12 @@
+import { ItemImage } from "./ItemImage";
+import { ItemType } from "./ItemType";
+
+export interface InventoryItem {
+    authId: string;
+    itemImage: ItemImage;
+    itemType: ItemType;
+    amount: number;
+}
+
+
+

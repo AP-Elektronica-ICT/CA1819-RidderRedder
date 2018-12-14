@@ -67,5 +67,23 @@ namespace RidderRedderApi.Web.Api.Controllers {
         public bool DeleteInventoryItem(int itemid) {
             return this.inventoryService.DeleteInventoryItem(itemid);
         }
+
+        /// <summary>
+        /// Gets all item types.
+        /// </summary>
+        /// <returns>The all item types.</returns>
+        [HttpGet("types")]
+        public List<ItemType> GetAllItemTypes() {
+            return this.inventoryService.GetAllItemTypes();
+        }
+
+        /// <summary>
+        /// Gets all item images.
+        /// </summary>
+        /// <returns>The all item images.</returns>
+        [HttpGet("images")]
+        public List<ItemImage> GetAllItemImages() {
+            return this.inventoryService.GetAllItemImages();
+        }
     }
 }

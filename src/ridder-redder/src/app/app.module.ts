@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorHandler, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -8,9 +8,7 @@ import { GoogleMaps } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 import { RidderRedder } from './app.component';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { HomePage } from '../pages/home/home';
-import { CombatPage } from '../pages/combat/combat';
-import { ArLauncherComponent } from '../components/ar-launcher/ar-launcher';
+
 import { ComponentsModule } from '../components/components.module';
 import { HomePageModule } from '../pages/home/home.module';
 import { CombatPageModule } from '../pages/combat/combat.module';
@@ -22,6 +20,8 @@ import { PlayerProvider } from '../providers/player/PlayerProvider';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import { DeviceMotion } from '@ionic-native/device-motion';
 import { AuthProvider } from '../providers/auth/AuthProvider';
+import { InventoryProvider } from '../providers/inventory/InventoryProvider';
+import { InterceptorProvider } from '../providers/interceptor/Interceptor';
 
 @NgModule({
   declarations: [
@@ -37,6 +37,7 @@ import { AuthProvider } from '../providers/auth/AuthProvider';
     ComponentsModule,
     HomePageModule,
     CombatPageModule,
+    // DirectivesModule,
     IonicModule.forRoot(RidderRedder)
   ],
   bootstrap: [IonicApp],
@@ -59,7 +60,14 @@ import { AuthProvider } from '../providers/auth/AuthProvider';
     DeviceMotion,
     ScreenOrientation,
     SpeechRecognition,
-    AuthProvider
+    AuthProvider,
+    InventoryProvider,
+    InterceptorProvider,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorProvider,
+      multi: true
+  }
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

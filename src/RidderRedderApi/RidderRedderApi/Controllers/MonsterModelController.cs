@@ -19,11 +19,14 @@ namespace RidderRedderApi.Web.Api.Controllers {
 
         //private MonsterModelService monsterModelService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:RidderRedderApi.Web.Api.Controllers.MonsterModelController"/> class.
+        /// </summary>
         public MonsterModelController() {
         }
 
         /// <summary>
-        /// Gets the monster model image.
+        /// Gets the monster model image stored on the server saved in PNG format
         /// </summary>
         /// <returns>The monster model image.</returns>
         /// <param name="monsterModelPath">Monster model path.</param>
