@@ -42,5 +42,17 @@ namespace RidderRedderApi.Web.Api.Controllers {
 		public IActionResult Update(string landmarkId, [FromBody]Landmark l) {
 			return Ok(landmarkService.Update(l));
 		}
-	}
+
+        /// <summary>
+		/// Insert a new landmark
+		/// </summary>
+		/// <returns>The update.</returns>
+		/// <param name="landmarkId">LandmarkId.</param>
+		/// <param name="l">L.</param>
+		[HttpPost("{landmarkId}")]
+        public IActionResult Insert(string landmarkId, [FromBody]Landmark l)
+        {
+            return Ok(landmarkService.Post(l));
+        }
+    }
 }
