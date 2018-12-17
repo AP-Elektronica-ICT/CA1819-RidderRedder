@@ -1,2 +1,2 @@
 
-export const RootUrl = "http://192.168.1.44:44328/api/v1/";
+export const RootUrl = "http://ridderredder.francecentral.cloudapp.azure.com/api/v1/";
