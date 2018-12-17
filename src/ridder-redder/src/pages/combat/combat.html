@@ -1,6 +1,13 @@
-<ion-content class="background" padding *ngIf="combat">
-    <div class="combat-container" *ngIf="monster && !combat.loading">
+<ion-content class="background" *ngIf="combat">
+
+    <!-- RANGED CONTAINER, HIGHER THAN THE OTHERS -->
+    <img src="assets/icons/bow-straight.png" id="img-ranged-bow" bow-drag [combat]="this.combat" width="100" height="100"
+        *ngIf="combat.combatState === 2">
+
+    <div class="combat-container" padding *ngIf="monster && !combat.loading">
         <div class="header-container">
+
+            <!-- DIFFICULTY CONTAINER, SHOWS SKULLS BASED ON DIFFICULTY-->
             <div class="difficulty">
                 <p>Difficulty</p>
                 <ul>
@@ -10,6 +17,8 @@
                 </ul>
 
             </div>
+
+            <!-- HEADER INFO, MONSTER- AND PLAYER HEALTH BAR-->
             <div class="header-info">
                 <img src="assets/icons/fight.png" width="80" height="80" *ngIf="combatState === 0">
                 <div class="combat-info" *ngIf="combatState != 0">
@@ -18,52 +27,64 @@
                         {{combat.monster.Name.monsterNameText}}</span>
                 </div>
             </div>
+
+            <!-- SHOW WEAKNESS ICON -->
             <div class="weakness">
                 <p>Weakness</p>
                 <img src="assets/icons/fire.png" width="30" height="30">
             </div>
         </div>
+
+        <!-- AR CONTAINER -->
         <div class="ar-container">
-            <!-- <ar-frame>
 
-            </ar-frame> -->
-
-            <!-- <span class="monsterHealth">{{combat.monster.Health}} / {{combat.monster.MaxHealth}}</span> -->
-
-            <div class="monster-container">
-                <img src="{{combat.monster.Model.monsterModelPath}}" class="monsterImage">
+            <div class="monster-container" *ngIf="combat.combatState != 4 && combat.combatState != 5">
+                <img src="{{combat.monster.Model.monsterModelPath}}" #monsterObject class="monsterImage">
 
                 <!-- <span class="combat-splash">POW!</span> -->
 
             </div>
         </div>
+        <!-- FOOTER CONTAINER -->
         <div class="footer-container">
 
-            <div class="combat-ranged-container" *ngIf="combatState === 2">
-                <img src="assets/icons/bow-straight.png" id="img-ranged-bow" width="100" height="100">
-            </div>
-
-            <div class="info-container">
+            <!-- INFO CONTAINER-->
+            <div class="info-container" id="infoContainer">
                 <h1>{{infoHead}}</h1>
                 <p>{{infoParagraph}}</p>
                 <p>Total experience {{combat.player.Experience}}</p>
             </div>
 
+            <!-- LOOT CONTAINER -->
+            <div class="loot-container" *ngIf="combat.combatState == 4">
+                <h2>Gained loot:</h2>
+                <div class="loot-content">
+                    <div class="loot-item" *ngFor="let loot of combat.lootGained">
+                        <h4>{{loot.amount}} {{loot.itemType.itemTypeName}}</h4>
+                        <img src="{{loot.itemImage.path}}">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SELECT COMBAT STYLE CONTAINER-->
             <div (click)="combat.selectCombatStyle($event)" class="combat-style-container" *ngIf="combat.combatState === 0">
                 <img src="assets/icons/sword.png" id="img-sword" width="80" height="80">
                 <img src="assets/icons/bow.png" id="img-bow" width="80" height="80">
                 <img src="assets/icons/wand.png" id="img-wand" width="80" height="80">
             </div>
 
+            <!-- MELEE CONTAINER -->
             <div (click)="combat.interactFooter($event)" class="combat-melee-container" *ngIf="combat.combatState === 1">
                 <img src="assets/icons/sword-slash.png" id="img-sword-slash" width="100" height="100">
             </div>
 
+            <!-- MAGIC CONTAINER -->
             <div (click)="combat.interactFooter($event)" class="combat-magic-container" *ngIf="combat.combatState === 3">
                 <img src="assets/icons/speak-clean.png" id="img-magic-speak" width="100" height="100">
                 <img src="assets/icons/wand.png" id="img-magic-wand" width="100" height="100">
             </div>
 
+            <!-- RETRY CONTAINER-->
             <div (click)="combat.retry()" class="retry-container" *ngIf="combat.combatState == 4 || combat.combatState === 5">
                 <img src="assets/icons/retry.png" id="img-retry" width="40" height="40">
                 <p>Retry</p>
@@ -71,20 +92,15 @@
 
         </div>
 
-        <div class="button-container" *ngIf="combat.inCombat">
-            <button ion-button class="btnDamageMonster" (click)="damageMonster()">
-                Monster {{combat.monster.Health}}
-            </button>
-            <button ion-button class="btnForfeit" (click)="forfeit()">
-                Forfeit
-            </button>
-            <button ion-button class="btnDamagePlayer" (click)="damagePlayer()" disabled>
-                Player {{combat.player.Health}}
-            </button>
+        <!-- CHEAT CONTAINER WHEN IN COMBAT -->
+        <div class="button-container">
+            <img src="assets/icons/chicken.png" class="chicken-img" width="30" height="30" (click)="forfeit()" *ngIf="combat.inCombat">
+            <img src="assets/icons/dead.png" class="kill-img" width="30" height="30" (click)="killMonster()" *ngIf="combat.inCombat">
         </div>
+
     </div>
     <div class="loading-container" *ngIf="combat.loading">
-        LOADING
+        <img src="assets/icons/loading.gif" class="loading-gif" width="90" height="90">
     </div>
     <span class="screen-splash"></span>
 </ion-content>

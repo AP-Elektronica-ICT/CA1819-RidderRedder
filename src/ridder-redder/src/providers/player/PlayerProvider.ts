@@ -17,23 +17,24 @@ import { RootUrl } from '../RootUrl';
 @Injectable()
 export class PlayerProvider {
 
-    // private baseUrl = "http://192.168.11.30:5000/api/v1";
     private httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
             // 'Authorization': `Bearer ${this.auth.access_token}`
         })
     }
-
     private player: Player;
-
     Inventory: Array<Knight>;
 
     constructor(public http: HttpClient, private auth: AuthProvider) {
         // connect to server, get data
-        console.log("Hello PlayerProvider");
-        this.GetPlayer(auth.AuthId).subscribe(player => {
-            this.player = player;
+        this.GetPlayer(auth.AuthId).subscribe(data => {
+            let p: Player = {
+                PlayerName: data.PlayerName,
+                Experience: data.Experience,
+                AuthId: data.AuthId
+            }
+            this.player = p;
         }, error => {
             console.log(error);
         });
@@ -58,9 +59,7 @@ export class PlayerProvider {
             let p: Player = {
                 PlayerName: data.playerName,
                 Experience: data.experience,
-                AuthId: data.authId,
-                Health: 500,
-                MaxHealth: 500
+                AuthId: data.authId
             };
             return p;
         });
@@ -70,7 +69,6 @@ export class PlayerProvider {
         let queryString = RootUrl;
         queryString += "Player/";
         queryString +=  this.auth.AuthId;
-
         let playerDto: PlayerDto = {
             authId: p.AuthId,
             experience: parseInt(p.Experience.toFixed(0)),
@@ -78,13 +76,11 @@ export class PlayerProvider {
         }
         console.log(playerDto);
 
-        return this.http.put<PlayerDto>(queryString, playerDto, this.httpOptions).map(data => {
+        return this.http.put<PlayerDto>(`/player/${this.auth.AuthId}`, playerDto).map(data => {
             let p: Player = {
                 PlayerName: data.playerName,
                 Experience: data.experience,
                 AuthId: data.authId,
-                Health: 500,
-                MaxHealth: 500
             };
             return p;
         });

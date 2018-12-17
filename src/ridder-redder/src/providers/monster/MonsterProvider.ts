@@ -14,7 +14,6 @@ import { RootUrl } from '../RootUrl';
 @Injectable()
 export class MonsterProvider {
 
-    // private baseUrl = "http://192.168.11.30:5000/api/v1";
     private httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
@@ -28,9 +27,7 @@ export class MonsterProvider {
 
     public getMonster(): Observable<Monster> {
         let queryString = RootUrl;
-        queryString += "Monster"
-
-
+        queryString += "monster"
 
         return this.http.get<MonsterDto>(queryString, this.httpOptions).map(m => {
             let monster = {

@@ -1,16 +1,19 @@
-import { Component, Input } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Monster } from '../../models/Monster';
-import { CombatState } from '../../models/CombatState';
-import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion';
-import { Combat } from '../../models/Combat';
-import { Player } from '../../models/Player';
-import { MonsterDto } from '../../dtos/MonsterDto';
-
+import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion';
+
 import { MonsterProvider } from '../../providers/monster/MonsterProvider';
 import { PlayerProvider } from '../../providers/player/PlayerProvider';
 import { AuthProvider } from '../../providers/auth/AuthProvider';
+
+import { Combat } from '../../models/Combat';
+import { Player } from '../../models/Player';
+import { Monster } from '../../models/Monster';
+import { CombatState } from '../../models/CombatState';
+
+import { MonsterDto } from '../../dtos/MonsterDto';
+import { InventoryProvider } from '../../providers/inventory/InventoryProvider';
 
 /**
  * Generated class for the CombatPage page.
@@ -27,6 +30,7 @@ import { AuthProvider } from '../../providers/auth/AuthProvider';
 export class CombatPage {
 
     @Input() monster: Monster;
+    @ViewChild('monsterObject') monsterObject: ElementRef;
 
     private combat: Combat;
 
@@ -40,27 +44,25 @@ export class CombatPage {
         private speech: SpeechRecognition,
         private monsterProvider: MonsterProvider,
         private playerProvider: PlayerProvider,
-        private authProvider: AuthProvider
+        private authProvider: AuthProvider,
+        private invProvider: InventoryProvider
     ) {
 
-        var options = {
-            frequency: 100
-        }
+
+    }
+
+    ionViewDidLoad() {
 
         this.loadPlayer();
 
     }
-
-
 
     private loadPlayer() {
         this.playerProvider.GetPlayer(this.authProvider.AuthId).subscribe(data => {
             let p: Player = {
                 PlayerName: data.PlayerName,
                 Experience: data.Experience,
-                AuthId: data.AuthId,
-                Health: 500,
-                MaxHealth: 500
+                AuthId: data.AuthId
             }
 
             this.loadMonster(p);
@@ -73,11 +75,9 @@ export class CombatPage {
     private loadMonster(player: Player) {
         this.monsterProvider.getMonster().subscribe(data => {
             this.monster = data;
-        
-            this.combat = new Combat(this, this.monster, player, this.deviceMotion, this.speech, this.playerProvider, this.monsterProvider);
+            this.combat = new Combat(this, this.monster, player, this.deviceMotion, this.speech, this.playerProvider, this.monsterProvider, this.authProvider, this.invProvider);
 
             this.setInfo();
-
             this.loadSpeech();
 
         }, error => {
@@ -88,7 +88,7 @@ export class CombatPage {
     private loadSpeech() {
         // Check feature available
         this.speech.isRecognitionAvailable().then((available: boolean) => {
-            console.log("Speech recognition available: " + available);
+            // console.log("Speech recognition available: " + available);
             // Request permissions
             // Check permission
             this.speech.hasPermission()
@@ -104,17 +104,13 @@ export class CombatPage {
         });
     }
 
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad CombatPage');
-
-    }
-
     difficulty(n: number): any[] {
         return Array(n);
     }
 
     setInfo() {
-console.log("Setting info");
+        // console.log("Setting info");
+        this.resetInfoContainerPosition();
         switch (this.combat.combatState) {
             case CombatState.ChoosingCombatStyle:
                 this.infoHead = "Battle time!";
@@ -127,6 +123,7 @@ console.log("Setting info");
             case CombatState.CombatRanged:
                 this.infoHead = "Shoot him!"
                 this.infoParagraph = "Aim and drag the bow to shoot";
+                this.setInfoContainerPosition(0);
                 break;
             case CombatState.CombatMagic:
                 this.infoHead = "Hocus Pocus"; //Replace with magic spell
@@ -134,27 +131,42 @@ console.log("Setting info");
                 break;
             case CombatState.CombatVictory:
                 this.infoHead = "Victory!"
-                this.infoParagraph = `You have defeated the monster!\nYou have gained ${this.combat.experienceGained} experience!`;
+                this.infoParagraph = "";
+                this.setInfoContainerPosition(43);
+                // this.infoParagraph = `You have defeated the monster!\nYou have gained ${this.combat.experienceGained} experience!`;
                 break;
             case CombatState.CombatDefeat:
                 this.infoHead = "Defeat!"
-                this.infoParagraph = "You have been defeated by the monster!";
+                this.infoParagraph = "";
+                this.setInfoContainerPosition(43);
+                // this.infoParagraph = "You have been defeated by the monster!";
                 break;
         }
+    }
+
+    private resetInfoContainerPosition() {
+        let el = document.getElementById('infoContainer');
+        if (el)
+            el.style.bottom = '18% !important';
+        
+    }
+    private setInfoContainerPosition(bottom: number) {
+        let el = document.getElementById('infoContainer');
+        if (el) 
+            el.style.bottom = bottom + '% !important';
+        
     }
 
     damageMonster() {
         this.combat.hitMonster();
     }
 
-    damagePlayer() {
-        this.combat.hitPlayer();
+    killMonster() {
+        this.combat.hitMonster(this.monster.Health);
     }
 
     forfeit() {
         this.combat.stopCombat();
     }
-
-
 
 }
