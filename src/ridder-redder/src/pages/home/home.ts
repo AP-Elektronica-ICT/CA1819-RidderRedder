@@ -33,7 +33,7 @@ export class HomePage {
     private loading = true;
 
     // tfw static doesn't work
-    monsterDistance: number = 0.005; // 0.005 ~ 250m?
+    monsterDistance: number = 0.003; // 0.005 ~ 250m?
 
     constructor(public navCtrl: NavController, public geolocation: Geolocation, public modalCtrl: ModalController, public monsterProvider: MonsterProvider, public lmProvider: LandmarkProvider, public pProvider: PlayerProvider, public authProvider: AuthProvider, public navParams: NavParams) {
         this.monsters = new Array<Monster>();
@@ -79,13 +79,13 @@ export class HomePage {
                             lat: resp.coords.latitude,
                             lng: resp.coords.longitude
                         },
-                        zoom: 17,
+                        zoom: 16,
                         tilt: 30
                     },
                     gestures: {
                         scroll: false,
                         tilt: false,
-                        zoom: true,
+                        zoom: false,
                         rotate: true
                     },
                     styles: [ // disable placenames etc.
@@ -139,7 +139,9 @@ export class HomePage {
                     {
                         lat: data.coords.latitude,
                         lng: data.coords.longitude
-                    }
+                    },
+                    zoom: 16,
+                    tilt: 30
                 });
         }, error => {
             console.log("Stopped watching: " + error);
@@ -234,7 +236,7 @@ export class HomePage {
         }
 
         this.monsters.forEach(m => {
-            if(m.Health <= 0)
+            if (m.Health <= 0)
                 this.removeMonster(m);
         });
 
@@ -254,7 +256,14 @@ export class HomePage {
 
             let marker: Marker = this.map.addMarkerSync({
                 title: monster.Title.monsterTitleText + " " + monster.Name.monsterNameText,
-                icon: 'blue',
+                icon: {
+                    url: 'assets/icons/marker_icon.png',
+                    // url: monster.Model.monsterModelPath,
+                    size: {
+                        width: 25,
+                        height: 25
+                    }
+                },
                 animation: 'DROP',
                 position: {
                     lat: rlat,
