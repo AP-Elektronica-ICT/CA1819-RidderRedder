@@ -30,6 +30,8 @@ export class HomePage {
     mapLoaded = false;
     private geoPosWatcher: any;
 
+    private loading = true;
+
     // tfw static doesn't work
     monsterDistance: number = 0.005; // 0.005 ~ 250m?
 
@@ -126,6 +128,7 @@ export class HomePage {
     watchMap() {
         console.log("Watching map...");
         this.geolocation.watchPosition({ timeout: 5000, enableHighAccuracy: true }).subscribe(data => {
+            this.loading = false;
             this.updateMonsters();
             this.prevPos.lat = data.coords.latitude;
             this.prevPos.lng = data.coords.longitude;
