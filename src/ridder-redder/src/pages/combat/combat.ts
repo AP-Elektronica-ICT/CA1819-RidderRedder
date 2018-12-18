@@ -14,6 +14,7 @@ import { CombatState } from '../../models/CombatState';
 
 import { MonsterDto } from '../../dtos/MonsterDto';
 import { InventoryProvider } from '../../providers/inventory/InventoryProvider';
+import { Geolocation } from '@ionic-native/geolocation';
 
 /**
  * Generated class for the CombatPage page.
@@ -37,6 +38,8 @@ export class CombatPage {
     private infoHead: string;
     private infoParagraph: string;
 
+    public loading: boolean = true;
+
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
@@ -45,31 +48,50 @@ export class CombatPage {
         private monsterProvider: MonsterProvider,
         private playerProvider: PlayerProvider,
         private authProvider: AuthProvider,
-        private invProvider: InventoryProvider
+        private invProvider: InventoryProvider,
+        private geolocation: Geolocation
     ) {
-
-
+        if (!navParams.get('monster'))
+            this.monsterProvider.getMonster().subscribe((data) => {
+                this.monster = data;
+                this.loadPlayer();
+            }, error => {
+                console.log(error);
+            });
+        else {
+            console.log("monster param is filled, setting it");
+            this.monster = navParams.get('monster');
+            this.loadPlayer();
+        }
     }
 
     ionViewDidLoad() {
-
-        this.loadPlayer();
-
+        
     }
 
     private loadPlayer() {
-        this.playerProvider.GetPlayer(this.authProvider.AuthId).subscribe(data => {
+        this.playerProvider.getPlayer(this.authProvider.AuthId).subscribe(data => {
             let p: Player = {
                 PlayerName: data.PlayerName,
                 Experience: data.Experience,
                 AuthId: data.AuthId
             }
+            
+            this.loadCombat(p, this.monster);
+            
+            this.loadSpeech();
+            // this.loadMonster(p);
 
-            this.loadMonster(p);
-
+            this.loading = false;
         }, failed => {
             console.log(failed);
+            this.loading = false;
         })
+    }
+
+    private loadCombat(player: Player, monster: Monster){
+        this.combat = new Combat(this, monster, player, this.deviceMotion, this.speech, this.playerProvider, this.monsterProvider, this.authProvider, this.invProvider);
+        this.setInfo();
     }
 
     private loadMonster(player: Player) {
@@ -110,7 +132,6 @@ export class CombatPage {
 
     setInfo() {
         // console.log("Setting info");
-        this.resetInfoContainerPosition();
         switch (this.combat.combatState) {
             case CombatState.ChoosingCombatStyle:
                 this.infoHead = "Battle time!";
@@ -123,7 +144,6 @@ export class CombatPage {
             case CombatState.CombatRanged:
                 this.infoHead = "Shoot him!"
                 this.infoParagraph = "Aim and drag the bow to shoot";
-                this.setInfoContainerPosition(0);
                 break;
             case CombatState.CombatMagic:
                 this.infoHead = "Hocus Pocus"; //Replace with magic spell
@@ -131,30 +151,15 @@ export class CombatPage {
                 break;
             case CombatState.CombatVictory:
                 this.infoHead = "Victory!"
-                this.infoParagraph = "";
-                this.setInfoContainerPosition(43);
+                this.infoParagraph = "Total experience: " + this.combat.player.Experience;
                 // this.infoParagraph = `You have defeated the monster!\nYou have gained ${this.combat.experienceGained} experience!`;
                 break;
             case CombatState.CombatDefeat:
                 this.infoHead = "Defeat!"
-                this.infoParagraph = "";
-                this.setInfoContainerPosition(43);
+                this.infoParagraph = "Total experience: " + this.combat.player.Experience;
                 // this.infoParagraph = "You have been defeated by the monster!";
                 break;
         }
-    }
-
-    private resetInfoContainerPosition() {
-        let el = document.getElementById('infoContainer');
-        if (el)
-            el.style.bottom = '18% !important';
-        
-    }
-    private setInfoContainerPosition(bottom: number) {
-        let el = document.getElementById('infoContainer');
-        if (el) 
-            el.style.bottom = bottom + '% !important';
-        
     }
 
     damageMonster() {

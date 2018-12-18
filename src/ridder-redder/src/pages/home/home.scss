@@ -1,10 +1,11 @@
 page-home {
-	#map_canvas {
-		height: 90%;
-	}
-  #inv_button {
-    height: 10%;
-    width: 100%;
-  }
+    #map_canvas {
+        height: 90%;
+        min-height: 400px;
+        min-width: 400px;
+    }
+    #inv_button {
+        height: 10%;
+        width: 100%;
+    }
 }
-

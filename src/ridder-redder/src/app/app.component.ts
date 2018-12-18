@@ -6,13 +6,14 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 import { HomePage } from '../pages/home/home';
 import { CombatPage } from '../pages/combat/combat';
+import { TestComponent } from '../components/test/test';
 
 @Component({
     templateUrl: 'app.html'
 })
 export class RidderRedder {
-    
-  rootPage:any = CombatPage;
+
+    rootPage: any = HomePage;
 
 
     constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private screenOrientation: ScreenOrientation) {

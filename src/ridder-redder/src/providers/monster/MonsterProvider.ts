@@ -19,6 +19,7 @@ export class MonsterProvider {
     }
 
     public getMonster(): Observable<Monster> {
+        console.log("Getting new monster");
         return this.http.get<MonsterDto>(`/monster`).map(m => {
             let monster = {
                 MonsterId: m.monsterId,
@@ -31,7 +32,7 @@ export class MonsterProvider {
                 MaxHealth: 250,
                 Marker: null
             }
-            console.log(monster);
+            // console.log(monster);
             return monster;
         });
     }
