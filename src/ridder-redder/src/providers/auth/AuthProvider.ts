@@ -6,13 +6,13 @@ import Auth0 from 'auth0-js';
 
 const auth0config = {
     // needed for auth0
-    clientID: 'SaPc53EJzOhIZgJ0nseM6hjA94bYA7F3',
+    clientID: '1x5h4mH6h17n4nfG5HDZ1obMjf5vNpIZ',
 
     // needed for auth0cordova
-    clientId: 'SaPc53EJzOhIZgJ0nseM6hjA94bYA7F3',
+    clientId: '1x5h4mH6h17n4nfG5HDZ1obMjf5vNpIZ',
     domain: 'melvinb.eu.auth0.com',
     redirectURL: location.href,
-    // scope: 'openid',
+    responseType: 'code',
     packageIdentifier: 'be.ridder.redder'
 };
 

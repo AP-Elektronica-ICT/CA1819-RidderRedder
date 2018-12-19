@@ -85,10 +85,10 @@
       "cordova-plugin-geolocation": {},
       "cordova-plugin-safariviewcontroller": {},
       "cordova-plugin-customurlscheme": {
-        "URL_SCHEME": "{be.ridder.redder}",
-        "ANDROID_SCHEME": "{be.ridder.redder}",
+        "URL_SCHEME": "be.ridder.redder",
+        "ANDROID_SCHEME": "be.ridder.redder",
         "ANDROID_HOST": "melvinb.eu.auth0.com",
-        "ANDROID_PATHPREFIX": "/cordova/{be.ridder.redder}/callback"
+        "ANDROID_PATHPREFIX": "/cordova/be.ridder.redder/callback"
       }
     },
     "platforms": [

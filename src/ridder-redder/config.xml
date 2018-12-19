@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="be.ridder.redder" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Ridder Redder</name>
-    <description>An awesome Ionic/Cordova app.</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+    <description>An awesome Cloud Applications city game</description>
+    <author email="hi@ionicframework" href="http://ionicframework.com/">Melvin Bootsgezel and Yoeri Temmerman</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -99,10 +99,10 @@
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1" />
     <plugin name="cordova-plugin-safariviewcontroller" spec="^1.5.4" />
     <plugin name="cordova-plugin-customurlscheme" spec="^4.3.0">
-        <variable name="URL_SCHEME" value="{be.ridder.redder}" />
-        <variable name="ANDROID_SCHEME" value="{be.ridder.redder}" />
+        <variable name="URL_SCHEME" value="be.ridder.redder" />
+        <variable name="ANDROID_SCHEME" value="be.ridder.redder" />
         <variable name="ANDROID_HOST" value="melvinb.eu.auth0.com" />
-        <variable name="ANDROID_PATHPREFIX" value="/cordova/{be.ridder.redder}/callback" />
+        <variable name="ANDROID_PATHPREFIX" value="/cordova/be.ridder.redder/callback" />
     </plugin>
     <engine name="android" spec="^7.1.4" />
     <engine name="browser" spec="^5.0.4" />
