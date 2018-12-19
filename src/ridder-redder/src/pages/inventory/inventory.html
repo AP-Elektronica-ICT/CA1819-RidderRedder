@@ -1,28 +1,16 @@
-<!--
-  Generated template for the InventoryPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>inventory</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-  <ion-list>
-    <ion-item *ngFor="let knight of Knights">
-      <ion-card>
-        <ion-card-content >
-          <img src="assets/imgs/Knight_{{knight.colour}}.png" width="100" height="100">
-          <!--Knight by Hayden Kerrisk from the Noun Project-->
-          <p>{{knight.colour}} {{knight.level}} </p>
-        </ion-card-content>
-      </ion-card>
-    </ion-item>
-  </ion-list>
+<ion-content class="background">
+    <div class="loading-container" *ngIf="!inventoryItems">
+        <img src="assets/icons/loading.gif" class="loading-gif" width="90" height="90">
+    </div>
+    <div class="inventory-container">
+        <div class="inventory-header">
+            <h6>Inventory</h6><a (click)="returnView()">Return</a>
+        </div>
+        <ion-scroll scrollY="true">
+            <div class="inventory-item" *ngFor="let item of inventoryItems">
+                <h6>{{item.amount}} {{item.itemType.itemTypeName}}</h6>
+                <img src="{{item.itemImage.path}}">
+            </div>
+        </ion-scroll>
+    </div>
 </ion-content>

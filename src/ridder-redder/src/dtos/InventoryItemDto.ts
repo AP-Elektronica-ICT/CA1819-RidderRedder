@@ -1,7 +1,7 @@
 import { ItemImage } from "../models/ItemImage";
 import { ItemType } from "../models/ItemType";
 
-export interface InventoryItem {
+export interface InventoryItemDto {
     inventoryItemId: number;
     authId: string;
     itemImage: ItemImage;

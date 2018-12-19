@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 <div class="loot-loading" *ngIf="combat.lootGained.length == 0">
-                    <img src="assets/icons/loading.gif" class="loading-gif" width="60" height="60">
+                    <img src="assets/icons/loading.gif" class=" loading-gif" width="60" height="60">
                 </div>
             </div>
 
@@ -89,11 +89,12 @@
             <!-- RETRY CONTAINER-->
             <div (click)="combat.retry()" class="retry-container" *ngIf="combat.combatState == 4 || combat.combatState === 5">
                 <div class="retry-content" *ngIf="DEBUG">
-                    <img src="assets/icons/retry.png" id="img-retry" width="40" height="40" >
+                    <img src="assets/icons/retry.png" id="img-retry" width="40" height="40">
                     <p>Retry</p>
                 </div>
                 <div class="continue-content" *ngIf="!DEBUG">
-                    <button ion-button>Return to map</button>
+                    <img src="assets/icons/retry.png" id="img-retry" width="40" height="40">
+                    <p>Return</p>
                 </div>
             </div>
 
