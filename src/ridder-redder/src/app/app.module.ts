@@ -22,14 +22,18 @@ import { DeviceMotion } from '@ionic-native/device-motion';
 import { AuthProvider } from '../providers/auth/AuthProvider';
 import { InventoryProvider } from '../providers/inventory/InventoryProvider';
 import { InterceptorProvider } from '../providers/interceptor/Interceptor';
+import { LoginPage } from '../pages/login/login';
+import { LoginPageModule } from '../pages/login/login.module';
+import { InventoryPageModule } from '../pages/inventory/inventory.module';
+import { LandmarkPageModule } from '../pages/landmark/landmark.module';
 
 @NgModule({
   declarations: [
     RidderRedder,
     //HomePage,
     //CombatPage,    these are in seperate Module files
-    InventoryPage,
-    LandmarkPage
+    // InventoryPage,
+    // LandmarkPage
   ],
   imports: [
     BrowserModule,
@@ -37,6 +41,9 @@ import { InterceptorProvider } from '../providers/interceptor/Interceptor';
     ComponentsModule,
     HomePageModule,
     CombatPageModule,
+    LoginPageModule,
+    InventoryPageModule,
+    LandmarkPageModule,
     // DirectivesModule,
     IonicModule.forRoot(RidderRedder)
   ],
@@ -45,8 +52,8 @@ import { InterceptorProvider } from '../providers/interceptor/Interceptor';
     RidderRedder,
     //HomePage,
     //CombatPage
-    InventoryPage,
-    LandmarkPage
+    // InventoryPage,
+    // LandmarkPage
   ],
   providers: [
     StatusBar,

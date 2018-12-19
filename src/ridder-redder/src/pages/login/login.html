@@ -1,0 +1,11 @@
+<ion-content padding>
+
+    <div *ngIf="!auth.isAuthenticated()">
+        <button ion-button block color="primary" (click)="auth.login()"> Log In </button>
+    </div>
+
+
+    <div *ngIf="auth.isAuthenticated()">
+        <button ion-button block color="primary" (click)="auth.logout()">Logout, {{ auth.user.nickname }}</button>
+    </div>
+</ion-content>
