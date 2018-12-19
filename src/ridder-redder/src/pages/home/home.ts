@@ -105,33 +105,38 @@ export class HomePage {
       });
   }
 
+  // determine correct icon for landmark
+  selectLandmarkIcon(landmark){
+    if(landmark.ownerId == null){
+      return {url: 'assets/imgs/castle_black.png',  //Castle by BGBOXXX Design from the Noun Project
+        size: {
+          width: 20,
+          height: 30}
+      }
+    }
+    else if(landmark.ownerId == this.authProvider.AuthId){
+      return {url: 'assets/imgs/castle_green.png',  //Castle by BGBOXXX Design from the Noun Project
+        size: {
+          width: 20,
+          height: 30}
+      }
+    }
+    else{
+      return {url: 'assets/imgs/castle_red.png',  //Castle by BGBOXXX Design from the Noun Project
+        size: {
+          width: 20,
+          height: 30}
+      }
+    }
+  }
+
   // add landmark markers to the map
   addLandmarks(){
+    console.log("adding landmarks");
+    console.log(this.landmarks);
     for(let landmark of this.landmarks){
-      var icon;
-      if(landmark.ownerId == null){
-        icon = {url: 'assets/imgs/castle_black.png',  //Castle by BGBOXXX Design from the Noun Project
-          size: {
-            width: 20,
-            height: 30}
-        }
-      }
-      else if(landmark.ownerId == this.authProvider.AuthId){
-        icon = {url: 'assets/imgs/castle_green.png',  //Castle by BGBOXXX Design from the Noun Project
-          size: {
-            width: 20,
-            height: 30}
-        }
-
-      }
-      else{
-        icon = {url: 'assets/imgs/castle_red.png',  //Castle by BGBOXXX Design from the Noun Project
-          size: {
-            width: 20,
-            height: 30}
-        }
-      }
-
+      console.log(landmark);
+      var icon = this.selectLandmarkIcon(landmark);
       // create marker
       let marker: Marker = this.map.addMarkerSync({
         title: landmark.name,

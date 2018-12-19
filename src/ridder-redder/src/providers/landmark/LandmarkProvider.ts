@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from "rxjs/Observable";
 import { Landmark } from '../../models/Landmark';
 import { Knight } from '../../models/Knight';
-import { RootUrl } from '../RootUrl';
 
 /*
   Generated class for the LandmarkProvider provider.
@@ -13,7 +12,7 @@ import { RootUrl } from '../RootUrl';
 */
 @Injectable()
 export class LandmarkProvider {
-  queryUrl = RootUrl + "landmark/";
+  queryUrl = "/landmark/";
   httpOptions = { headers: 
     new HttpHeaders({
       'Content-Type': 'application/json'

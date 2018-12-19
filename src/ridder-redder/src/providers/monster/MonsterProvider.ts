@@ -4,7 +4,6 @@ import { Monster } from '../../models/Monster';
 import { Observable } from "rxjs/Observable";
 import { AuthProvider } from '../auth/AuthProvider';
 import { MonsterDto } from '../../dtos/MonsterDto';
-import { RootUrl } from '../RootUrl';
 /*
   Generated class for the MonsterProvider provider.
 
@@ -26,8 +25,7 @@ export class MonsterProvider {
     }
 
     public getMonster(): Observable<Monster> {
-        let queryString = RootUrl;
-        queryString += "monster"
+        let queryString = "/monster"
 
         return this.http.get<MonsterDto>(queryString, this.httpOptions).map(m => {
             let monster = {
@@ -47,8 +45,7 @@ export class MonsterProvider {
     }
 
     public getMonsters(count: number): Observable<MonsterDto[]> {
-        let queryString = RootUrl;
-        queryString += "Monster/" + count;
+        let queryString = "/Monster/" + count;
 
         return this.http.get<MonsterDto[]>(queryString, this.httpOptions);
     }

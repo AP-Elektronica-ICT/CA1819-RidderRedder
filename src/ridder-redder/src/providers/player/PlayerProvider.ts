@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 import { AuthProvider } from '../auth/AuthProvider';
 import { query } from '@angular/core/src/render3/instructions';
 import { PlayerDto } from '../../dtos/PlayerDto';
-import { RootUrl } from '../RootUrl'; 
 
 /*
   Generated class for the PlayerProvider provider.
@@ -51,9 +50,7 @@ export class PlayerProvider {
     }
 
     public GetPlayer(authid: string): Observable<Player> {
-        let queryString = RootUrl;
-        queryString += "Player/";
-        queryString += authid;
+        let queryString = "/player/" + authid;
 
         return this.http.get<PlayerDto>(queryString, this.httpOptions).map(data => {
             let p: Player = {
@@ -66,8 +63,7 @@ export class PlayerProvider {
     }
 
     public UpdatePlayer(p: Player): Observable<Player> {
-        let queryString = RootUrl;
-        queryString += "Player/";
+        let queryString = "/player/";
         queryString +=  this.auth.AuthId;
         let playerDto: PlayerDto = {
             authId: p.AuthId,
