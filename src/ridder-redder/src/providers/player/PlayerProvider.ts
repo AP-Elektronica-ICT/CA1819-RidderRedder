@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Knight } from '../../models/Knight';
 import { Player } from '../../models/Player';
 import { Observable } from 'rxjs';
+import 'rxjs/add/operator/map'
 import { AuthProvider } from '../auth/AuthProvider';
 import { query } from '@angular/core/src/render3/instructions';
 import { PlayerDto } from '../../dtos/PlayerDto';
@@ -27,13 +28,8 @@ export class PlayerProvider {
 
     constructor(public http: HttpClient, private auth: AuthProvider) {
         // connect to server, get data
-        this.GetPlayer(auth.AuthId).subscribe(data => {
-            let p: Player = {
-                PlayerName: data.PlayerName,
-                Experience: data.Experience,
-                AuthId: data.AuthId
-            }
-            this.player = p;
+        this.getPlayer(auth.AuthId).subscribe(data => {
+            this.player = data;
         }, error => {
             console.log(error);
         });
@@ -49,22 +45,19 @@ export class PlayerProvider {
         return this.Inventory;
     }
 
-    public GetPlayer(authid: string): Observable<Player> {
-        let queryString = "/player/" + authid;
-
-        return this.http.get<PlayerDto>(queryString, this.httpOptions).map(data => {
+    public getPlayer(authid: string): Observable<Player> {
+        return this.http.get<PlayerDto>(`/player/${authid}`).map(data => {
             let p: Player = {
                 PlayerName: data.playerName,
                 Experience: data.experience,
                 AuthId: data.authId
             };
+            this.player = p;
             return p;
         });
     }
 
-    public UpdatePlayer(p: Player): Observable<Player> {
-        let queryString = "/player/";
-        queryString +=  this.auth.AuthId;
+    public updatePlayer(p: Player): Observable<Player> {
         let playerDto: PlayerDto = {
             authId: p.AuthId,
             experience: parseInt(p.Experience.toFixed(0)),

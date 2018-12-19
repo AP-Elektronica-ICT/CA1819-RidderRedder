@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Knight } from '../../models/Knight'
 import { PlayerProvider } from '../../providers/player/PlayerProvider';
+import { InventoryItem } from '../../models/InventoryItem';
+import { InventoryProvider } from '../../providers/inventory/InventoryProvider';
 
 /**
  * Generated class for the InventoryPage page.
@@ -12,19 +14,30 @@ import { PlayerProvider } from '../../providers/player/PlayerProvider';
 
 @IonicPage()
 @Component({
-  selector: 'page-inventory',
-  templateUrl: 'inventory.html',
+    selector: 'page-inventory',
+    templateUrl: 'inventory.html',
 })
 export class InventoryPage {
-  Knights: Array<Knight>;
+    Knights: Array<Knight>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public playerProvider: PlayerProvider) {
-    this.Knights = playerProvider.getInventory();
-    console.log(this.Knights);
-  }
+    private inventoryItems: InventoryItem[];
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad InventoryPage');
-  }
+    constructor(public navCtrl: NavController, public navParams: NavParams, public playerProvider: PlayerProvider, private invProvider: InventoryProvider) {
+        this.Knights = playerProvider.getInventory();
+
+        invProvider.getInventory().subscribe(data => {
+            this.inventoryItems = data;
+        });
+
+        console.log(this.Knights);
+    }
+
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad InventoryPage');
+    }
+
+    returnView() {
+        this.navCtrl.pop();
+    }
 
 }

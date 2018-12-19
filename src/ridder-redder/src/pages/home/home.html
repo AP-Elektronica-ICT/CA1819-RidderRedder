@@ -1,5 +1,12 @@
-<ion-content >
-  <div id="map_canvas">
-  </div>
-  <button id="inv_button" (click)="presentInventory()" >inv</button>
+<ion-content>
+
+    <div class="loading-container" *ngIf="loading">
+
+    </div>
+
+    <div id="map_canvas">
+
+    </div>
+
+    <button id="inv_button" (click)="presentInventory()">Show inventory</button>
 </ion-content>

@@ -4,7 +4,7 @@
     <img src="assets/icons/bow-straight.png" id="img-ranged-bow" bow-drag [combat]="this.combat" width="100" height="100"
         *ngIf="combat.combatState === 2">
 
-    <div class="combat-container" padding *ngIf="monster && !combat.loading">
+    <div class="combat-container" padding *ngIf="monster && !loading">
         <div class="header-container">
 
             <!-- DIFFICULTY CONTAINER, SHOWS SKULLS BASED ON DIFFICULTY-->
@@ -52,17 +52,19 @@
             <div class="info-container" id="infoContainer">
                 <h1>{{infoHead}}</h1>
                 <p>{{infoParagraph}}</p>
-                <p>Total experience {{combat.player.Experience}}</p>
             </div>
 
             <!-- LOOT CONTAINER -->
             <div class="loot-container" *ngIf="combat.combatState == 4">
                 <h2>Gained loot:</h2>
-                <div class="loot-content">
+                <div class="loot-content" *ngIf="combat.lootGained">
                     <div class="loot-item" *ngFor="let loot of combat.lootGained">
                         <h4>{{loot.amount}} {{loot.itemType.itemTypeName}}</h4>
                         <img src="{{loot.itemImage.path}}">
                     </div>
+                </div>
+                <div class="loot-loading" *ngIf="combat.lootGained.length == 0">
+                    <img src="assets/icons/loading.gif" class=" loading-gif" width="60" height="60">
                 </div>
             </div>
 
@@ -86,8 +88,14 @@
 
             <!-- RETRY CONTAINER-->
             <div (click)="combat.retry()" class="retry-container" *ngIf="combat.combatState == 4 || combat.combatState === 5">
-                <img src="assets/icons/retry.png" id="img-retry" width="40" height="40">
-                <p>Retry</p>
+                <div class="retry-content" *ngIf="DEBUG">
+                    <img src="assets/icons/retry.png" id="img-retry" width="40" height="40">
+                    <p>Retry</p>
+                </div>
+                <div class="continue-content" *ngIf="!DEBUG">
+                    <img src="assets/icons/retry.png" id="img-retry" width="40" height="40">
+                    <p>Return</p>
+                </div>
             </div>
 
         </div>
@@ -99,7 +107,7 @@
         </div>
 
     </div>
-    <div class="loading-container" *ngIf="combat.loading">
+    <div class="loading-container" *ngIf="loading">
         <img src="assets/icons/loading.gif" class="loading-gif" width="90" height="90">
     </div>
     <span class="screen-splash"></span>

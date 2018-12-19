@@ -14,9 +14,12 @@ import { AuthProvider } from "../providers/auth/AuthProvider";
 import { InventoryItem } from "./InventoryItem";
 import { InventoryProvider } from '../providers/inventory/InventoryProvider';
 import { AddInventoryItemDto } from "../dtos/AddInventoryItemDto";
+import { HomePage } from "../pages/home/home";
 
 
 export class Combat {
+
+    public DEBUG = false;
 
     public parent: CombatPage;
 
@@ -44,7 +47,7 @@ export class Combat {
     private speechListener;
     private speechOptions;
 
-    private loading: boolean = false;
+    
 
     public constructor(
         private parentPage: CombatPage,
@@ -161,6 +164,7 @@ export class Combat {
 
         this.parent.setInfo();
         this.resetTimer();
+        this.returnToMap();
     }
 
     resetTimer() {
@@ -283,7 +287,6 @@ export class Combat {
         }
     }
 
-
     defeatMonster() {
         this.inCombat = false;
         this.experienceGained = this.monster.Difficulty * 50 + this.maxTime;
@@ -302,16 +305,34 @@ export class Combat {
     }
 
     retry() {
+        if(!this.DEBUG)
+            this.returnToMap();
+
         if (this.combatState == CombatState.CombatVictory) {
-            this.loading = true;
+            this.parent.loading = true;
             this.monsterProvider.getMonster().subscribe(m => {
                 this.monster = m;
-                this.loading = false;
+                this.parent.loading = false;
             });
         }
         this.lootGained = [];
         this.combatState = CombatState.ChoosingCombatStyle;
         this.stopCombat();
+    }
+
+    resetCombat(){
+        this.lootGained = [];
+        this.monster.Marker.remove();
+    }
+
+    returnToMap(){
+        this.resetCombat();
+        this.parent.navCtrl.pop();
+        // this.parent.navCtrl.push(
+        //     HomePage,
+        //     { lastmonster: this.monster }
+        // );
+        console.log("Returning to map");
     }
 
     changeCombatState(state: CombatState) {
@@ -320,7 +341,7 @@ export class Combat {
 
         if (this.combatState == CombatState.CombatDefeat || this.combatState == CombatState.CombatVictory) {
             // this.loading = true;
-            this.playerProvider.UpdatePlayer(this.player).subscribe(data => {
+            this.playerProvider.updatePlayer(this.player).subscribe(data => {
                 let p: Player = {
                     PlayerName: data.PlayerName,
                     Experience: data.Experience,
