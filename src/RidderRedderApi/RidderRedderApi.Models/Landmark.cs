@@ -16,15 +16,15 @@ namespace RidderRedderApi.Models {
         [Key]
         public int LandmarkId { get; set; }
         /// <summary>
-        /// Gets or sets the position x.
+        /// Gets or sets the lattitude.
         /// </summary>
-        /// <value>The position x.</value>
-        public float PosX { get; set; }
+        /// <value>The lat</value>
+        public float Lat { get; set; }
         /// <summary>
-        /// Gets or sets the position y.
+        /// Gets or sets longitude.
         /// </summary>
-        /// <value>The position y.</value>
-        public float PosY { get; set; }
+        /// <value>The lon</value>
+        public float Lng { get; set; }
 
 		public string Name { get; set; }
 

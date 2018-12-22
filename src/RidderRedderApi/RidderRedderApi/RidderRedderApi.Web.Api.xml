@@ -44,6 +44,18 @@
             <returns><c>true</c>, if inventory item was deleted, <c>false</c> otherwise.</returns>
             <param name="itemid">Itemid.</param>
         </member>
+        <member name="M:RidderRedderApi.Web.Api.Controllers.InventoryController.GetAllItemTypes">
+            <summary>
+            Gets all item types.
+            </summary>
+            <returns>The all item types.</returns>
+        </member>
+        <member name="M:RidderRedderApi.Web.Api.Controllers.InventoryController.GetAllItemImages">
+            <summary>
+            Gets all item images.
+            </summary>
+            <returns>The all item images.</returns>
+        </member>
         <member name="M:RidderRedderApi.Web.Api.Controllers.LandmarkController.#ctor(RidderRedderApi.Services.LandmarkService)">
             <summary>
             Initializes a new instance of the <see cref="T:RidderRedderApi.Web.Api.Controllers.LandmarkController"/> class.
@@ -59,6 +71,14 @@
         <member name="M:RidderRedderApi.Web.Api.Controllers.LandmarkController.Update(System.String,RidderRedderApi.Models.Landmark)">
             <summary>
             Update the specified landmark with given landmarkId
+            </summary>
+            <returns>The update.</returns>
+            <param name="landmarkId">LandmarkId.</param>
+            <param name="l">L.</param>
+        </member>
+        <member name="M:RidderRedderApi.Web.Api.Controllers.LandmarkController.Insert(System.String,RidderRedderApi.Models.Landmark)">
+            <summary>
+            Insert a new landmark
             </summary>
             <returns>The update.</returns>
             <param name="landmarkId">LandmarkId.</param>
@@ -93,9 +113,14 @@
             Monster model controller.
             </summary>
         </member>
+        <member name="M:RidderRedderApi.Web.Api.Controllers.MonsterModelController.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:RidderRedderApi.Web.Api.Controllers.MonsterModelController"/> class.
+            </summary>
+        </member>
         <member name="M:RidderRedderApi.Web.Api.Controllers.MonsterModelController.GetMonsterModelImage(System.String)">
             <summary>
-            Gets the monster model image.
+            Gets the monster model image stored on the server saved in PNG format
             </summary>
             <returns>The monster model image.</returns>
             <param name="monsterModelPath">Monster model path.</param>
