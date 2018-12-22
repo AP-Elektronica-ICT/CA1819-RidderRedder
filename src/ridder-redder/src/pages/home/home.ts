@@ -38,8 +38,6 @@ export class HomePage {
     constructor(public navCtrl: NavController, public geolocation: Geolocation, public modalCtrl: ModalController, public monsterProvider: MonsterProvider, public lmProvider: LandmarkProvider, public pProvider: PlayerProvider, public authProvider: AuthProvider, public navParams: NavParams) {
         this.monsters = new Array<Monster>();
         this.prevPos = { lat: 0, lng: 0 };
-
-        this.landmarks = lmProvider.getLandmarks();
     }
 
     ionViewDidLoad() {
@@ -108,11 +106,17 @@ export class HomePage {
                 this.prevPos.lng = resp.coords.longitude;
 
                 this.map = GoogleMaps.create('map_canvas', mapOptions);
-                this.addLandmarks();
+              
+                this.lmProvider.getLandmarks().subscribe((landmarks) => {
+                  console.log('got landmarks');
+                  console.log(landmarks);
+                  this.landmarks = landmarks;
+                  this.addLandmarks();
+                });
                 // this.updateMonsters();
 
                 this.mapLoaded = true;
-
+                
                 this.watchMap();
 
             }).catch((error) => {
@@ -148,39 +152,43 @@ export class HomePage {
         });
 
     }
+    
+    chooseLandmarkIcon(landmark){
+        var icon;
+        if (landmark.ownerId == null) {
+            icon = {
+                url: 'assets/imgs/castle_black.png',  //Castle by BGBOXXX Design from the Noun Project
+                size: {
+                    width: 20,
+                    height: 30
+                }
+            }
+        }
+        else if (landmark.ownerId == this.authProvider.AuthId) {
+            icon = {
+                url: 'assets/imgs/castle_green.png',  //Castle by BGBOXXX Design from the Noun Project
+                size: {
+                    width: 20,
+                    height: 30
+                }
+            }
+        }
+        else {
+            icon = {
+                url: 'assets/imgs/castle_red.png',  //Castle by BGBOXXX Design from the Noun Project
+                size: {
+                    width: 20,
+                    height: 30
+                }
+            }
+        }
+        return icon;
+    }
+
     // add landmark markers to the map
     addLandmarks() {
         for (let landmark of this.landmarks) {
-            var icon;
-            if (landmark.ownerId == null) {
-                icon = {
-                    url: 'assets/imgs/castle_black.png',  //Castle by BGBOXXX Design from the Noun Project
-                    size: {
-                        width: 20,
-                        height: 30
-                    }
-                }
-            }
-            else if (landmark.ownerId == this.authProvider.AuthId) {
-                icon = {
-                    url: 'assets/imgs/castle_green.png',  //Castle by BGBOXXX Design from the Noun Project
-                    size: {
-                        width: 20,
-                        height: 30
-                    }
-                }
-
-            }
-            else {
-                icon = {
-                    url: 'assets/imgs/castle_red.png',  //Castle by BGBOXXX Design from the Noun Project
-                    size: {
-                        width: 20,
-                        height: 30
-                    }
-                }
-            }
-
+            var icon = this.chooseLandmarkIcon(landmark);
             // create marker
             let marker: Marker = this.map.addMarkerSync({
                 title: landmark.name,
@@ -203,24 +211,24 @@ export class HomePage {
     // move map centre to current location, if location is far enough from previous location
     updateMap() {
         this.geolocation.getCurrentPosition()
-            .then((resp) => {
-                console.log("Moving  map to " + resp);
+        .then((resp) => {
+            console.log("Moving  map to " + resp);
 
-                this.prevPos.lat = resp.coords.latitude;
-                this.prevPos.lng = resp.coords.longitude;
+            this.prevPos.lat = resp.coords.latitude;
+            this.prevPos.lng = resp.coords.longitude;
 
-                this.map.animateCamera(
+            this.map.animateCamera(
+                {
+                    target:
                     {
-                        target:
-                        {
-                            lat: resp.coords.latitude,
-                            lng: resp.coords.longitude
-                        }
-                    });
+                        lat: resp.coords.latitude,
+                        lng: resp.coords.longitude
+                    }
+                });
 
-            }).catch((error) => {
-                console.log(error);
-            });
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 
     // generate new monsters, and check if you're close enough to fight
@@ -300,7 +308,9 @@ export class HomePage {
 
     resetGeo() {
         // this.geoPosWatcher.unsubscribe();
-        this.geolocation.watchPosition().subscribe().unsubscribe();
+        if(this.geolocation){
+          this.geolocation.watchPosition().subscribe().unsubscribe();
+        }
     }
 
     // show inventory

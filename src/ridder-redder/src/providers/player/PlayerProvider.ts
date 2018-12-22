@@ -7,6 +7,7 @@ import 'rxjs/add/operator/map'
 import { AuthProvider } from '../auth/AuthProvider';
 import { query } from '@angular/core/src/render3/instructions';
 import { PlayerDto } from '../../dtos/PlayerDto';
+
 /*
   Generated class for the PlayerProvider provider.
 
@@ -16,8 +17,13 @@ import { PlayerDto } from '../../dtos/PlayerDto';
 @Injectable()
 export class PlayerProvider {
 
+    private httpOptions = {
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            // 'Authorization': `Bearer ${this.auth.access_token}`
+        })
+    }
     private player: Player;
-
     Inventory: Array<Knight>;
 
     constructor(public http: HttpClient, private auth: AuthProvider) {

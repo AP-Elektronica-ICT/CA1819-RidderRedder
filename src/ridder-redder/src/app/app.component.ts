@@ -18,9 +18,7 @@ import Auth0 from 'auth0-js';
     templateUrl: 'app.html'
 })
 export class RidderRedder {
-
     rootPage: any = LoginPage;
-
 
     constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private screenOrientation: ScreenOrientation) {
         platform.ready().then(() => {

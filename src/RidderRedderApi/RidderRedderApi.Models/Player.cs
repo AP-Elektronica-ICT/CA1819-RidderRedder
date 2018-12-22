@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
@@ -26,5 +27,7 @@ namespace RidderRedderApi.Models {
         /// <value>The experience.</value>
         public int Experience { get; set; }
 
+		[ForeignKey("Owner")]
+		public ICollection<Landmark> Landmarks { get; set; }
     }
 }

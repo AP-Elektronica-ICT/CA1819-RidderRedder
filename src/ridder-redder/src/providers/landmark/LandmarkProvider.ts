@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from "rxjs/Observable";
 import { Landmark } from '../../models/Landmark';
 import { Knight } from '../../models/Knight';
-
 
 /*
   Generated class for the LandmarkProvider provider.
@@ -12,27 +12,27 @@ import { Knight } from '../../models/Knight';
 */
 @Injectable()
 export class LandmarkProvider {
-  landmarks: Array<Landmark>;
+  queryUrl = "/landmark/";
+  httpOptions = { headers: 
+    new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  }
 
   constructor(public http: HttpClient) {
     console.log('Hello LandmarkProvider Provider');
-    // connect to server, fetch all landmarks
 
-    this.landmarks = new Array<Landmark>();
-    this.landmarks.push(new Landmark(0, "Campus ELL", 51.230322, 4.416155, null, null));
-    this.landmarks.push(new Landmark(1, "Campus NOO", 51.230309, 4.413604, "admin", "adminName"));
-    this.landmarks[1].addKnight(new Knight(0, "admin", "red", 14));
-    this.landmarks.push(new Landmark(2, "Bar Noord", 21.230944, 4.422794, "notadmin", "notadminName"));
-    this.landmarks[2].addKnight(new Knight(1, "notadmin", "blue", 18));
-    this.landmarks.push(new Landmark(3, "Maria met kind", 51.227181, 4.454838, null, null));
   }
 
-  getLandmarks():Array<Landmark>{
-    return this.landmarks;
+  getLandmarks():Observable<Array<Landmark>>{
+    console.log('in getLandmarks');
+    console.log(this.queryUrl);
+    console.log(this.httpOptions);
+    return this.http.get<Array<Landmark>>(this.queryUrl, this.httpOptions)
   }
 
-  addKnight(landmark: Landmark, knight: Knight):Landmark {
-    //TODO push to DB
-    return landmark;
+  addKnight(landmark: Landmark, knight: Knight):Observable<Landmark> {
+    landmark.knights.push(knight);
+    return this.http.post<Landmark>(this.queryUrl + landmark.id, landmark, this.httpOptions);
   }
 }
