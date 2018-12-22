@@ -308,7 +308,9 @@ export class HomePage {
 
     resetGeo() {
         // this.geoPosWatcher.unsubscribe();
-        this.geolocation.watchPosition().subscribe().unsubscribe();
+        if(this.geolocation){
+          this.geolocation.watchPosition().subscribe().unsubscribe();
+        }
     }
 
     // show inventory
