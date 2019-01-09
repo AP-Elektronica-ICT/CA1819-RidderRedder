@@ -102,8 +102,8 @@
 
         <!-- CHEAT CONTAINER WHEN IN COMBAT -->
         <div class="button-container">
-            <img src="assets/icons/chicken.png" class="chicken-img" width="30" height="30" (click)="forfeit()" *ngIf="combat.inCombat">
-            <img src="assets/icons/dead.png" class="kill-img" width="30" height="30" (click)="killMonster()" *ngIf="combat.inCombat">
+            <img src="assets/icons/chicken.png" class="chicken-img" width="30" height="30" (click)="combat.stopCombat()" *ngIf="combat.inCombat">
+            <img src="assets/icons/dead.png" class="kill-img" width="30" height="30" (click)="combat.hitMonster(combat.monster.health)" *ngIf="combat.inCombat">
         </div>
 
     </div>
