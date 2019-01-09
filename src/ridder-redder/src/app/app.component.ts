@@ -7,12 +7,18 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { HomePage } from '../pages/home/home';
 import { CombatPage } from '../pages/combat/combat';
 import { TestComponent } from '../components/test/test';
+import { LoginPage } from '../pages/login/login';
+
+import * as auth0 from 'auth0-js';
+
+import Auth0Cordova from '@auth0/cordova';
+import Auth0 from 'auth0-js';
 
 @Component({
     templateUrl: 'app.html'
 })
 export class RidderRedder {
-    rootPage: any = HomePage;
+    rootPage: any = LoginPage;
 
     constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private screenOrientation: ScreenOrientation) {
         platform.ready().then(() => {
@@ -22,6 +28,10 @@ export class RidderRedder {
 
             statusBar.styleDefault();
             splashScreen.hide();
+
+            (<any>window).handleOpenURL = (url) => {
+                Auth0Cordova.onRedirectUri(url);
+            };
         });
     }
 }
