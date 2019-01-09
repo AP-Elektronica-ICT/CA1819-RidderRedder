@@ -9,30 +9,36 @@ import { Knight } from '../../models/Knight';
 
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
-*/
+ */
 @Injectable()
 export class LandmarkProvider {
-  queryUrl = "/landmark/";
-  httpOptions = { headers: 
-    new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  }
+    queryUrl = "/landmark/";
+    httpOptions = { headers: 
+        new HttpHeaders({
+            'Content-Type': 'application/json'
+        })
+    }
 
-  constructor(public http: HttpClient) {
-    console.log('Hello LandmarkProvider Provider');
+    constructor(public http: HttpClient) {
+        console.log('Hello LandmarkProvider Provider');
 
-  }
+    }
 
-  getLandmarks():Observable<Array<Landmark>>{
-    console.log('in getLandmarks');
-    console.log(this.queryUrl);
-    console.log(this.httpOptions);
-    return this.http.get<Array<Landmark>>(this.queryUrl, this.httpOptions)
-  }
+    getLandmarks():Observable<Array<Landmark>>{
+        console.log('in getLandmarks');
+        console.log(this.queryUrl);
+        console.log(this.httpOptions);
+        return this.http.get<Array<Landmark>>(this.queryUrl, this.httpOptions)
+    }
 
-  addKnight(landmark: Landmark, knight: Knight):Observable<Landmark> {
-    landmark.knights.push(knight);
-    return this.http.post<Landmark>(this.queryUrl + landmark.id, landmark, this.httpOptions);
-  }
+    addKnight(landmark: Landmark, knight: Knight):Observable<Landmark> {
+        if(landmark.knights){
+            landmark.knights.push(knight);
+        }
+        else{
+            landmark.knights = [knight];
+            landmark.ownerId = 
+        }
+        return this.http.post<Landmark>(this.queryUrl + landmark.id, landmark, this.httpOptions);
+    }
 }
