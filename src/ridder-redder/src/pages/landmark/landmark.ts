@@ -24,9 +24,11 @@ export class LandmarkPage {
   loading: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public pProv: PlayerProvider, public lmProvider: LandmarkProvider, public authProvider: AuthProvider) {
+    this.loading = true;
     this.pId = authProvider.AuthId;
     this.knights = this.pProv.getInventory();
     this.landmark = this.navParams.get('landmark');
+    this.loading = false;
   }
 
   ionViewDidLoad() {

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from "rxjs/Observable";
 import { Landmark } from '../../models/Landmark';
 import { Knight } from '../../models/Knight';
-
+import { AuthProvider } from '../auth/AuthProvider'';
 /*
   Generated class for the LandmarkProvider provider.
 
@@ -19,7 +19,7 @@ export class LandmarkProvider {
         })
     }
 
-    constructor(public http: HttpClient) {
+    constructor(public http: HttpClient, public auth: AuthProvider) {
         console.log('Hello LandmarkProvider Provider');
 
     }
@@ -37,7 +37,7 @@ export class LandmarkProvider {
         }
         else{
             landmark.knights = [knight];
-            landmark.ownerId = 
+            landmark.ownerId = this.auth.authId;
         }
         return this.http.post<Landmark>(this.queryUrl + landmark.id, landmark, this.httpOptions);
     }
