@@ -47,6 +47,7 @@ export class HomePage {
         document.addEventListener("pause", this.resetGeo, false);
 
         
+<<<<<<< HEAD
 
         if (!this.navParams.get('lastmonster'))
             this.removeMonster(this.navParams.get('lastmonster'));
@@ -59,6 +60,20 @@ export class HomePage {
             this.updateMap();
             this.updateMonsters();
         });
+=======
+
+        // if (!this.navParams.get('lastmonster'))
+        //     this.removeMonster(this.navParams.get('lastmonster'));
+
+        // if (!this.mapLoaded)
+        //     this.loadMap();
+        // else
+        //     this.watchMap();
+        // this.mapUpdater = Observable.interval(5000).subscribe(() => {
+        //     this.updateMap();
+        //     this.updateMonsters();
+        // });
+>>>>>>> documentation
 
     }
 
