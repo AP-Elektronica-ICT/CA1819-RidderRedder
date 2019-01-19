@@ -1,0 +1,16 @@
+<ion-content class="background">
+    <div class="loading-container" *ngIf="!inventoryItems">
+        <img src="assets/icons/loading.gif" class="loading-gif" width="90" height="90">
+    </div>
+    <div class="inventory-container">
+        <div class="inventory-header">
+            <h6>Inventory</h6><a (click)="returnView()">Return</a>
+        </div>
+        <ion-scroll scrollY="true">
+            <div class="inventory-item" *ngFor="let item of inventoryItems">
+                <h6>{{item.amount}} {{item.itemType.itemTypeName}}</h6>
+                <img src="{{item.itemImage.path}}">
+            </div>
+        </ion-scroll>
+    </div>
+</ion-content>

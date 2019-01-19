@@ -1,0 +1,177 @@
+import { Component, Input, ViewChild, ElementRef } from '@angular/core';
+import { SpeechRecognition } from '@ionic-native/speech-recognition';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion';
+
+import { MonsterProvider } from '../../providers/monster/MonsterProvider';
+import { PlayerProvider } from '../../providers/player/PlayerProvider';
+import { AuthProvider } from '../../providers/auth/AuthProvider';
+
+import { Combat } from '../../models/Combat';
+import { Player } from '../../models/Player';
+import { Monster } from '../../models/Monster';
+import { CombatState } from '../../models/CombatState';
+
+import { MonsterDto } from '../../dtos/MonsterDto';
+import { InventoryProvider } from '../../providers/inventory/InventoryProvider';
+import { Geolocation } from '@ionic-native/geolocation';
+
+/**
+ * Generated class for the CombatPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+
+@IonicPage()
+@Component({
+    selector: 'page-combat',
+    templateUrl: 'combat.html',
+})
+export class CombatPage {
+
+    @Input() monster: Monster;
+    @ViewChild('monsterObject') monsterObject: ElementRef;
+
+    private combat: Combat;
+
+    private infoHead: string;
+    private infoParagraph: string;
+
+    public loading: boolean = true;
+
+    constructor(
+        public navCtrl: NavController,
+        public navParams: NavParams,
+        private deviceMotion: DeviceMotion,
+        private speech: SpeechRecognition,
+        private monsterProvider: MonsterProvider,
+        private playerProvider: PlayerProvider,
+        private authProvider: AuthProvider,
+        private invProvider: InventoryProvider,
+        private geolocation: Geolocation
+    ) {
+        if (!navParams.get('monster'))
+            this.monsterProvider.getMonster().subscribe((data) => {
+                this.monster = data;
+                this.loadPlayer();
+            }, error => {
+                console.log(error);
+            });
+        else {
+            console.log("monster param is filled, setting it");
+            this.monster = navParams.get('monster');
+            this.loadPlayer();
+        }
+    }
+
+    ionViewDidLoad() {
+        
+    }
+
+    private loadPlayer() {
+        this.playerProvider.getPlayer(this.authProvider.AuthId).subscribe(data => {
+            let p: Player = {
+                PlayerName: data.PlayerName,
+                Experience: data.Experience,
+                AuthId: data.AuthId
+            }
+            
+            this.loadCombat(p, this.monster);
+            
+            this.loadSpeech();
+            // this.loadMonster(p);
+
+            this.loading = false;
+        }, failed => {
+            console.log(failed);
+            this.loading = false;
+        })
+    }
+
+    private loadCombat(player: Player, monster: Monster){
+        this.combat = new Combat(this, monster, player, this.deviceMotion, this.speech, this.playerProvider, this.monsterProvider, this.authProvider, this.invProvider);
+        this.setInfo();
+    }
+
+    private loadMonster(player: Player) {
+        this.monsterProvider.getMonster().subscribe(data => {
+            this.monster = data;
+            this.combat = new Combat(this, this.monster, player, this.deviceMotion, this.speech, this.playerProvider, this.monsterProvider, this.authProvider, this.invProvider);
+
+            this.setInfo();
+            this.loadSpeech();
+
+        }, error => {
+            console.log(error);
+        });
+    }
+
+    private loadSpeech() {
+        // Check feature available
+        this.speech.isRecognitionAvailable().then((available: boolean) => {
+            // console.log("Speech recognition available: " + available);
+            // Request permissions
+            // Check permission
+            this.speech.hasPermission()
+                .then((hasPermission: boolean) => {
+                    if (!hasPermission)
+                        this.speech.requestPermission()
+                            .then(
+                                () => console.log('Granted'),
+                                () => console.log('Denied')
+                            )
+                });
+
+        });
+    }
+
+    difficulty(n: number): any[] {
+        return Array(n);
+    }
+
+    setInfo() {
+        // console.log("Setting info");
+        switch (this.combat.combatState) {
+            case CombatState.ChoosingCombatStyle:
+                this.infoHead = "Battle time!";
+                this.infoParagraph = "Choose a combat style to start the fight";
+                break;
+            case CombatState.CombatMelee:
+                this.infoHead = "Slash him!";
+                this.infoParagraph = "Slash your phone towards the monster to damage him";
+                break;
+            case CombatState.CombatRanged:
+                this.infoHead = "Shoot him!"
+                this.infoParagraph = "Aim and drag the bow to shoot";
+                break;
+            case CombatState.CombatMagic:
+                this.infoHead = "Hocus Pocus"; //Replace with magic spell
+                this.infoParagraph = this.combat.monster.Health < this.combat.monster.MaxHealth ? "Tap below to cast another spell!" : "Speak up! Call out this spell to deal damage";
+                break;
+            case CombatState.CombatVictory:
+                this.infoHead = "Victory!"
+                this.infoParagraph = "Total experience: " + this.combat.player.Experience;
+                // this.infoParagraph = `You have defeated the monster!\nYou have gained ${this.combat.experienceGained} experience!`;
+                break;
+            case CombatState.CombatDefeat:
+                this.infoHead = "Defeat!"
+                this.infoParagraph = "Total experience: " + this.combat.player.Experience;
+                // this.infoParagraph = "You have been defeated by the monster!";
+                break;
+        }
+    }
+
+    damageMonster() {
+        this.combat.hitMonster();
+    }
+
+    killMonster() {
+        this.combat.hitMonster(this.monster.Health);
+    }
+
+    forfeit() {
+        this.combat.stopCombat();
+    }
+
+}

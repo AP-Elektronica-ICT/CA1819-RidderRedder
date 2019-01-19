@@ -18,17 +18,47 @@ namespace RidderRedderApi.Services {
             return this.inventoryRepository.GetInventoryForPlayer(authid);
         }
 
-        public InventoryItem PostInventoryItem(AddInventoryItemDto item) {
+        public InventoryItem PostInventoryItem(AddInventoryItemDto itemDto) {
+            ItemImage img = inventoryRepository.GetItemImage(itemDto.ItemImageId);
+            ItemType type = inventoryRepository.GetItemType(itemDto.ItemTypeId);
+
+            InventoryItem item = new InventoryItem(itemDto.AuthId, img, type, itemDto.Amount);
+
             return this.inventoryRepository.PostInventoryItem(item);
         }
 
-        public InventoryItem UpdateInventoryItem(UpdateInventoryItemDto item, int itemid) {
+        public InventoryItem UpdateInventoryItem(UpdateInventoryItemDto itemDto, int itemid) {
+            InventoryItem item = this.inventoryRepository.GetInventoryItem(itemid);
+            ItemImage img = this.inventoryRepository.GetItemImage(itemDto.ItemImageId);
+            ItemType type = this.inventoryRepository.GetItemType(itemDto.ItemTypeId);
+
+            if (item == null)
+                return null;
+
+            if (img == null)
+                img = item.ItemImage;
+
+            if (type == null)
+                type = item.ItemType;
+
+            item.Amount = itemDto.Amount;
+            item.ItemType = type;
+            item.ItemImage = img;
+
             return this.inventoryRepository.UpdateInventoryItem(item, itemid);
 
         }
 
         public bool DeleteInventoryItem(int itemid) {
             return this.inventoryRepository.DeleteInventoryItem(itemid);
+        }
+
+        public List<ItemImage> GetAllItemImages() {
+            return this.inventoryRepository.GetAllItemImages();
+        }
+
+        public List<ItemType> GetAllItemTypes() {
+            return this.inventoryRepository.GetAllItemTypes();
         }
     }
 }

@@ -21,13 +21,14 @@ namespace RidderRedderApi {
             CreateWebHostBuilder(args).Build().Run();
         }
 
-        /// <summary>
-        /// Creates the web host builder.
-        /// </summary>
-        /// <returns>The web host builder.</returns>
-        /// <param name="args">Arguments.</param>
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+		/// <summary>
+		/// Creates the web host builder.
+		/// </summary>
+		/// <returns>The web host builder.</returns>
+		/// <param name="args">Arguments.</param>
+		public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+			WebHost.CreateDefaultBuilder(args)
+				.UseStartup<Startup>()
+				.UseUrls("http://*");
     }
 }

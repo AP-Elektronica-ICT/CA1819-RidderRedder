@@ -30,7 +30,8 @@ namespace RidderRedderApi.Web.Api.Controllers {
         /// <returns>The all.</returns>
         [HttpGet]
         public IActionResult GetAll() {
-            return Ok(playerService.GetAll());
+			Console.Out.WriteLine("get landmarks");
+			return Ok(playerService.GetAll());
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace RidderRedderApi.Web.Api.Controllers {
         /// <param name="p">P.</param>
         [HttpPut("{authid}")]
         public IActionResult Update(string authid, [FromBody]Player p) {
-            return Ok(playerService.Update(p));
+            return Ok(playerService.Update(p, authid));
         }
 
         /// <summary>
