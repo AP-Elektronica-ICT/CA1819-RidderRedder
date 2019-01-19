@@ -14,6 +14,7 @@ import { MonsterProvider } from '../../providers/monster/MonsterProvider';
 import { PlayerProvider } from '../../providers/player/PlayerProvider';
 import { MonsterDto } from '../../dtos/MonsterDto';
 import { AuthProvider } from '../../providers/auth/AuthProvider';
+import { LandmarkLoader } from '../../providers/LandmarkLoader';
 
 // @IonicPage()
 @Component({
@@ -45,13 +46,15 @@ export class HomePage {
 
         document.addEventListener("pause", this.resetGeo, false);
 
-        if (!this.navParams.get('lastmonster'))
-            this.removeMonster(this.navParams.get('lastmonster'));
+        
 
-        if (!this.mapLoaded)
-            this.loadMap();
-        else
-            this.watchMap();
+        // if (!this.navParams.get('lastmonster'))
+        //     this.removeMonster(this.navParams.get('lastmonster'));
+
+        // if (!this.mapLoaded)
+        //     this.loadMap();
+        // else
+        //     this.watchMap();
         // this.mapUpdater = Observable.interval(5000).subscribe(() => {
         //     this.updateMap();
         //     this.updateMonsters();
