@@ -27,7 +27,17 @@ namespace RidderRedderApi.Repositories {
             try {
                 return this.context.InventoryItems.Find(itemId);
             } catch (Exception e) {
-                throw e;
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+
+        public InventoryItem GetInventoryItemByColor(ItemImage image) {
+            try {
+                return this.context.InventoryItems.First(i => i.ItemImage.Equals(image));
+            } catch (Exception e) {
+                Console.WriteLine(e);
+                return null;
             }
         }
 
