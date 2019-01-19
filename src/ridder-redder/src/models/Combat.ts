@@ -324,6 +324,7 @@ export class Combat {
         this.lootGained = [];
         this.monster.Marker.remove();
     }
+    
 
     returnToMap(){
         this.resetCombat();
@@ -369,7 +370,10 @@ export class Combat {
                 itemTypeId: 1,
                 amount: 1
             }
+            
+
             this.invProvider.addToInventory(item).subscribe(data => {
+                data.amount = item.amount;
                 this.lootGained.push(data);
                 console.log("Added new " + data.itemType.itemTypeName + " to inventory");
             }, err => {

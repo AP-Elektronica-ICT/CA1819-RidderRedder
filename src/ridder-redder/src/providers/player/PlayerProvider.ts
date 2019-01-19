@@ -17,13 +17,7 @@ import { PlayerDto } from '../../dtos/PlayerDto';
 @Injectable()
 export class PlayerProvider {
 
-    private httpOptions = {
-        headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            // 'Authorization': `Bearer ${this.auth.access_token}`
-        })
-    }
-    private player: Player;
+    public player: Player;
     Inventory: Array<Knight>;
 
     constructor(public http: HttpClient, private auth: AuthProvider) {
@@ -43,6 +37,18 @@ export class PlayerProvider {
 
     getInventory() {
         return this.Inventory;
+    }
+
+    public newPlayer(player: PlayerDto): Observable<Player> {
+        return this.http.post<PlayerDto>(`/player`, player).map(data=> {
+            let p: Player = {
+                PlayerName: data.playerName,
+                Experience: data.experience,
+                AuthId: data.authId
+            };
+            this.player = p;
+            return p;
+        })
     }
 
     public getPlayer(authid: string): Observable<Player> {

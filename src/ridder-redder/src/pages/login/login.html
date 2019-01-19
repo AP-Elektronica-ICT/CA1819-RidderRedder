@@ -9,7 +9,7 @@
         </div>
 
         <div class="login-content" *ngIf="auth.isAuthenticated()">
-            <h4>Welcome back {{auth.user.nickname ? auth.user.nickname : "user"}}</h4>
+            <h4>Welcome back {{playerProvider.player?.PlayerName ? playerProvider.player?.PlayerName  : "player"}}!</h4>
             <button ion-button color="light" (click)="startGame()">Start Game</button>
             <button ion-button color="light" (click)="showOptions()">Options</button>
             <button ion-button color="danger" (click)="auth.logout()">Log out</button>
