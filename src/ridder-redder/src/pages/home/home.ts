@@ -33,8 +33,8 @@ export class HomePage {
 
     private loading = true;
 
-    // tfw static doesn't work
-    monsterDistance: number = 0.003; // 0.005 ~ 250m?
+    // The maximum distance a monster should be able to spawn from you
+    private monsterDistance: number = 0.003; // 0.005 ~ 250m?
 
     constructor(public navCtrl: NavController, public geolocation: Geolocation, public modalCtrl: ModalController, public monsterProvider: MonsterProvider, public lmProvider: LandmarkProvider, public pProvider: PlayerProvider, public authProvider: AuthProvider, public navParams: NavParams) {
         this.monsters = new Array<Monster>();
@@ -42,34 +42,39 @@ export class HomePage {
     }
 
     ionViewDidLoad() {
-        console.log("Home page did load");
-
         document.addEventListener("pause", this.resetGeo, false);
-
-        
 
         // this.presentInventory();
 
+        // Check if there has previously been a defeated monster.
+        // Then remove it from the list
         if (!this.navParams.get('lastmonster'))
             this.removeMonster(this.navParams.get('lastmonster'));
 
+        // Check if the map is loaded, load the map, watch the map.
         if (!this.mapLoaded)
             this.loadMap();
         else
             this.watchMap();
-        this.mapUpdater = Observable.interval(5000).subscribe(() => {
-            this.updateMap();
-            this.updateMonsters();
-        });
+        // this.mapUpdater = Observable.interval(5000).subscribe(() => {
+        //     this.updateMap();
+        //     this.updateMonsters();
+        // });
 
     }
 
-    // create new GoogleMap
-    loadMap() {
+    // Here we load the Google Maps map by getting our current geolocation.
+    // 1. Then we set some map and position options like camera tracking 
+    // and disabling options like zooming and scrolling.
+    // 2. Then we load in the landmarks for the map.
+    // 3. Then we watch our map for movement changes.
+    private loadMap() {
         console.log("Loading map");
         this.geolocation.getCurrentPosition({ timeout: 5000, enableHighAccuracy: false })
             .then((resp) => {
                 console.log("Got current position");
+
+                // Step 1. Set map options
                 let mapOptions: GoogleMapOptions = {
                     controls: {
                         "myLocation": true,  // the blue location dot
@@ -106,22 +111,21 @@ export class HomePage {
                     ]
                 };
 
-
                 this.prevPos.lat = resp.coords.latitude;
                 this.prevPos.lng = resp.coords.longitude;
 
                 this.map = GoogleMaps.create('map_canvas', mapOptions);
-              
-                this.lmProvider.getLandmarks().subscribe((landmarks) => {
-                  console.log('got landmarks');
-                  console.log(landmarks);
-                  this.landmarks = landmarks;
-                  this.addLandmarks();
-                });
-                // this.updateMonsters();
 
+                // Step 2. Load in our landmarks from the API and put them on our map
+                this.lmProvider.getLandmarks().subscribe((landmarks) => {
+                    console.log('got landmarks');
+                    console.log(landmarks);
+                    this.landmarks = landmarks;
+                    this.addLandmarks();
+                });
+
+                // Step 3. We start watching our map for movement changes
                 this.mapLoaded = true;
-                
                 this.watchMap();
 
             }).catch((error) => {
@@ -134,7 +138,10 @@ export class HomePage {
             });
     }
 
-    watchMap() {
+    // Here we watch the map. Listening to the movement of the user.
+    // Whenever the user has moved, this we will update it's position
+    // and let the camera follow the user.
+    private watchMap() {
         console.log("Watching map...");
         this.geolocation.watchPosition({ timeout: 5000, enableHighAccuracy: true }).subscribe(data => {
             this.loading = false;
@@ -142,6 +149,7 @@ export class HomePage {
             this.prevPos.lat = data.coords.latitude;
             this.prevPos.lng = data.coords.longitude;
 
+            // Follow the user
             this.map.animateCamera(
                 {
                     target:
@@ -157,8 +165,10 @@ export class HomePage {
         });
 
     }
-    
-    chooseLandmarkIcon(landmark){
+
+    // Select the landmark icon based on the state of the landmark
+    // PARAM: landmark: The landmark to check it's owner
+    private chooseLandmarkIcon(landmark) {
         var icon;
         if (landmark.ownerId == null) {
             icon = {
@@ -190,8 +200,8 @@ export class HomePage {
         return icon;
     }
 
-    // add landmark markers to the map
-    addLandmarks() {
+    // Add landmark markers to the map
+    private addLandmarks() {
         for (let landmark of this.landmarks) {
             var icon = this.chooseLandmarkIcon(landmark);
             // create marker
@@ -213,31 +223,33 @@ export class HomePage {
         }
     }
 
-    // move map centre to current location, if location is far enough from previous location
-    updateMap() {
+    // Move map center to current location, if location is far enough from previous location
+    // DEPRECATED: no longer used, replaced with => watchMap()
+    private updateMap() {
         this.geolocation.getCurrentPosition()
-        .then((resp) => {
-            console.log("Moving  map to " + resp);
+            .then((resp) => {
+                console.log("Moving  map to " + resp);
 
-            this.prevPos.lat = resp.coords.latitude;
-            this.prevPos.lng = resp.coords.longitude;
+                this.prevPos.lat = resp.coords.latitude;
+                this.prevPos.lng = resp.coords.longitude;
 
-            this.map.animateCamera(
-                {
-                    target:
+                this.map.animateCamera(
                     {
-                        lat: resp.coords.latitude,
-                        lng: resp.coords.longitude
-                    }
-                });
+                        target:
+                        {
+                            lat: resp.coords.latitude,
+                            lng: resp.coords.longitude
+                        }
+                    });
 
-        }).catch((error) => {
-            console.log(error);
-        });
+            }).catch((error) => {
+                console.log(error);
+            });
     }
 
-    // generate new monsters, and check if you're close enough to fight
-    updateMonsters() {
+    // Generate new monsters, and check if you're close enough to fight
+    // Also check if monsters are dead to remove them
+    private updateMonsters() {
         // console.log("Updating monsters");
         if (this.monsters.length > 5) {
             // this.monsters[0].Marker.remove();
@@ -255,7 +267,9 @@ export class HomePage {
 
     }
 
-    generateMonster() {
+    // Generate a new monster to put on the map. 
+    // The position and attributes of this monster are random
+    private generateMonster() {
         // console.log("Generating new monster...");
         // generate new marker location
         // let currPos = this.map.getCameraPosition().target;
@@ -293,7 +307,10 @@ export class HomePage {
         });
     }
 
-    removeMonster(monster: Monster) {
+    // Removes a monster from the map and list. This should be 
+    // called whenever a monster has been defeated or timed out.
+    // PARAM: monster: The monster to remove from the map and list
+    private removeMonster(monster: Monster) {
         if (!monster)
             return;
 
@@ -302,8 +319,9 @@ export class HomePage {
         this.monsters.splice(this.monsters.indexOf(monster), 1);
     }
 
-    // open the fight screen
-    launchFight(monster: Monster) {
+    // Navigate to the combat screen in order to fight the monster
+    // PARAM: monster: The Monster to start combat with
+    private launchFight(monster: Monster) {
         this.resetGeo();
         let combatModal = this.modalCtrl.create(
             CombatPage,
@@ -312,21 +330,23 @@ export class HomePage {
         combatModal.present();
     }
 
-    resetGeo() {
+    // Stops the subscription on watchPosition.
+    // This should be called when cleaning up
+    private resetGeo() {
         // this.geoPosWatcher.unsubscribe();
-        if(this.geolocation){
-          this.geolocation.watchPosition().subscribe().unsubscribe();
+        if (this.geolocation) {
+            this.geolocation.watchPosition().subscribe().unsubscribe();
         }
     }
 
-    // show inventory
-    presentInventory() {
+    // Present the inventory panel
+    public presentInventory() {
         let inventoryModal = this.modalCtrl.create(InventoryPage);
         inventoryModal.present();
     }
 
-    // show landmark info
-    presentLandmark(landmark: Landmark) {
+    // Present landmark information
+    private presentLandmark(landmark: Landmark) {
         console.log('Opening landmark page');
         console.log(landmark);
         this.navCtrl.push(
