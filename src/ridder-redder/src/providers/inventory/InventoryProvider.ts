@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { ItemType } from '../../models/ItemType';
 import { ItemImage } from '../../models/ItemImage';
 import { AddInventoryItemDto } from '../../dtos/AddInventoryItemDto';
+import { Landmark } from '../../models/Landmark';
+import { Knight } from '../../models/Knight';
 
 /*
   Generated class for the InventoryProvider provider.
@@ -110,5 +112,36 @@ export class InventoryProvider {
     public deleteInventoryItem(itemId: number): Observable<Boolean> {
         return this.http.delete<Boolean>(`/inventory/${itemId}`);
     }
+    
+    public transferItemToLandmark(item: InventoryItem, itemId: number, amount: number, landmark: Landmark): Observable<Landmark> {
+        // Update given landmark to include knights to defend it with
 
+        // Create a new knight with given color, level and owner
+        let knight: Knight = {
+            id: 0,
+            colour: "" + item.itemImage.itemImageId,
+            level: amount,
+            owner: this.auth.AuthId
+        }
+        landmark.addKnight(knight);
+        landmark.ownerId = this.auth.AuthId;
+        landmark.ownerName = this.auth.user.nickname;
+
+        // Update the landmark with its owner and defender(s)
+        this.http.put<Landmark>(`/Landmark/${landmark.id}`, landmark).subscribe(landmarkData => {
+            console.log(landmarkData);
+
+            // Update the player's inventory to substract the amount of knights
+            item.amount -= amount;
+            this.http.put<InventoryItem>(`/Inventory/${itemId}`, item).subscribe(itemData => {
+                console.log(itemData);
+                return landmark;
+            }, itemError => console.log(itemError));
+
+        }, landmarkError => console.log(landmarkError));
+        
+
+        // Remove the knights from the player
+        return null;
+    }
 }
