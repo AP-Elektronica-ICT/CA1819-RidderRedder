@@ -14,6 +14,7 @@ import { MonsterProvider } from '../../providers/monster/MonsterProvider';
 import { PlayerProvider } from '../../providers/player/PlayerProvider';
 import { MonsterDto } from '../../dtos/MonsterDto';
 import { AuthProvider } from '../../providers/auth/AuthProvider';
+import { LandmarkLoader } from '../../providers/LandmarkLoader';
 
 // @IonicPage()
 @Component({
@@ -45,6 +46,10 @@ export class HomePage {
 
         document.addEventListener("pause", this.resetGeo, false);
 
+        
+
+        // this.presentInventory();
+
         if (!this.navParams.get('lastmonster'))
             this.removeMonster(this.navParams.get('lastmonster'));
 
@@ -52,10 +57,10 @@ export class HomePage {
             this.loadMap();
         else
             this.watchMap();
-        // this.mapUpdater = Observable.interval(5000).subscribe(() => {
-        //     this.updateMap();
-        //     this.updateMonsters();
-        // });
+        this.mapUpdater = Observable.interval(5000).subscribe(() => {
+            this.updateMap();
+            this.updateMonsters();
+        });
 
     }
 
@@ -300,10 +305,11 @@ export class HomePage {
     // open the fight screen
     launchFight(monster: Monster) {
         this.resetGeo();
-        this.navCtrl.push(
+        let combatModal = this.modalCtrl.create(
             CombatPage,
             { monster: monster }
-        );
+        )
+        combatModal.present();
     }
 
     resetGeo() {

@@ -51,24 +51,15 @@ export class CombatPage {
         private invProvider: InventoryProvider,
         private geolocation: Geolocation
     ) {
-        if (!navParams.get('monster'))
-            this.monsterProvider.getMonster().subscribe((data) => {
-                this.monster = data;
-                this.loadPlayer();
-            }, error => {
-                console.log(error);
-            });
-        else {
-            console.log("monster param is filled, setting it");
-            this.monster = navParams.get('monster');
-            this.loadPlayer();
-        }
+        this.setMonster();
     }
 
-    ionViewDidLoad() {
-        
-    }
-
+    /*
+     * Load the player from the API thats assigned to the current logged in user his AuthID
+     * When the player is loaded, we load the combat based on the given player and the 
+     * monster received from the navigation parameters.
+     * When the combat is loaded we the speech recognition.
+     */
     private loadPlayer() {
         this.playerProvider.getPlayer(this.authProvider.AuthId).subscribe(data => {
             let p: Player = {
@@ -76,9 +67,9 @@ export class CombatPage {
                 Experience: data.Experience,
                 AuthId: data.AuthId
             }
-            
+
             this.loadCombat(p, this.monster);
-            
+
             this.loadSpeech();
             // this.loadMonster(p);
 
@@ -89,11 +80,40 @@ export class CombatPage {
         })
     }
 
-    private loadCombat(player: Player, monster: Monster){
+    /*
+     * Load an instance of Combat in order to start the battle between the Player and Monster(s)
+     * PARAM player: The player that should be fighting with the monster(s)
+     * PARAM monster: The monster that should be fighting the player
+     */
+    private loadCombat(player: Player, monster: Monster) {
         this.combat = new Combat(this, monster, player, this.deviceMotion, this.speech, this.playerProvider, this.monsterProvider, this.authProvider, this.invProvider);
         this.setInfo();
     }
 
+    /*
+     *  Check if monster is set in navigation parameters. 
+     *  If monster is set, we save it in a class variable, 
+     *  if it is not set, we get a new monster.
+     */
+    private setMonster() {
+        if (this.navParams.get('monster')){
+            this.monster = this.navParams.get('monster');
+            this.loadPlayer();
+        } else {
+            this.monsterProvider.getMonster().subscribe((data) => {
+                this.monster = data;
+                this.loadPlayer();
+            }, error => {
+                console.log(error);
+            });
+        }
+    }
+
+    /*
+     * Load a random monster.
+     * This function can be used for statically loading a new monster,
+     * when the monster is not provided by the navigation parameters.
+     */
     private loadMonster(player: Player) {
         this.monsterProvider.getMonster().subscribe(data => {
             this.monster = data;
@@ -107,6 +127,9 @@ export class CombatPage {
         });
     }
 
+    /* 
+     * Check if speech recognition is available on device and load it if it is available
+     */
     private loadSpeech() {
         // Check feature available
         this.speech.isRecognitionAvailable().then((available: boolean) => {
@@ -126,11 +149,18 @@ export class CombatPage {
         });
     }
 
-    difficulty(n: number): any[] {
+    /* 
+     * Generate random difficulty
+     * PARAM n: difficulty range (n = 4 is a difficulty from 0 to 4)
+     */
+    private difficulty(n: number): any[] {
         return Array(n);
     }
 
-    setInfo() {
+    /* 
+     * Set content of info container based on combatState
+     */
+    public setInfo() {
         // console.log("Setting info");
         switch (this.combat.combatState) {
             case CombatState.ChoosingCombatStyle:
@@ -160,18 +190,6 @@ export class CombatPage {
                 // this.infoParagraph = "You have been defeated by the monster!";
                 break;
         }
-    }
-
-    damageMonster() {
-        this.combat.hitMonster();
-    }
-
-    killMonster() {
-        this.combat.hitMonster(this.monster.Health);
-    }
-
-    forfeit() {
-        this.combat.stopCombat();
     }
 
 }
