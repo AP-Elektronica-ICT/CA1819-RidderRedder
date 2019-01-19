@@ -22,10 +22,11 @@ export class LoginPage {
     loginPageContent: HTMLElement;
     loginContainer: HTMLElement;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthProvider, private playerProvider: PlayerProvider) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthProvider, private playerProvider: PlayerProvider) { }
 
-    }
-
+    // When the view has been loaded, this function will be called.
+    // We store our HTML Elements in variables for later use, and
+    // Start by loading the player => loadPlayer()
     ionViewDidLoad() {
         this.loginPageContent = document.getElementById('loginPageContent');
         this.loginContainer = document.getElementById('loginContainer');
@@ -36,9 +37,12 @@ export class LoginPage {
         this.loadPlayer();
     }
 
+    // Load the player based on the logged in user.
+    // If we can't find a player, 
+    // we make a new one => newPlayer()
     loadPlayer() {
         if (!this.auth.AuthId)
-           return;
+            return;
 
         this.playerProvider.getPlayer(this.auth.AuthId).subscribe(success => {
             console.log(success);
@@ -47,6 +51,9 @@ export class LoginPage {
             this.newPlayer();
         });
     }
+
+    // Create a new player with the logged in 
+    // user's AuthID and nickname
     newPlayer() {
         this.playerProvider.newPlayer({
             authId: this.auth.AuthId,
@@ -68,6 +75,8 @@ export class LoginPage {
         this.navCtrl.push(HomePage);
     }
 
+    // This should show game options
+    // However, there are no options to.. ..optionate
     showOptions() {
         // TODO: navigate to Options page
     }

@@ -4,6 +4,7 @@ import { Landmark } from "../models/Landmark";
 
 export class LandmarkLoader {
 
+    // HttpHeaders for a static call to the API
     private httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
@@ -11,19 +12,20 @@ export class LandmarkLoader {
         })
     }
 
-    data: RootObject;
-
-
+    // This class is designed to be runned outside of Ionic to load in
+    // geodata markers and store these in our database.
     constructor(public http: HttpClient) {
         this.http.get<RootObject>('https://opendata.arcgis.com/datasets/5ccff54ed791480aa91bc8f5fcf2e9ab_292.geojson').subscribe(data => {
-            this.data = data;
-
-            this.setLandmarks();
+            this.setLandmarks(data);
         })
     }
 
-    private setLandmarks() {
-        this.data.features.forEach(element => {
+    // Save landmarks to the API's database in order to call them our own
+    // PARAM: data: The geodata received from the public geodata API. See 
+    //              rootObject below for more info.
+    // RETURNS: none
+    private setLandmarks(data: RootObject) {
+        data.features.forEach(element => {
             let lm = {
                 "landmarkId": undefined,
                 "lat": element.properties.LAT,
