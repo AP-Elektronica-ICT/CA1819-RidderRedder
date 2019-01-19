@@ -12,27 +12,23 @@ import { Knight } from '../../models/Knight';
 */
 @Injectable()
 export class LandmarkProvider {
-  queryUrl = "/landmark/";
-  httpOptions = { headers: 
-    new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  }
+    queryUrl = "/landmark/";
 
-  constructor(public http: HttpClient) {
-    console.log('Hello LandmarkProvider Provider');
+    constructor(public http: HttpClient) { }
 
-  }
+    // Get all the landmarks from the API
+    // PARAM: none
+    // RETURNS: Observable<Landmark[]>
+    getLandmarks(): Observable<Array<Landmark>> {
+        return this.http.get<Array<Landmark>>(this.queryUrl)
+    }
 
-  getLandmarks():Observable<Array<Landmark>>{
-    console.log('in getLandmarks');
-    console.log(this.queryUrl);
-    console.log(this.httpOptions);
-    return this.http.get<Array<Landmark>>(this.queryUrl, this.httpOptions)
-  }
-
-  addKnight(landmark: Landmark, knight: Knight):Observable<Landmark> {
-    landmark.knights.push(knight);
-    return this.http.post<Landmark>(this.queryUrl + landmark.id, landmark, this.httpOptions);
-  }
+    // Add a knight, or knights to the given landmark
+    // PARAMS: landmark: The landmark to update it's knights, 
+    //         knight: The knight to add to the landmark
+    // RETURNS: Observable<Landmark>
+    addKnight(landmark: Landmark, knight: Knight): Observable<Landmark> {
+        landmark.knights.push(knight);
+        return this.http.post<Landmark>(this.queryUrl + landmark.id, landmark);
+    }
 }
