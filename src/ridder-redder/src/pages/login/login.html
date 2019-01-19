@@ -1,0 +1,18 @@
+<ion-content padding id="loginPageContent">
+    <div class="ridder-redder">
+        <img src="assets/imgs/ridderredder.png">
+    </div>
+    <div class="login-container login-background" id="loginContainer">
+        <div class="login-content" *ngIf="!auth.isAuthenticated()">
+            <h4>You haven't logged in yet.</h4>
+            <button ion-button (click)="auth.login()">Log in</button>
+        </div>
+
+        <div class="login-content" *ngIf="auth.isAuthenticated()">
+            <h4>Welcome back {{playerProvider.player?.PlayerName ? playerProvider.player?.PlayerName  : "player"}}!</h4>
+            <button ion-button color="light" (click)="startGame()">Start Game</button>
+            <button ion-button color="light" (click)="showOptions()">Options</button>
+            <button ion-button color="danger" (click)="auth.logout()">Log out</button>
+        </div>
+    </div>
+</ion-content>

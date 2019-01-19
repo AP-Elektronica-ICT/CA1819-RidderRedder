@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RidderRedderApi.Web.Api", "RidderRedderApi\RidderRedderApi.Web.Api.csproj", "{7D4BD548-5B55-45E8-85BD-7ADF815E6273}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RidderRedderApi.Models", "RidderRedderApi.Models\RidderRedderApi.Models.csproj", "{444F7F64-A73D-4C86-9A14-98E90CC0B6F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RidderRedderApi.Repositories", "RidderRedderApi.Repositories\RidderRedderApi.Repositories.csproj", "{9C5038F3-E1FB-4A23-B3A7-0D3AFFB590BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RidderRedderApi.Services", "RidderRedderApi.Services\RidderRedderApi.Services.csproj", "{725A61BA-5D8A-4B84-BD58-04CCB0C9388F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RidderRedderApi.ViewModels", "RidderRedderApi.ViewModels\RidderRedderApi.ViewModels.csproj", "{4CBA9A15-1656-441A-B657-C990A700F0C4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7D4BD548-5B55-45E8-85BD-7ADF815E6273}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D4BD548-5B55-45E8-85BD-7ADF815E6273}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D4BD548-5B55-45E8-85BD-7ADF815E6273}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D4BD548-5B55-45E8-85BD-7ADF815E6273}.Release|Any CPU.Build.0 = Release|Any CPU
+		{444F7F64-A73D-4C86-9A14-98E90CC0B6F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{444F7F64-A73D-4C86-9A14-98E90CC0B6F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{444F7F64-A73D-4C86-9A14-98E90CC0B6F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{444F7F64-A73D-4C86-9A14-98E90CC0B6F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C5038F3-E1FB-4A23-B3A7-0D3AFFB590BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C5038F3-E1FB-4A23-B3A7-0D3AFFB590BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C5038F3-E1FB-4A23-B3A7-0D3AFFB590BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C5038F3-E1FB-4A23-B3A7-0D3AFFB590BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{725A61BA-5D8A-4B84-BD58-04CCB0C9388F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{725A61BA-5D8A-4B84-BD58-04CCB0C9388F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{725A61BA-5D8A-4B84-BD58-04CCB0C9388F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{725A61BA-5D8A-4B84-BD58-04CCB0C9388F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CBA9A15-1656-441A-B657-C990A700F0C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CBA9A15-1656-441A-B657-C990A700F0C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CBA9A15-1656-441A-B657-C990A700F0C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CBA9A15-1656-441A-B657-C990A700F0C4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BA0DA441-F93B-4BB6-90F0-55F893B8C363}
+	EndGlobalSection
+EndGlobal

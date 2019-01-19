@@ -1,0 +1,237 @@
+page-combat {
+}
+.background {
+    // background: -moz-linear-gradient(top, rgba(50,98,153,1) 0%, rgba(131,175,211,0.57) 23%, rgba(255,255,255,0.15) 45%, rgba(255,255,255,0.02) 52%, rgba(255,255,255,0) 53%, rgba(255,255,255,0.4) 59%, rgba(201,223,189,1) 68%, rgba(117,173,86,1) 82%, rgba(99,175,61,1) 100%); /* FF3.6-15 */
+    // background: -webkit-linear-gradient(top, rgba(50,98,153,1) 0%,rgba(131,175,211,0.57) 23%,rgba(255,255,255,0.15) 45%,rgba(255,255,255,0.02) 52%,rgba(255,255,255,0) 53%,rgba(255,255,255,0.4) 59%,rgba(201,223,189,1) 68%,rgba(117,173,86,1) 82%,rgba(99,175,61,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    // background: linear-gradient(to bottom, #326299 0%, rgba(131, 175, 211, 0.57) 20%, #ffe968 30%, #c9dfbd 50%, #75ad56 70%, #63af3d 100%);
+
+    background: url("../assets/imgs/background_clouds.png") no-repeat center
+        center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+    // filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#326299', endColorstr='#63af3d',GradientType=0 ); /* IE6-9 */
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    height: 200px;
+
+    .difficulty {
+        ul {
+            list-style: none;
+            padding-inline-start: 0px;
+        }
+    }
+    .header-info {
+        text-align: center;
+        width: 40%;
+        margin-top: 15px;
+
+        .combat-info {
+            display: flex;
+            justify-content: space-around;
+            flex-direction: column;
+
+            span {
+                font-size: 18px;
+                font-weight: 400;
+                padding: 4px;
+            }
+            .healthbar-container {
+                // position: fixed;
+
+                background-size: cover;
+                opacity: 0.9;
+                width: 120%;
+                margin-left: -10%;
+                margin-bottom: 8px;
+                height: 30px;
+                border-radius: 12px;
+                border: 1px solid black;
+                text-align: center;
+
+                transition: all ease-in-out 500ms;
+            }
+            h2 {
+                // position: fixed;
+                width: 250px;
+                margin-left: -60px;
+
+                margin-top: 15px;
+                margin-bottom: 0;
+                text-align: center;
+            }
+            #playerbar {
+                background: url("../assets/imgs/healthbar_player.png") no-repeat;
+                background-size: 100% 100%;
+            }
+            #monsterbar {
+                background: url("../assets/imgs/healthbar_monster.png")
+                    no-repeat;
+                background-size: 100% 100%;
+                color: #e3e3e3;
+                border: 1px solid #3e3e3e;
+                width: 160%;
+                margin-left: -30%;
+            }
+        }
+    }
+    .weakness {
+        img {
+            float: right;
+        }
+    }
+}
+
+.ar-container {
+    position: fixed;
+    height: 50%;
+    width: 100%;
+    // border: 3px solid red;
+    left: 0;
+    top: 20%;
+
+    .monster-container {
+        height: 60%;
+        margin-top: 20%;
+
+        img {
+            position: absolute;
+            left: calc(50% - 50px);
+            top: 30%;
+            height: 100px;
+            // border: 1px solid red;
+
+            transition: 300ms ease-in all;
+        }
+    }
+}
+
+.footer-container {
+    position: fixed;
+    padding: 0;
+    width: 90%;
+    bottom: 0;
+
+    .info-container {
+        text-align: center;
+        // padding: 12px;
+        // padding-bottom: 18px;
+        position: relative;
+        // position: fixed;
+        // bottom: calc(0%);
+        // width: calc(100% - 24px);
+        width: 100%;
+    }
+    .loot-container {
+        position: fixed;
+        bottom: calc(20%);
+        width: 90%;
+        text-align: center;
+        border: 1px solid black;
+        border-radius: 5px;
+        padding: 5px;
+        background: rgba(0, 0, 0, 0.2);
+
+        h2 {
+            font-size: 1.8rem;
+        }
+
+        .loot-content {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+
+            .loot-item {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                text-align: center;
+                h4 {
+                    font-size: 1.6rem;
+                }
+                img {
+                    margin: auto;
+                    text-align: center;
+                    width: 50px;
+                    height: auto;
+                }
+            }
+        }
+        .loot-loading {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            img {
+                margin: auto;
+                text-align: center;
+            }
+        }
+    }
+    .combat-style-container {
+        display: flex;
+        justify-content: space-between;
+        padding: 16px;
+    }
+    .combat-melee-container,
+    .combat-magic-container {
+        display: flex;
+        justify-content: space-around;
+        padding-bottom: 16px;
+    }
+    .retry-container {
+        position: fixed;
+        bottom: calc(52% - 37px);
+        left: calc(50% - 20px);
+        // bottom: 0;
+        // left: 0;
+        text-align: center;
+        color: white;
+    }
+}
+
+#img-ranged-bow {
+    z-index: 1100;
+    // transition: 100ms all;
+}
+#ranged-target {
+    position: absolute;
+    left: calc(50% - 6px);
+    top: calc(65% - 50px);
+}
+
+.button-container {
+    position: fixed;
+    left: 12px;
+    bottom: 12px;
+
+    width: calc(100% - 24px);
+    // display: flex;
+    // justify-content: space-between;
+    .chicken-img {
+        float: left;
+    }
+    .kill-img {
+        float: right;
+    }
+}
+
+.screen-splash {
+    display: block;
+    background: white;
+    position: fixed;
+    opacity: 0;
+    width: 100%;
+    height: 0%;
+    z-index: 101;
+    transition: all 0.1s;
+}
+.loading-container {
+    position: fixed;
+    top: calc(50% - 45px);
+    left: calc(50% - 45px);
+}
