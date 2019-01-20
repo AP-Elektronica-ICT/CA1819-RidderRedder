@@ -60,17 +60,19 @@ Visual Studio Code | Gebruiken wij als IDE voor Ionic. | [download](https://code
  * Open de ``Command Prompt`` in Windows of de ``Terminal`` in Mac
  * Type ``npm install -g ionic cordova`` om Ionic Cordova te installeren.
  * Test of Ionic en Cordova goed geinstalleerd zijn door ``ionic -v`` en ``cordova -v`` uit te voeren
-3. #### Android of Xcode installeren
+3. #### Java installeren
+ * Download en installeer Java JDK 1.8 (versie 8) vanaf de download link hierboven.
+4. #### Android of Xcode installeren
  * Download en installeer Android Studio of Xcode vanaf de download link hierboven. Afhankelijk van het apparaat waarop getest moet worden. 
  * ANDROID: Zorg zeker en vast dat de Android SDK beschikbaar is vanaf de commandline 
-4. #### Ionic project ophalen
+5. #### Ionic project ophalen
  * Download de laatste versie van RidderRedder door een ``pull`` uit te voeren van de ``master`` branch als je dit nog niet hebt gedaan in stap 3 van de API configureren.
  * Navigeer in explorer/finder naar de directory waar RidderRedder is opgeslagen.
  * Navigeer naar de map ``\CA1819-RidderRedder\src\ridder-redder``.
  * Open het project hier in ``Visual Studio Code``.
-5. #### Deploy naar device
+6. #### Deploy naar device
  * Sluit de telefoon aan de computer met een USB kabel. Android of iPhone worden beiden ondersteund.
-6. #### Ionic project configureren
+7. #### Ionic project configureren
  * Open de geintegreerde Terminal in Visual Studio Code.
  * Typ de volgende commando in om het project te starten: ``ionic cordova run android --device`` voor Android of ``ionic cordova run ios --device`` voor iPhone.
  * Typ ``Y`` bij de volgende prompt: ``? Install @ionic/app-scripts? (Y/n)``
