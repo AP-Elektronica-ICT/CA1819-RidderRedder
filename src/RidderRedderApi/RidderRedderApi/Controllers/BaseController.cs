@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace RidderRedderApi.Web.Api.Controllers
 {
+    /// <summary>
+    /// Base controller for every other controllers.
+    /// We should add user authentication here.
+    /// </summary>
     [ApiController]
     public class BaseController : ControllerBase
     {

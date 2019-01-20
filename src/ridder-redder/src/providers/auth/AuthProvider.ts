@@ -32,7 +32,8 @@ export class AuthProvider {
     constructor(public zone: NgZone) {
         this.user = this.getStorageVariable('profile');
         this.idToken = this.getStorageVariable('id_token');
-        this.AuthId = this.user.sub;
+        if (this.user)
+            this.AuthId = this.user.sub;
     }
 
     // Get a specific item thats stored in the local storage of the phone
