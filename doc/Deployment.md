@@ -64,7 +64,7 @@ Visual Studio Code | Gebruiken wij als IDE voor Ionic. | [download](https://code
  * Download en installeer Java JDK 1.8 (versie 8) vanaf de download link hierboven.
 4. #### Android of Xcode installeren
  * Download en installeer Android Studio of Xcode vanaf de download link hierboven. Afhankelijk van het apparaat waarop getest moet worden. 
- * ANDROID: Zorg zeker en vast dat de Android SDK beschikbaar is vanaf de commandline 
+ * Open via Android Studio de SDK Manager, en selecteer Android 4.4 (KitKat) (API level 19) om te installeren. Accepteer ook zeker de license agreement.
 5. #### Ionic project ophalen
  * Download de laatste versie van RidderRedder door een ``pull`` uit te voeren van de ``master`` branch als je dit nog niet hebt gedaan in stap 3 van de API configureren.
  * Navigeer in explorer/finder naar de directory waar RidderRedder is opgeslagen.
@@ -76,4 +76,15 @@ Visual Studio Code | Gebruiken wij als IDE voor Ionic. | [download](https://code
  * Open de geintegreerde Terminal in Visual Studio Code.
  * Typ de volgende commando in om het project te starten: ``ionic cordova run android --device`` voor Android of ``ionic cordova run ios --device`` voor iPhone.
  * Typ ``Y`` bij de volgende prompt: ``? Install @ionic/app-scripts? (Y/n)``
+ 8. #### OPTIONEEL: Verbinding instellen naar lokaal gehoste API
+  * Open het bestand ``/ridder-redder/src/environments/Environment.ts``
+  * Wijzig de variabel ``apiUrl`` om te verwijzen naar het IP adres en poort nummer van de lokale API server. (Dit is het IP adres van de computer waarop de Dotnet applicatie gehost wordt). Bijvoorbeeld: ``public static apiUrl = "192.168.11.15:80/api/v1";``
+
  
+ ### Troubleshooting
+ * ``Error: Requirements check failed for JDK 1.8``
+     * Deze error kan voorkomen wanneer we de app proberen te runnen. Terwijl JDK 1.8 wel degelijk geinstalleerd is. Dit kunnen we fixen door andere JDK versies dan 1.8 te uninstalleren. 
+ 
+
+
+
