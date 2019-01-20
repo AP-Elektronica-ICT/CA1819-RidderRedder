@@ -16,6 +16,7 @@ using Swashbuckle.AspNetCore.Swagger;
 
 using RidderRedderApi.Repositories;
 using RidderRedderApi.Services;
+using Newtonsoft.Json;
 
 namespace RidderRedderApi {
     /// <summary>

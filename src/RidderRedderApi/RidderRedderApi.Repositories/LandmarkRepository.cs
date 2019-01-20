@@ -1,4 +1,5 @@
-﻿using RidderRedderApi.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using RidderRedderApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,9 @@ namespace RidderRedderApi.Repositories {
 
 		public List<Landmark> GetLandmarks() {
 			try {
-				return this.context.Landmarks.ToList();
+                return this.context.Landmarks
+                    .Include(lm => lm.Knights)
+                    .ToList();
 			}
 			catch (Exception e) {
 				throw e;
@@ -23,7 +26,10 @@ namespace RidderRedderApi.Repositories {
 
 		public Landmark Get(int landmarkId) {
 			try {
-				return this.context.Landmarks.Find(landmarkId);
+				return this.context.Landmarks
+                    .Where(lm => lm.LandmarkId == landmarkId)
+                    .Include(lm => lm.Knights)
+                    .First();
 			}
 			catch (Exception e) {
 				throw e;
@@ -50,7 +56,11 @@ namespace RidderRedderApi.Repositories {
 			try {
 				this.context.Landmarks.Update(l);
 				this.context.SaveChanges();
-				return l;
+
+                return this.context.Landmarks
+                    .Where(lm => lm.LandmarkId == l.LandmarkId)
+                    .Include(lm => lm.Knights)
+                    .First();
 			}
 			catch (Exception e) {
 				throw e;
