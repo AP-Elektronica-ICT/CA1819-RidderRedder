@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from "rxjs/Observable";
 import { Landmark } from '../../models/Landmark';
 import { Knight } from '../../models/Knight';
-import { AuthProvider } from '../auth/AuthProvider'';
+import { PlayerProvider } from '../player/PlayerProvider';
 /*
   Generated class for the LandmarkProvider provider.
 
@@ -19,7 +19,7 @@ export class LandmarkProvider {
         })
     }
 
-    constructor(public http: HttpClient, public auth: AuthProvider) {
+    constructor(public http: HttpClient, public pProv: PlayerProvider) {
         console.log('Hello LandmarkProvider Provider');
 
     }
@@ -29,6 +29,11 @@ export class LandmarkProvider {
         console.log(this.queryUrl);
         console.log(this.httpOptions);
         return this.http.get<Array<Landmark>>(this.queryUrl, this.httpOptions)
+        .map((landmarks) => {
+            console.log("got landmarks");
+            console.log(landmarks);
+            return landmarks;
+        });
     }
 
     addKnight(landmark: Landmark, knight: Knight):Observable<Landmark> {
@@ -37,8 +42,12 @@ export class LandmarkProvider {
         }
         else{
             landmark.knights = [knight];
-            landmark.ownerId = this.auth.authId;
+            landmark.owner = this.pProv.player.AuthId;
         }
-        return this.http.post<Landmark>(this.queryUrl + landmark.id, landmark, this.httpOptions);
+        console.log("making http post for landmark");
+        console.log(this.queryUrl + landmark.landmarkId);
+        console.log(landmark);
+        console.log(this.httpOptions);
+        return this.http.post<Landmark>(this.queryUrl + landmark.landmarkId, landmark, this.httpOptions);
     }
 }

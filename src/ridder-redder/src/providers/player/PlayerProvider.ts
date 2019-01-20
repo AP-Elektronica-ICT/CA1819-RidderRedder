@@ -23,7 +23,7 @@ export class PlayerProvider {
             // 'Authorization': `Bearer ${this.auth.access_token}`
         })
     }
-    private player: Player;
+    public player: Player;
     Inventory: Array<Knight>;
 
     constructor(public http: HttpClient, private auth: AuthProvider) {

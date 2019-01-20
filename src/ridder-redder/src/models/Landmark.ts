@@ -1,23 +1,22 @@
 import { Marker } from '@ionic-native/google-maps';
 import { Knight } from './Knight'
+import { Player } from './Player'
 export class Landmark {
-  id: number;
+  landmarkId: number;
   name: string;
   lat;
   lng;
   marker: Marker;
   knights: Array<Knight>;
-  ownerId: string;
-  ownerName: string;
+  owner: string;
 
-  constructor(id:number, name: string, lat, lng, ownerId: string, ownerName: string){
-    this.id = id;
+  constructor(landmarkId:number, name: string, lat, lng, owner: string){
+    this.landmarkId = landmarkId;
     this.name = name;
     this.lat = lat;
     this.lng = lng;
     this.knights = new Array<Knight>();
-    this.ownerId = ownerId;
-    this.ownerName = ownerName;
+    this.owner = owner;
   }
 
   getKnights(){
@@ -30,6 +29,5 @@ export class Landmark {
 
   addKnight(newknight: Knight){
     this.knights.push(newknight);
-  }
-
+ }
 }
