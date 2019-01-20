@@ -48,6 +48,9 @@ Software | Uitleg Software | Download
 ---------|-----------------------|----------------------------
 NodeJS | Veel van Ionic's CLI commando's gebruiken NodeJS. Om NPM packages te kunnen installeren hebben we ook NodeJS nodig. | [download](https://nodejs.org/en/)
 Ionic Cordova | Ionic Cordova wordt gebruikt om onze app cross-platform te realiseren. | [download](https://ionicframework.com/docs/intro/installation/)
+Android CLI SDK | Dit wordt gebruikt om de Ionic app te builden voor Android | [download]https://developer.android.com/studio/#downloads
+Xcode | Dit wordt gebruikt om de Ionic app te builden voor iOS | [download](https://developer.apple.com/xcode/)
+Visual Studio Code | Gebruiken wij als IDE voor Ionic. | [download](https://code.visualstudio.com)
 
 1. #### NodeJS installeren
  * Download en installeer de laatste TLS versie van NodeJS via de download link hierboven.
@@ -56,7 +59,18 @@ Ionic Cordova | Ionic Cordova wordt gebruikt om onze app cross-platform te reali
  * Open de ``Command Prompt`` in Windows of de ``Terminal`` in Mac
  * Type ``npm install -g ionic cordova`` om Ionic Cordova te installeren.
  * Test of Ionic en Cordova goed geinstalleerd zijn door ``ionic -v`` en ``cordova -v`` uit te voeren
-3. #### Ionic project configureren
+3. #### Android of Xcode installeren
+ * Download en installeer de Android CLI SDK of Xcode vanaf de download link hierboven. Afhankelijk van het apparaat waarop getest moet worden. 
+ * ANDROID: Zorg zeker en vast dat de Android SDK beschikbaar is vanaf de commandline 
+4. #### Ionic project ophalen
  * Download de laatste versie van RidderRedder door een ``pull`` uit te voeren van de ``master`` branch als je dit nog niet hebt gedaan in stap 3 van de API configureren.
  * Navigeer in explorer/finder naar de directory waar RidderRedder is opgeslagen.
  * Navigeer naar de map ``\CA1819-RidderRedder\src\ridder-redder``.
+ * Open het project hier in ``Visual Studio Code``.
+5. #### Deploy naar device
+ * Sluit het de telefoon aan de computer met een USB kabel. Android of iPhone worden beiden ondersteund.
+6. #### Ionic project configureren
+ * Open de geintegreerde Terminal in Visual Studio Code.
+ * Typ de volgende commando in om het project te starten: ``ionic cordova run android --device`` of ``ionic cordova run ios --device`` voor iPhones
+ * Typ ``Y`` bij de volgende prompt: ``? Install @ionic/app-scripts? (Y/n)``
+ 
