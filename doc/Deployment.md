@@ -11,9 +11,17 @@ Het andere deel is een zelfgemaakte Ionic app. In de app kunnen we het spel Ridd
 #### API
 * .NET Core 2.1                     [download hier](https://dotnet.microsoft.com/download/dotnet-core/2.1)
 * Visual Studio 2017 versie 15.7+   [update uitleg](https://docs.microsoft.com/en-us/visualstudio/install/update-visual-studio?view=vs-2017)
-* MySQL Server 8.0+                 [downloda hier](https://dev.mysql.com/downloads/mysql/)
+* MySQL Server 8.0+                 [download hier](https://dev.mysql.com/downloads/mysql/)
+* MySQL Workbench                   Deze zit bij de installatie van MySQL Server
 
 ### ASP.NET Core API Deployment
+1. #### MySQL Configureren
+  * Download en installeer MySQL server via de download link hierboven.
+  * Gebruik MySQL Workbench om te verbinden naar de lokale MySQL server.
+  * Maak een nieuwe database/schema aan en noem deze ``ridderredderapi``.
+  * Selecteer deze database als ``standaard database`` of ``default schema``
+  * Voer de query van [SQLDump](https://github.com/AP-Elektronica-ICT/CA1819-RidderRedder/blob/master/doc/SQLDump.sql) uit om alle tabellen en standaard data over te nemen.
+2. #### Dotnet project instellen
 
 ### Ionic Deployment
 
