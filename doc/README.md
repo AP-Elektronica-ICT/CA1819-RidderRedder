@@ -12,9 +12,9 @@ Als coding guideline voor de Dotnet core omgeving hebben we de coding guidelines
  
 ### Ionic (Typescript)
 Als coding guideline voor de Ionic omgeving hebben wij de volgende conventions vastgesteld.
-> Gebruik ``camelcasing`` voor alle **variabels**. Voorbeeld: ```public authId;```  
-> Gebruik ``camelCasing`` voor alle **functie** namen en **parameters**. 
-> Curly brackets ``{ }`` moeten op dezelfde lijn geplaatst worden voor een ``function`` en ``condition blocks``  
-> Als er binnen een ``if() { }`` statement maar 1 regel code staat, mogen de curly brackets ``{}`` weggelaten worden.  
-> Namen van **Pages**, **Components** en **Directives** moeten met een kleine letter beginnen.  
-> Namen van **Providers** moeten met een hoofdletter beginnen.  
+* Gebruik ``camelcasing`` voor alle **variabels**.
+* Gebruik ``camelCasing`` voor alle **functie** namen en **parameters**. 
+* Curly brackets ``{ }`` moeten op dezelfde lijn geplaatst worden voor een ``function`` en ``condition blocks``  
+* Als er binnen een ``if() { }`` statement maar 1 regel code staat, mogen de curly brackets ``{}`` weggelaten worden.  
+* Namen van **Pages**, **Components** en **Directives** moeten met een kleine letter beginnen.  
+* Namen van **Providers** moeten met een hoofdletter beginnen.  
