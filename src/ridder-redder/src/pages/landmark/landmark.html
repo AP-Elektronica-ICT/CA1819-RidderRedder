@@ -19,15 +19,17 @@
         <img src="assets/icons/loading.gif" class="loading-gif" width="90" height="90">
     </div>
     <ion-card *ngIf="!loading">
-        <div *ngIf='!landmark.owner'>
+        <div *ngIf='neutral'>
             <h4>neutral landmark</h4>
             <p>Place a knight here to claim it</p>
         </div>
-
+        <div>
+            <h4>Owned by: {{ownerName}}</h4>
+        </div>
         <div id="knightList" *ngIf="neutral || friendly">
             <p>Owned knights:</p>
             <div *ngIf="inventory?.length > 0">
-                <ion-card class="knightCard" *ngFor="let item of inventory" (click)="addKnight(knight)">
+                <ion-card class="knightCard" *ngFor="let item of inventory" (click)="addItem(item)">
                     <img src="{{item.itemImage.path}}" width="50" height="50">
                 </ion-card>
             </div>

@@ -24,6 +24,7 @@ export class LandmarkPage {
     pId: string;
     inventory: Array<InventoryItem>;
     knights: Array<Knight>;
+    ownerName: string;
     neutral: boolean;
     friendly: boolean;
     enemy: boolean;
@@ -38,8 +39,15 @@ export class LandmarkPage {
             this.friendly = false;
             this.enemy = false;
         }
-        else if (){
+        else if (this.landmark.owner == pId){ //TODO
             this.neutral = false;
+            this.friendly = true;
+            this.enemy = false;
+        }
+        else {
+            this.neutral = false;
+            this.friendly = false;
+            this.enemy = true;
         }
         this.iProvider.getInventory()
             .subscribe((inv) => {
@@ -48,6 +56,11 @@ export class LandmarkPage {
                 this.inventory = inv;
                 this.loading = false;
             });
+        if(this.enemy || this.friendly){
+            pProv.getPlayer(landmark.owner).subscribe(
+                p => {
+                    this.ownerName = p.PlayerName;
+                };)
     }
 
     ionViewDidLoad() {
@@ -55,13 +68,13 @@ export class LandmarkPage {
         console.log(this.landmark);
     }
 
-    addKnight(knight: Knight){
+    addItem(item: InventoryItem){
         //tell landmark provider to add knight to landmark
         console.log("adding knight to landmark:");
-        console.log(knight);
+        console.log(item);
         console.log(this.landmark);
         this.loading = true;
-        this.lmProvider.addKnight(this.landmark, knight).subscribe((landmark) => {
+        this.iProvider.transferItemToLandmark(item, 1, this.landmark).subscribe((landmark) => {
             this.landmark = landmark;
             this.loading = false;
         });

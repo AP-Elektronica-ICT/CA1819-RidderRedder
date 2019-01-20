@@ -17,14 +17,8 @@ import { PlayerDto } from '../../dtos/PlayerDto';
 @Injectable()
 export class PlayerProvider {
 
-    private httpOptions = {
-        headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            // 'Authorization': `Bearer ${this.auth.access_token}`
-        })
-    }
     public player: Player;
-    Inventory: Array<Knight>;
+    //Inventory: Array<Knight>;
 
     constructor(public http: HttpClient, private auth: AuthProvider) {
         // connect to server, get data
@@ -34,15 +28,27 @@ export class PlayerProvider {
             console.log(error);
         });
 
-        this.Inventory = new Array<Knight>();
+        /* this.Inventory = new Array<Knight>();
         this.Inventory.push({id: 0, colour: "red", level: 4 , owner: "admin"});
         this.Inventory.push({id: 1, colour: "blue", level: 6, owner: "admin"});
         this.Inventory.push({id: 2, colour: "black", level: 2, owner: "admin"});
-        this.Inventory.push({id: 3,  colour: "red", level: 5, owner: "admin"});
+        this.Inventory.push({id: 3,  colour: "red", level: 5, owner: "admin"});*/
     }
 
-    getInventory() {
-        return this.Inventory;
+    //getInventory() {
+    //  return this.Inventory;
+    //}
+
+    public newPlayer(player: PlayerDto): Observable<Player> {
+        return this.http.post<PlayerDto>(`/player`, player).map(data=> {
+            let p: Player = {
+                PlayerName: data.playerName,
+                Experience: data.experience,
+                AuthId: data.authId
+            };
+            this.player = p;
+            return p;
+        })
     }
 
     public getPlayer(authid: string): Observable<Player> {
@@ -52,7 +58,7 @@ export class PlayerProvider {
                 Experience: data.experience,
                 AuthId: data.authId
             };
-            this.player = p;
+            //this.player = p;
             return p;
         });
     }

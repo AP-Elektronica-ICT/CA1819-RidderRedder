@@ -19,16 +19,18 @@ const auth0config = {
 @Injectable()
 export class AuthProvider {
 
-    public AuthId = "admin";
+    public AuthId = "";
+    // Static for iPhone =       auth0|5bfe96d135b0da3846796a38
 
     auth0 = new Auth0.WebAuth(auth0config);
     accessToken: string;
     idToken: string;
-    user: any;
+    public user: any;
 
     constructor(public zone: NgZone) {
         this.user = this.getStorageVariable('profile');
         this.idToken = this.getStorageVariable('id_token');
+        this.AuthId = this.user.sub;
     }
 
     private getStorageVariable(name) {
@@ -82,6 +84,7 @@ export class AuthProvider {
                 this.zone.run(() => {
                     this.user = profile;
                 });
+
             });
         });
     }

@@ -28,56 +28,56 @@ import { InventoryPageModule } from '../pages/inventory/inventory.module';
 import { LandmarkPageModule } from '../pages/landmark/landmark.module';
 
 @NgModule({
-  declarations: [
-    RidderRedder,
-    //HomePage,
-    //CombatPage,    these are in seperate Module files
-    // InventoryPage,
-    // LandmarkPage
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    ComponentsModule,
-    HomePageModule,
-    CombatPageModule,
-    LoginPageModule,
-    InventoryPageModule,
-    LandmarkPageModule,
-    // DirectivesModule,
-    IonicModule.forRoot(RidderRedder)
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    RidderRedder,
-    //HomePage,
-    //CombatPage
-    // InventoryPage,
-    // LandmarkPage
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    GoogleMaps,
-    Geolocation,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    MonsterProvider,
-    PlayerProvider,
-    LandmarkProvider,
-    DeviceMotion,
-    ScreenOrientation,
-    SpeechRecognition,
-    AuthProvider,
-    InventoryProvider,
-    InterceptorProvider,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: InterceptorProvider,
-      multi: true
-  }
-  ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ]
+    declarations: [
+        RidderRedder,
+        //HomePage,
+        //CombatPage,    these are in seperate Module files
+        // InventoryPage,
+        // LandmarkPage
+    ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        ComponentsModule,
+        HomePageModule,
+        CombatPageModule,
+        LoginPageModule,
+        InventoryPageModule,
+        LandmarkPageModule,
+        // DirectivesModule,
+        IonicModule.forRoot(RidderRedder)
+    ],
+    bootstrap: [IonicApp],
+    entryComponents: [
+        RidderRedder,
+        //HomePage,
+        //CombatPage
+        // InventoryPage,
+        // LandmarkPage
+    ],
+    providers: [
+        StatusBar,
+        SplashScreen,
+        GoogleMaps,
+        Geolocation,
+        { provide: ErrorHandler, useClass: IonicErrorHandler },
+        MonsterProvider,
+        PlayerProvider,
+        LandmarkProvider,
+        DeviceMotion,
+        ScreenOrientation,
+        SpeechRecognition,
+        AuthProvider,
+        InventoryProvider,
+        InterceptorProvider,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: InterceptorProvider,
+            multi: true
+        }
+    ],
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+    ]
 })
 export class AppModule { }

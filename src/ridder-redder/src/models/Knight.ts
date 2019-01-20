@@ -1,13 +1,15 @@
 export class Knight{
-  id: number;
-  owner: string;
-  colour: string;
-  level: number;
+    knightId: number;
+    authId: string;
+    colour: string;
+    level: number;
+    landmarkId: number;
 
-  constructor(id: number, owner: string, colour: string, level: number){
-    this.id = id;
-    this.owner = owner;
-    this.colour = colour;
-    this.level = level;
-  }
+    constructor(knightId: number, authId: string, colour: string, level: number, landmarkId: number){
+        this.knightId = knightId;
+        this.authId = authId;
+        this.colour = colour;
+        this.level = level;
+        this.landmarkId = landmarkId;
+    }
 }
