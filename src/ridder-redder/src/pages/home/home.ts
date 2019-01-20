@@ -46,7 +46,7 @@ export class HomePage {
 
         document.addEventListener("pause", this.resetGeo, false);
 
-        
+
 
         // this.presentInventory();
 
@@ -61,7 +61,20 @@ export class HomePage {
             this.updateMap();
             this.updateMonsters();
         });
+    }
 
+    // refresh landmarks
+    ionViewWillEnter() {
+        this.loading = true;
+        for(let landmark of this.landmarks){
+            this.removeLandmark(landmark);
+        }
+        this.lmProvider.getLandmarks().subscribe((landmarks) => {
+            console.log('got landmarks');
+            console.log(landmarks);
+            this.landmarks = landmarks;
+            this.addLandmarks();
+        });
     }
 
     // create new GoogleMap
@@ -111,17 +124,17 @@ export class HomePage {
                 this.prevPos.lng = resp.coords.longitude;
 
                 this.map = GoogleMaps.create('map_canvas', mapOptions);
-              
+
                 this.lmProvider.getLandmarks().subscribe((landmarks) => {
-                  console.log('got landmarks');
-                  console.log(landmarks);
-                  this.landmarks = landmarks;
-                  this.addLandmarks();
+                    console.log('got landmarks');
+                    console.log(landmarks);
+                    this.landmarks = landmarks;
+                    this.addLandmarks();
                 });
                 // this.updateMonsters();
 
                 this.mapLoaded = true;
-                
+
                 this.watchMap();
 
             }).catch((error) => {
@@ -157,10 +170,10 @@ export class HomePage {
         });
 
     }
-    
+
     chooseLandmarkIcon(landmark){
         var icon;
-        if (landmark.ownerId == null) {
+        if (landmark.owner == null) {
             icon = {
                 url: 'assets/imgs/castle_black.png',  //Castle by BGBOXXX Design from the Noun Project
                 size: {
@@ -169,7 +182,7 @@ export class HomePage {
                 }
             }
         }
-        else if (landmark.ownerId == this.authProvider.AuthId) {
+        else if (landmark.owner == this.authProvider.AuthId) {
             icon = {
                 url: 'assets/imgs/castle_green.png',  //Castle by BGBOXXX Design from the Noun Project
                 size: {
@@ -216,24 +229,24 @@ export class HomePage {
     // move map centre to current location, if location is far enough from previous location
     updateMap() {
         this.geolocation.getCurrentPosition()
-        .then((resp) => {
-            console.log("Moving  map to " + resp);
+            .then((resp) => {
+                console.log("Moving  map to " + resp);
 
-            this.prevPos.lat = resp.coords.latitude;
-            this.prevPos.lng = resp.coords.longitude;
+                this.prevPos.lat = resp.coords.latitude;
+                this.prevPos.lng = resp.coords.longitude;
 
-            this.map.animateCamera(
-                {
-                    target:
+                this.map.animateCamera(
                     {
-                        lat: resp.coords.latitude,
-                        lng: resp.coords.longitude
-                    }
-                });
+                        target:
+                        {
+                            lat: resp.coords.latitude,
+                            lng: resp.coords.longitude
+                        }
+                    });
 
-        }).catch((error) => {
-            console.log(error);
-        });
+            }).catch((error) => {
+                console.log(error);
+            });
     }
 
     // generate new monsters, and check if you're close enough to fight
@@ -299,7 +312,16 @@ export class HomePage {
 
         console.log("Removing monster from the list: " + monster.Name);
         monster.Marker.remove();
-        this.monsters.splice(this.monsters.indexOf(monster), 1);
+        this.monsters.shift();
+    }
+    
+    removeLandmark(landmark: Landmark) {
+        if (landmark)
+            return;
+
+        console.log("Removing landmark from the list: " + landmark.name);
+        landmark.marker.remove();
+        this.landmarks.shift();
     }
 
     // open the fight screen
@@ -315,7 +337,7 @@ export class HomePage {
     resetGeo() {
         // this.geoPosWatcher.unsubscribe();
         if(this.geolocation){
-          this.geolocation.watchPosition().subscribe().unsubscribe();
+            this.geolocation.watchPosition().subscribe().unsubscribe();
         }
     }
 

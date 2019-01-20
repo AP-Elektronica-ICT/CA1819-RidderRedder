@@ -50,4 +50,21 @@ export class LandmarkProvider {
         console.log(this.httpOptions);
         return this.http.post<Landmark>(this.queryUrl + landmark.landmarkId, landmark, this.httpOptions);
     }
+
+    killKnight(landmark: Landmark):Observable<Landmark> {
+        console.log("killing knight on landmark");
+        console.log(landmark);
+        landmark.knights.shift();
+        console.log(landmark);
+        if(landmark.knights.length == 0){
+            landmark.owner = null;
+            landmark.knights = null;
+        }
+        return this.http.post<Landmark>(this.queryUrl + landmark.landmarkId, landmark, this.httpOptions)
+        .map(lm => {
+            console.log("killKnight, got reply");
+            console.log(lm);
+            return lm;
+        });
+    }
 }

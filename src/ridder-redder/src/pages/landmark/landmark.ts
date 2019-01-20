@@ -39,7 +39,7 @@ export class LandmarkPage {
             this.friendly = false;
             this.enemy = false;
         }
-        else if (this.landmark.owner == pId){ //TODO
+        else if (this.landmark.owner == this.pId){
             this.neutral = false;
             this.friendly = true;
             this.enemy = false;
@@ -57,10 +57,12 @@ export class LandmarkPage {
                 this.loading = false;
             });
         if(this.enemy || this.friendly){
-            pProv.getPlayer(landmark.owner).subscribe(
-                p => {
-                    this.ownerName = p.PlayerName;
-                };)
+            pProv.getPlayer(this.landmark.owner)
+                .subscribe(
+                    p => {
+                        this.ownerName = p.PlayerName;
+                    });
+        }
     }
 
     ionViewDidLoad() {
@@ -78,5 +80,36 @@ export class LandmarkPage {
             this.landmark = landmark;
             this.loading = false;
         });
+    }
+
+    getImage(knight){
+        return this.iProvider.ItemImages[knight.colour + 1].path;
+    }
+
+    fight(){
+        console.log("fight yo");
+        if(true){
+            this.loading = true;
+            this.lmProvider.killKnight(this.landmark).subscribe(
+                lm => {
+                    this.landmark = lm;
+                    this.loading = false;
+                    if (!this.landmark.owner || (this.landmark.owner == null)){
+                        this.neutral = true;
+                        this.friendly = false;
+                        this.enemy = false;
+                    }
+                    else if (this.landmark.owner == this.pId){
+                        this.neutral = false;
+                        this.friendly = true;
+                        this.enemy = false;
+                    }
+                    else {
+                        this.neutral = false;
+                        this.friendly = false;
+                        this.enemy = true;
+                    }
+                });
+        }
     }
 }

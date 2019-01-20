@@ -2,16 +2,31 @@ page-landmark {
 
 }
 
-#knightList {
+.knightList {
+    width: 100%;
+    height: 40%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
 
 .knightCard {
-    width: 20%;
-    justify-content: space-around;
-
+    width: 50px;
+    height: 50px;
+    margin: 3px;
+    padding: 1px !important;
     img {
     }
 }
+
+#garrison:first-child {
+    background-color: red;
+}
+
+#fightButton{
+    height: 15%;
+    width: 100%;
+    font-size: 18px;
+    padding: 8px;
+}
+
