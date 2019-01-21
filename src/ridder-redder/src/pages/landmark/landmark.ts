@@ -66,6 +66,9 @@ export class LandmarkPage {
         console.log("updating landmark");
         this.loading = true;
         
+        if(this.enemy && this.knights.length == 0)
+            this.navCtrl.pop();
+
         this.lmProvider.getLandmark(this.landmark.landmarkId)
             .subscribe(landmark => {
                 console.log("updated landmark");

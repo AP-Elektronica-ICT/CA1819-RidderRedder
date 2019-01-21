@@ -55,7 +55,7 @@
             </div>
 
             <!-- LOOT CONTAINER -->
-            <div class="loot-container" *ngIf="(combat.combatState == 4) && lootGained && (lootGained.length)">
+            <div class="loot-container" *ngIf="combat.combatState == 4">
                 <h2>Gained loot:</h2>
                 <div class="loot-content" *ngIf="combat.lootGained">
                     <div class="loot-item" *ngFor="let loot of combat.lootGained">

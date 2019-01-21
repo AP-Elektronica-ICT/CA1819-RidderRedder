@@ -299,8 +299,10 @@ export class Combat {
         this.player.Experience += this.experienceGained;
         this.changeCombatState(CombatState.CombatVictory);
         this.parent.setInfo();
+
         let tmp: any = this.monster;
         if(tmp.isKnight){
+            
             console.log("defeated knight");
             console.log(tmp);
             this.lootGained = [];
@@ -311,8 +313,8 @@ export class Combat {
                     this.lmPage.removeKnight();
                     this.lmPage.updateLandmark();
                 });
-        }
-        else{
+        } else {
+            console.log("Defeated monster");
             this.generateLoot();
 
         }
@@ -361,13 +363,9 @@ export class Combat {
             console.log(this.parent.navCtrl.getViews());
             
             let tmp: any = this.monster;
-            if(tmp.isKnight){
-                //remove last 2 pages to go back to map
-                this.parent.navCtrl.remove(this.parent.navCtrl.length()-2, 2);
-            }
-            else {
-                this.parent.navCtrl.pop();
-            }
+
+            this.parent.navCtrl.pop();
+            
             // this.parent.navCtrl.push(
             //     HomePage,
             //     { lastmonster: this.monster }
