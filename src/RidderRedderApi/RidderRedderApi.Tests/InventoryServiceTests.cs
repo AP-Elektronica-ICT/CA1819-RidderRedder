@@ -18,8 +18,8 @@ namespace RidderRedderApi.Tests
 
         private ApplicationContext context;
 
-        private InventoryRepository invRepository;
-        private InventoryService invService;
+        private InventoryRepository inventoryRepository;
+        private InventoryService inventoryService;
 
         private PlayerRepository playerRepository;
         private PlayerService playerService;
@@ -43,14 +43,15 @@ namespace RidderRedderApi.Tests
             context.SeedItemTypes();
             context.SeedItemImages();
 
+
             // Seed Monster content
             context.SeedMonsterModels();
             context.SeedMonsterNames();
             context.SeedMonsterTitles();
 
 
-            invRepository = new InventoryRepository(context);
-            invService = new InventoryService(invRepository);
+            inventoryRepository = new InventoryRepository(context);
+            inventoryService = new InventoryService(inventoryRepository);
 
             playerRepository = new PlayerRepository(context);
             playerService = new PlayerService(playerRepository);
@@ -211,6 +212,109 @@ namespace RidderRedderApi.Tests
          * Start of InventoryService testing
          */
         #region inventoryTesting
+
+        /// <summary>
+        /// Ensure player's inventory is empty and GET works
+        /// </summary>
+        [Fact]
+        public void EmptyGetInventoryForPlayerTest()
+        {
+            context.SeedPlayer(new Player { AuthId = "admin", Experience = 123, Landmarks = null, PlayerName = "Admin" });
+
+            inventoryService.GetInventoryForPlayer("admin").Should().HaveCount(0);
+        }
+
+        /// <summary>
+        /// Ensure player's inventory is not empty and GET works
+        /// </summary>
+        [Fact]
+        public void FilledGetInventoryForPlayerTest()
+        {
+            context.SeedPlayer(new Player { AuthId = "admin", Experience = 123, Landmarks = null, PlayerName = "Admin" });
+            
+            for(int i = 0; i < 3; i++)
+                inventoryService.PostInventoryItem(new AddInventoryItemDto{ AuthId = "admin", InventoryItemId = 1, ItemImageId = 1, ItemTypeId = 1, Amount = 1});
+            
+
+            inventoryService.GetInventoryForPlayer("admin").Should().HaveCountGreaterOrEqualTo(3);
+        }
+
+        /// <summary>
+        /// Ensure that an InventoryItem can be POSTed
+        /// </summary>
+        [Fact]
+        public void PostInventoryItemTest()
+        {
+            context.SeedPlayer(new Player { AuthId = "admin", Experience = 123, Landmarks = null, PlayerName = "Admin" });
+
+
+            InventoryItem item = inventoryService.PostInventoryItem(new AddInventoryItemDto
+            {
+                AuthId = "admin",
+                InventoryItemId = 1,
+                ItemImageId = 1,
+                ItemTypeId = 1,
+                Amount = 1
+            });
+
+            item.Should().NotBeNull();
+            item.InventoryItemId.Should().NotBe(null);
+            
+        }
+
+        /// <summary>
+        /// Ensure that an InventoryItem can be UPATEd 
+        /// </summary>
+        [Fact]
+        public void UpdateInventoryItemTest()
+        {
+            context.SeedPlayer(new Player { AuthId = "admin", Experience = 123, Landmarks = null, PlayerName = "Admin" });
+
+            InventoryItem item = inventoryService.PostInventoryItem(new AddInventoryItemDto
+            {
+                AuthId = "admin",
+                InventoryItemId = 1,
+                ItemImageId = 1,
+                ItemTypeId = 1,
+                Amount = 1
+            });
+
+            UpdateInventoryItemDto updateItem = new UpdateInventoryItemDto { ItemTypeId = 2, ItemImageId = 2, Amount = 2 };
+            InventoryItem updatedItem = inventoryService.UpdateInventoryItem(updateItem, 1);
+
+            updatedItem.ItemImage.ItemImageId.Should().Be(2);
+            updatedItem.ItemType.ItemTypeId.Should().Be(2);
+            updatedItem.Amount.Should().Be(2);
+        }
+
+        [Fact]
+        public void DeleteInventoryItemTest()
+        {
+            context.SeedPlayer(new Player { AuthId = "admin", Experience = 123, Landmarks = null, PlayerName = "Admin" });
+
+            InventoryItem item = inventoryService.PostInventoryItem(new AddInventoryItemDto
+            {
+                AuthId = "admin",
+                InventoryItemId = 1,
+                ItemImageId = 1,
+                ItemTypeId = 1,
+                Amount = 1
+            });
+
+            inventoryService.DeleteInventoryItem(item.InventoryItemId).Should().Be(true);
+        }
+        #endregion
+
+        /* 
+         * Start of LandmarkService testing
+         */
+        #region landmarkTesting
+
+        /*
+         * There are no unit tests for LandmarkService
+         * because there is no business logic, thus
+         * there is no need for testing.
+         */
 
         #endregion
 

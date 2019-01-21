@@ -79,5 +79,10 @@ namespace RidderRedderApi.Repositories {
             SaveChanges();
         }
 
+
+        public void SeedInventoryItem(InventoryItem item)
+        {
+            InventoryItems.Add(item);
+        }
     }
 }
