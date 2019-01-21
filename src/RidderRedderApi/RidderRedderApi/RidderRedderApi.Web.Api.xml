@@ -4,6 +4,12 @@
         <name>RidderRedderApi.Web.Api</name>
     </assembly>
     <members>
+        <member name="T:RidderRedderApi.Web.Api.Controllers.BaseController">
+            <summary>
+            Base controller for every other controllers.
+            We should add user authentication here.
+            </summary>
+        </member>
         <member name="T:RidderRedderApi.Web.Api.Controllers.InventoryController">
             <summary>
             Inventory controller.
@@ -56,6 +62,11 @@
             </summary>
             <returns>The all item images.</returns>
         </member>
+        <member name="T:RidderRedderApi.Web.Api.Controllers.LandmarkController">
+            <summary>
+            LandmarkController
+            </summary>
+        </member>
         <member name="M:RidderRedderApi.Web.Api.Controllers.LandmarkController.#ctor(RidderRedderApi.Services.LandmarkService)">
             <summary>
             Initializes a new instance of the <see cref="T:RidderRedderApi.Web.Api.Controllers.LandmarkController"/> class.
@@ -70,9 +81,9 @@
         </member>
         <member name="M:RidderRedderApi.Web.Api.Controllers.LandmarkController.Update(System.String,RidderRedderApi.Models.Landmark)">
             <summary>
-            Update the specified landmark with given landmarkId
+            Returns the landmark with given landmarkId
             </summary>
-            <returns>The update.</returns>
+            <returns>Landmark.</returns>
             <param name="landmarkId">LandmarkId.</param>
             <param name="l">L.</param>
         </member>
