@@ -24,6 +24,15 @@ export class LandmarkProvider {
 
     }
 
+    getLandmark(landmarkId: number):Observable<Landmark>{
+        console.log("get landmark");
+        return this.http.get<Landmark>(this.queryUrl + landmarkId, this.httpOptions)
+        .map((landmark) => {
+            console.log("got landmark");
+            console.log(landmark);
+            return landmark;
+    }
+    
     getLandmarks():Observable<Array<Landmark>>{
         console.log('in getLandmarks');
         console.log(this.queryUrl);
@@ -54,13 +63,11 @@ export class LandmarkProvider {
     killKnight(landmark: Landmark):Observable<Landmark> {
         console.log("killing knight on landmark");
         console.log(landmark);
-        landmark.knights.shift();
-        console.log(landmark);
-        if(landmark.knights.length == 0){
-            landmark.owner = null;
-            landmark.knights = null;
-        }
-        return this.http.post<Landmark>(this.queryUrl + landmark.landmarkId, landmark, this.httpOptions)
+        console.log(JSON.stringify(landmark));
+        let tmp = JSON.parse(JSON.stringify(landmark));
+        tmp.marker = undefined;
+        console.log(JSON.stringify(tmp));
+        return this.http.post<Landmark>(this.queryUrl + "/kill/" + landmark.landmarkId, tmp, this.httpOptions)
         .map(lm => {
             console.log("killKnight, got reply");
             console.log(lm);

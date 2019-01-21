@@ -294,6 +294,13 @@ export class Combat {
         this.changeCombatState(CombatState.CombatVictory);
         this.parent.setInfo();
         this.generateLoot();
+        if(this.monster == isKnight){
+            //TODO start loadingd
+            this.lmProvider.killKnight(this.monster.landmark).subscribe(
+                lm => {
+                    //TODO end loading
+                });
+        }
     }
 
     defeatedByMonster() {
@@ -322,7 +329,9 @@ export class Combat {
 
     resetCombat(){
         this.lootGained = [];
-        this.monster.Marker.remove();
+        if(this.monster != isKnight){
+            this.monster.Marker.remove();
+        }
     }
     
 

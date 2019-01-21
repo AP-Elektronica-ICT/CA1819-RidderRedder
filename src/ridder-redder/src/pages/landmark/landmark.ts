@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController} from 'ionic-angular';
 import { Landmark } from '../../models/Landmark';
 import { Knight } from '../../models/Knight';
 import { InventoryItem } from '../../models/InventoryItem';
@@ -7,6 +7,8 @@ import { PlayerProvider } from '../../providers/player/PlayerProvider';
 import { LandmarkProvider } from '../../providers/landmark/LandmarkProvider';
 import { AuthProvider } from '../../providers/auth/AuthProvider';
 import { InventoryProvider } from '../../providers/inventory/InventoryProvider';
+import { CombatPage } from '../combat/combat';
+
 /**
  * Generated class for the LandmarkPage page.
  *
@@ -30,10 +32,46 @@ export class LandmarkPage {
     enemy: boolean;
     loading: boolean;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public pProv: PlayerProvider, public lmProvider: LandmarkProvider, public authProvider: AuthProvider, public iProvider: InventoryProvider) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public pProv: PlayerProvider, public lmProvider: LandmarkProvider, public authProvider: AuthProvider, public iProvider: InventoryProvider, public modalCtrl: ModalController) {
         this.loading = true;
         this.pId = authProvider.AuthId;
         this.landmark = this.navParams.get('landmark');
+        this.updateLandmark
+    }
+
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad LandmarkPage');
+        console.log(this.landmark);
+    }
+
+    ionViewWillEnter() {
+        console.log("view will enter")
+        this.updateLandmark();
+    }
+
+    updateLandmark(){
+        this.loading = true;
+        this.lmProvider.getLandmark(this.landmark.landmarkId)
+        .subscribe(landmark => {
+            this.knights = this.landmark.knights;
+            this.checkLandmarkHostility();
+            this.iProvider.getInventory()
+            .subscribe(inv => {
+                console.log("got inventory");
+                console.log(inv);
+                this.inventory = inv;
+                this.loading = false;
+            });
+            if(this.enemy || this.friendly){
+                pProv.getPlayer(this.landmark.owner)
+                .subscribe(p => {
+                    this.ownerName = p.PlayerName;
+                });
+            }
+        });
+    }
+
+    checkLandmarkHostility(){
         if (!this.landmark.owner || (this.landmark.owner == null)){
             this.neutral = true;
             this.friendly = false;
@@ -49,27 +87,7 @@ export class LandmarkPage {
             this.friendly = false;
             this.enemy = true;
         }
-        this.iProvider.getInventory()
-            .subscribe((inv) => {
-                console.log("got inventory");
-                console.log(inv);
-                this.inventory = inv;
-                this.loading = false;
-            });
-        if(this.enemy || this.friendly){
-            pProv.getPlayer(this.landmark.owner)
-                .subscribe(
-                    p => {
-                        this.ownerName = p.PlayerName;
-                    });
-        }
     }
-
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad LandmarkPage');
-        console.log(this.landmark);
-    }
-
     addItem(item: InventoryItem){
         //tell landmark provider to add knight to landmark
         console.log("adding knight to landmark:");
@@ -78,38 +96,38 @@ export class LandmarkPage {
         this.loading = true;
         this.iProvider.transferItemToLandmark(item, 1, this.landmark).subscribe((landmark) => {
             this.landmark = landmark;
-            this.loading = false;
+            this.knights = landmark.knights;
+            this.checkLandmarkHostility();
+            this.iProvider.getInventory()
+                .subscribe(inventory => {
+                    this.inventory = inventory;
+                    this.loading = false;
+                });
         });
     }
 
     getImage(knight){
-        return this.iProvider.ItemImages[knight.colour + 1].path;
+        return this.iProvider.ItemImages[knight.colour - 1].path;
     }
 
     fight(){
         console.log("fight yo");
-        if(true){
-            this.loading = true;
-            this.lmProvider.killKnight(this.landmark).subscribe(
-                lm => {
-                    this.landmark = lm;
-                    this.loading = false;
-                    if (!this.landmark.owner || (this.landmark.owner == null)){
-                        this.neutral = true;
-                        this.friendly = false;
-                        this.enemy = false;
-                    }
-                    else if (this.landmark.owner == this.pId){
-                        this.neutral = false;
-                        this.friendly = true;
-                        this.enemy = false;
-                    }
-                    else {
-                        this.neutral = false;
-                        this.friendly = false;
-                        this.enemy = true;
-                    }
-                });
-        }
+        let combatModal = this.modalCtrl.create(
+            CombatPage,
+            { monster: {
+                Difficulty: 3,
+                Health: 300,
+                Level: 3,
+                MaxHealth: 300,
+                Model: {monsterModelId: 0, monsterModelPath: this.getImage(this.knights[0])},
+                MonsterId: 0,
+                Name: {monsterNameId: 0, monsterNameText: "Knight"},
+                Title: {monsterTitleId: 0, monsterTitleText: "Sir"},
+                isKnight: true,
+                landmark: this.landmark
+                }
+            }
+        )
+        combatModal.present();
     }
 }

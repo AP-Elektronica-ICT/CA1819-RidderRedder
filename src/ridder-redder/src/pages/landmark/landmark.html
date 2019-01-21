@@ -28,14 +28,14 @@
         </div>
         <div *ngIf="enemy || friendly">
             <p>Garrisonned knights:</p>
-            <div class=knightList id="garrison" *ngIf="landmark.knights.length > 0">
-                <ion-card class="knightCard" *ngFor="let knight of landmark.knights">
+            <div class=knightList id="garrison" *ngIf="knights.length > 0">
+                <ion-card class="knightCard" *ngFor="let knight of knights">
                     <img src="{{getImage(knight)}}" width="40" height="40">
                 </ion-card>
             </div>
         </div>
         <div *ngIf="enemy">
-            <button id="fightButton" ion-button color="danger" (click)="fight">fight</button>
+            <button id="fightButton" ion-button color="danger" (click)="fight()">fight</button>
         </div>
         <div id="inventory" *ngIf="neutral || friendly">
             <p>Tap a knight to add him to guard the castle:</p>

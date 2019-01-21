@@ -153,8 +153,11 @@ export class InventoryProvider {
             console.log(landmarkData);
             // Update the player's inventory to substract the amount of knights
             item.amount -= amount;
+            console.log("post-add inventory item");
+            console.log(item);
             return this.http.put<InventoryItem>(`/Inventory/${item.inventoryItemId}`, item)})
         .map(itemData => {
+            console.log("after subtracting items:");
             console.log(itemData);
             return tmplandmark;
         }, error => console.log(error));

@@ -74,6 +74,7 @@ export class HomePage {
             console.log(landmarks);
             this.landmarks = landmarks;
             this.addLandmarks();
+            this.loading = false;
         });
     }
 
@@ -316,7 +317,7 @@ export class HomePage {
     }
     
     removeLandmark(landmark: Landmark) {
-        if (landmark)
+        if (!landmark)
             return;
 
         console.log("Removing landmark from the list: " + landmark.name);
@@ -327,6 +328,8 @@ export class HomePage {
     // open the fight screen
     launchFight(monster: Monster) {
         this.resetGeo();
+        console.log("launching fight");
+        console.log(monster);
         let combatModal = this.modalCtrl.create(
             CombatPage,
             { monster: monster }
