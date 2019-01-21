@@ -69,26 +69,8 @@ export class HomePage {
         this.initialised = true;
     }
 
-    // refresh landmarks
-    //ionViewDidEnter() {
-    //    this.ionViewDidLoad();
-    //    console.log("viewDidEnter home");
-    //if(this.initialised){
-    //this.loading = true;
-    //for(let landmark of this.landmarks){
-    //    this.removeLandmark(landmark);
-    //}
-    //this.lmProvider.getLandmarks().pipe(first()).subscribe((landmarks) => {
-    //    console.log('got landmarks');
-    //    console.log(landmarks);
-    //    this.landmarks = landmarks;
-    //    this.addLandmarks();
-    //    this.loading = false;
-    //});}
-    //}
-
     // unsubscribe from subscriptions
-    ionViewDidLeave() {
+    ionViewWillLeave() {
         console.log("home view left");
         console.log(this.mapUpdater);
         console.log(this.geoPosWatcher);
@@ -97,8 +79,8 @@ export class HomePage {
         this.loading = true;
         this.map.remove();
         this.mapUpdater.unsubscribe();
-        this.geoPosWatcher.unsubscribe();
         this.geolocation.watchPosition().subscribe().unsubscribe();
+        this.geoPosWatcher.unsubscribe();
     }
 
     // create new GoogleMap
