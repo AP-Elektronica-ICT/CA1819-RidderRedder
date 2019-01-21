@@ -9,6 +9,10 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace RidderRedderApi.Web.Api.Controllers {
+
+    /// <summary>
+    /// LandmarkController
+    /// </summary>
 	[Route("api/v1/[controller]")]
 	[ApiController]
 	public class LandmarkController : BaseController {
