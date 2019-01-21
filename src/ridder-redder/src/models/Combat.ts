@@ -308,6 +308,7 @@ export class Combat {
                 lm => {
                     console.log("killKnight");
                     console.log(lm);
+                    this.lmPage.removeKnight();
                     this.lmPage.updateLandmark();
                 });
         }

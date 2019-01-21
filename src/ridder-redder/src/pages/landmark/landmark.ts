@@ -55,6 +55,7 @@ export class LandmarkPage {
         this.pId = this.authProvider.AuthId;
         this.landmark = this.navParams.get('landmark');
         this.updateLandmark();
+
     }
 
     ionViewWillLeave() {
@@ -64,6 +65,7 @@ export class LandmarkPage {
     updateLandmark() {
         console.log("updating landmark");
         this.loading = true;
+        
         this.lmProvider.getLandmark(this.landmark.landmarkId)
             .subscribe(landmark => {
                 console.log("updated landmark");
@@ -81,9 +83,14 @@ export class LandmarkPage {
                     this.pProv.getPlayer(this.landmark.owner)
                         .subscribe(p => {
                             this.ownerName = p.PlayerName;
+                            this.checkLandmarkHostility();
                         });
                 }
             });
+    }
+
+    removeKnight(){
+        this.knights.shift();
     }
 
     checkLandmarkHostility() {
@@ -175,9 +182,9 @@ export class LandmarkPage {
             {
                 monster: {
                     Difficulty: 3,
-                    Health: 300,
-                    Level: 3,
-                    MaxHealth: 300,
+                    Health: this.knights[0].level * 50,
+                    Level:  this.knights[0].level,
+                    MaxHealth:  this.knights[0].level * 50,
                     Model: { monsterModelId: 0, monsterModelPath: this.getImage(this.knights[0]) },
                     MonsterId: 0,
                     Name: { monsterNameId: 0, monsterNameText: "Knight" },
