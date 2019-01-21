@@ -317,6 +317,42 @@ namespace RidderRedderApi.Tests
          * there is no need for testing.
          */
 
+        [Fact]
+        public void PostLandmarkTest()
+        {
+            context.SeedPlayer(new Player { AuthId = "admin", Experience = 123, Landmarks = null, PlayerName = "Admin" });
+            landmarkService.Post(new Landmark
+            {
+                LandmarkId = 1,
+                Knights = null,
+                Lat = 13.3337f,
+                Lng = 66.6666f,
+                Name = "Hel",
+                Owner = "admin"
+            }).Should().NotBeNull();
+        }
+
+        [Fact]
+        public void GetLandMarkByIdTest()
+        {
+            context.SeedPlayer(new Player { AuthId = "admin", Experience = 123, Landmarks = null, PlayerName = "Admin" });
+            landmarkService.Post(new Landmark { LandmarkId = 1, Knights = null, Lat = 13.3337f, Lng = 66.6666f, Name = "Hel", Owner = "admin" });
+
+            landmarkService.Get(1).Should().NotBeNull();
+        }
+
+        [Fact]
+        public void KillKnightTest()
+        {
+            context.SeedPlayer(new Player { AuthId = "admin", Experience = 123, Landmarks = null, PlayerName = "Admin" });
+            List<Knight> knights = new List<Knight>();
+            knights.Add(new Knight { AuthId = "admin", Colour = 1, KnightId = 1, Landmark = null, LandmarkId = 0, Level = 25 });
+            knights.Add(new Knight { AuthId = "admin", Colour = 2, KnightId = 2, Landmark = null, LandmarkId = 0, Level = 15 });
+            context.Landmarks.Add(new Landmark { LandmarkId = 1, Knights = knights, Lat = 13.3337f, Lng = 66.6666f, Name = "Hel", Owner = "admin" });
+
+            landmarkService.Get(1).Knights.Should().HaveCount(2);
+        }
+
         #endregion
 
     }

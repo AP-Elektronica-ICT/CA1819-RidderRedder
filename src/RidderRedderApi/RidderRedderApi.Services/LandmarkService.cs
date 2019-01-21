@@ -44,7 +44,6 @@ namespace RidderRedderApi.Services {
                 else return Get(landmark.LandmarkId);
             }
             else return landmark;
-            
         }
 
         public bool Delete(int landmarkId) {
