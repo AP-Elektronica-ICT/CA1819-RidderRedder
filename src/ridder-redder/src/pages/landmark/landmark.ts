@@ -24,7 +24,7 @@ import { HomePage } from '../home/home';
 })
 export class LandmarkPage {
     @Input() landmark: Landmark;
-    @Input() home: HomePage; 
+    //@Input() home: HomePage; 
     pId: string;
     inventory: Array<InventoryItem>;
     knights: Array<Knight>;
@@ -38,7 +38,7 @@ export class LandmarkPage {
         this.loading = true;
         this.pId = authProvider.AuthId;
         this.landmark = this.navParams.get('landmark');
-        this.home = this.navParams.get('home');
+        //this.home = this.navParams.get('home');
         this.updateLandmark
     }
 
@@ -48,12 +48,16 @@ export class LandmarkPage {
     }
 
     ionViewDidEnter() {
-        console.log("view will enter")
+        console.log("view did enter landmark")
+        this.loading = true;
+        this.pId = this.authProvider.AuthId;
+        this.landmark = this.navParams.get('landmark');
         this.updateLandmark();
     }
 
     ionViewWillLeave(){
-        this.home.ionViewWillEnter();
+        console.log("ionViewWillLeave landmark")
+        //this.home.ionViewWillEnter();
     }
     updateLandmark(){
         console.log("updating landmark");
@@ -121,7 +125,8 @@ export class LandmarkPage {
 
     fight(){
         console.log("fight yo");
-        let combatModal = this.modalCtrl.create(
+        console.log(this.navCtrl);
+        this.navCtrl.push( //let combatModal = this.modalCtrl.create(
             CombatPage,
             { monster: {
                 Difficulty: 3,
@@ -138,6 +143,6 @@ export class LandmarkPage {
               lmPage: this
             }
         )
-        combatModal.present();
+        //combatModal.present();
     }
 }

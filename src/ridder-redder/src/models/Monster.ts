@@ -13,5 +13,6 @@ export class Monster {
     Health: number;
     MaxHealth: number;
     Marker: Marker
+    createdAt?: number;
 }
     

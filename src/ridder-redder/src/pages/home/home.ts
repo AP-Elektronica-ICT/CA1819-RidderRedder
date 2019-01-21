@@ -4,6 +4,7 @@ import { GoogleMaps, GoogleMap, GoogleMapOptions, GoogleMapsEvent, ILatLng, Mark
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs/Subscription';
+import { first } from 'rxjs/operators';
 import { Monster } from '../../models/Monster';
 import { Landmark } from '../../models/Landmark';
 import { InventoryPage } from '../inventory/inventory';
@@ -27,7 +28,7 @@ export class HomePage {
     mapUpdater: Subscription;
     monsters: Array<Monster>;
     landmarks: Array<Landmark>;
-
+    initialised: boolean;
     mapLoaded = false;
     private geoPosWatcher: any;
 
@@ -39,43 +40,65 @@ export class HomePage {
     constructor(public navCtrl: NavController, public geolocation: Geolocation, public modalCtrl: ModalController, public monsterProvider: MonsterProvider, public lmProvider: LandmarkProvider, public pProvider: PlayerProvider, public authProvider: AuthProvider, public navParams: NavParams) {
         this.monsters = new Array<Monster>();
         this.prevPos = { lat: 0, lng: 0 };
+        this.initialised = false;
     }
 
-    ionViewDidLoad() {
+    // was didLoad
+    ionViewDidEnter() {
         console.log("Home page did load");
 
         document.addEventListener("pause", this.resetGeo, false);
 
-
-
         // this.presentInventory();
 
-        if (!this.navParams.get('lastmonster'))
-            this.removeMonster(this.navParams.get('lastmonster'));
+        this.monsters = new Array<Monster>();
 
-        if (!this.mapLoaded)
-            this.loadMap();
-        else
-            this.watchMap();
+        if (!this.navParams.get('lastmonster'))
+            console.log("get nvparams lastmonster");
+        console.log(this.navParams.get('lastmonster'));
+        this.removeMonster(this.navParams.get('lastmonster'));
+
+        //if (!this.mapLoaded)
+        this.loadMap();
+        //else
+        this.watchMap();
         this.mapUpdater = Observable.interval(5000).subscribe(() => {
             this.updateMap();
             this.updateMonsters();
         });
+        this.initialised = true;
     }
 
     // refresh landmarks
-    ionViewWillEnter() {
+    //ionViewDidEnter() {
+    //    this.ionViewDidLoad();
+    //    console.log("viewDidEnter home");
+    //if(this.initialised){
+    //this.loading = true;
+    //for(let landmark of this.landmarks){
+    //    this.removeLandmark(landmark);
+    //}
+    //this.lmProvider.getLandmarks().pipe(first()).subscribe((landmarks) => {
+    //    console.log('got landmarks');
+    //    console.log(landmarks);
+    //    this.landmarks = landmarks;
+    //    this.addLandmarks();
+    //    this.loading = false;
+    //});}
+    //}
+
+    // unsubscribe from subscriptions
+    ionViewDidLeave() {
+        console.log("home view left");
+        console.log(this.mapUpdater);
+        console.log(this.geoPosWatcher);
+        this.mapLoaded = false;
+        this.initialised = false;
         this.loading = true;
-        for(let landmark of this.landmarks){
-            this.removeLandmark(landmark);
-        }
-        this.lmProvider.getLandmarks().subscribe((landmarks) => {
-            console.log('got landmarks');
-            console.log(landmarks);
-            this.landmarks = landmarks;
-            this.addLandmarks();
-            this.loading = false;
-        });
+        this.map.remove();
+        this.mapUpdater.unsubscribe();
+        this.geoPosWatcher.unsubscribe();
+        this.geolocation.watchPosition().subscribe().unsubscribe();
     }
 
     // create new GoogleMap
@@ -126,7 +149,7 @@ export class HomePage {
 
                 this.map = GoogleMaps.create('map_canvas', mapOptions);
 
-                this.lmProvider.getLandmarks().subscribe((landmarks) => {
+                this.lmProvider.getLandmarks().pipe(first()).subscribe((landmarks) => {
                     console.log('got landmarks');
                     console.log(landmarks);
                     this.landmarks = landmarks;
@@ -150,25 +173,28 @@ export class HomePage {
 
     watchMap() {
         console.log("Watching map...");
-        this.geolocation.watchPosition({ timeout: 5000, enableHighAccuracy: true }).subscribe(data => {
-            this.loading = false;
-            this.updateMonsters();
-            this.prevPos.lat = data.coords.latitude;
-            this.prevPos.lng = data.coords.longitude;
+        this.geoPosWatcher = this.geolocation.watchPosition({ timeout: 5000, enableHighAccuracy: true })
+            .subscribe(data => {
+                if(this.map){
+                    console.log("in geo watcher");
+                    this.loading = false;
+                    this.updateMonsters();
+                    this.prevPos.lat = data.coords.latitude;
+                    this.prevPos.lng = data.coords.longitude;
 
-            this.map.animateCamera(
-                {
-                    target:
-                    {
-                        lat: data.coords.latitude,
-                        lng: data.coords.longitude
-                    },
-                    zoom: 16,
-                    tilt: 30
-                });
-        }, error => {
-            console.log("Stopped watching: " + error);
-        });
+                    this.map.animateCamera({
+                        target:
+                        {
+                            lat: data.coords.latitude,
+                            lng: data.coords.longitude
+                        },
+                        zoom: 16,
+                        tilt: 30,
+                    });
+                }
+            }, error => {
+                console.log("Stopped watching: " + error);
+            });
 
     }
 
@@ -254,17 +280,24 @@ export class HomePage {
     updateMonsters() {
         // console.log("Updating monsters");
         if (this.monsters.length > 5) {
-            // this.monsters[0].Marker.remove();
-            // this.monsters.shift().Marker.remove();
+            //if( (this.monsters[0].createdAt-Date.now()) > 5*60*1000){
+            //    // if created more then 5 minutes ago, remove
+            //    this.monsters[0].Marker.remove();
+            //    this.monsters.shift();
+            //}
         } else {
             // for (let index = 0; index < 5 - this.monsters.length; index++) {
             this.generateMonster();
+            //this.monsters[this.monsters.length - 1].createdAt = Date.now();
             // }
         }
 
         this.monsters.forEach(m => {
-            if (m.Health <= 0)
+            if (m.Health <= 0){
+                console.log("minster health low");
+                console.log(m);
                 this.removeMonster(m);
+            }
         });
 
     }
@@ -277,8 +310,8 @@ export class HomePage {
         let rlng: number = (this.prevPos.lng - this.monsterDistance) + (Math.random() * 2 * this.monsterDistance);
 
         //generate random monster, attach marker
-        this.monsterProvider.getMonster().subscribe(data => {
-
+        this.monsterProvider.getMonster().pipe(first()).subscribe(data => {
+            console.log("got random monster in home");
             let monster: Monster = data;
 
             let marker: Marker = this.map.addMarkerSync({
@@ -315,7 +348,7 @@ export class HomePage {
         monster.Marker.remove();
         this.monsters.shift();
     }
-    
+
     removeLandmark(landmark: Landmark) {
         if (!landmark)
             return;
@@ -330,11 +363,11 @@ export class HomePage {
         this.resetGeo();
         console.log("launching fight");
         console.log(monster);
-        let combatModal = this.modalCtrl.create(
+        this.navCtrl.push( //let combatModal = this.modalCtrl.create(
             CombatPage,
             { monster: monster }
         )
-        combatModal.present();
+        //combatModal.present();
     }
 
     resetGeo() {

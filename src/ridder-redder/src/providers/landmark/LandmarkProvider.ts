@@ -25,25 +25,11 @@ export class LandmarkProvider {
     }
 
     getLandmark(landmarkId: number):Observable<Landmark>{
-        console.log("get landmark");
-        return this.http.get<Landmark>(this.queryUrl + landmarkId, this.httpOptions)
-        .map((landmark) => {
-            console.log("got landmark");
-            console.log(landmark);
-            return landmark;
-        });
+        return this.http.get<Landmark>(this.queryUrl + landmarkId, this.httpOptions);
     }
     
     getLandmarks():Observable<Array<Landmark>>{
-        console.log('in getLandmarks');
-        console.log(this.queryUrl);
-        console.log(this.httpOptions);
-        return this.http.get<Array<Landmark>>(this.queryUrl, this.httpOptions)
-        .map((landmarks) => {
-            console.log("got landmarks");
-            console.log(landmarks);
-            return landmarks;
-        });
+        return this.http.get<Array<Landmark>>(this.queryUrl, this.httpOptions);
     }
 
     addKnight(landmark: Landmark, knight: Knight):Observable<Landmark> {
@@ -62,17 +48,8 @@ export class LandmarkProvider {
     }
 
     killKnight(landmark: Landmark):Observable<Landmark> {
-        console.log("killing knight on landmark");
-        console.log(landmark);
-        console.log(JSON.stringify(landmark));
         let tmp = JSON.parse(JSON.stringify(landmark));
         tmp.marker = undefined;
-        console.log(JSON.stringify(tmp));
-        return this.http.post<Landmark>(this.queryUrl + "kill/" + landmark.landmarkId, tmp, this.httpOptions)
-        .map(lm => {
-            console.log("killKnight, got reply");
-            console.log(lm);
-            return lm;
-        });
+        return this.http.post<Landmark>(this.queryUrl + "kill/" + landmark.landmarkId, tmp, this.httpOptions);
     }
 }

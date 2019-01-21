@@ -341,13 +341,16 @@ export class Combat {
         this.lootGained = [];
         let tmp: any = this.monster;
         if(!tmp.isKnight){
-            this.monster.Marker.remove();
+            //this.monster.Marker.remove();
         }
     }
     
 
     returnToMap(){
         this.resetCombat();
+        console.log("returnToMap start");
+        console.log(this.parent.navCtrl);
+        console.log(this.parent.navCtrl.getViews());
         this.parent.navCtrl.pop();
         // this.parent.navCtrl.push(
         //     HomePage,
