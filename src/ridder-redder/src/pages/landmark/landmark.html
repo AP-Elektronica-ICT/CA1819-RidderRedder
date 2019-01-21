@@ -41,10 +41,11 @@
             <p>Tap a knight to add him to guard the castle:</p>
             <div class="knightList" *ngIf="inventory?.length > 0">
                 <ion-card class="knightCard" *ngFor="let item of inventory" (click)="addItem(item)">
+                    <p>{{item.amount}}</p>
                     <img src="{{item.itemImage.path}}" width="50" height="50">
                 </ion-card>
             </div>
-            <div *ngIf="knights?.length == 0">
+            <div *ngIf="inventory?.length == 0">
                 <ion-card>
                     <b>You don't have any knights, go and resque some by beating monters</b>
                 </ion-card>

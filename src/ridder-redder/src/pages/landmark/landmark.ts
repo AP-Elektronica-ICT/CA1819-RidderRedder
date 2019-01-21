@@ -8,6 +8,7 @@ import { LandmarkProvider } from '../../providers/landmark/LandmarkProvider';
 import { AuthProvider } from '../../providers/auth/AuthProvider';
 import { InventoryProvider } from '../../providers/inventory/InventoryProvider';
 import { CombatPage } from '../combat/combat';
+import { HomePage } from '../home/home';
 
 /**
  * Generated class for the LandmarkPage page.
@@ -23,6 +24,7 @@ import { CombatPage } from '../combat/combat';
 })
 export class LandmarkPage {
     @Input() landmark: Landmark;
+    @Input() home: HomePage; 
     pId: string;
     inventory: Array<InventoryItem>;
     knights: Array<Knight>;
@@ -36,6 +38,7 @@ export class LandmarkPage {
         this.loading = true;
         this.pId = authProvider.AuthId;
         this.landmark = this.navParams.get('landmark');
+        this.home = this.navParams.get('home');
         this.updateLandmark
     }
 
@@ -44,15 +47,21 @@ export class LandmarkPage {
         console.log(this.landmark);
     }
 
-    ionViewWillEnter() {
+    ionViewDidEnter() {
         console.log("view will enter")
         this.updateLandmark();
     }
 
+    ionViewWillLeave(){
+        this.home.ionViewWillEnter();
+    }
     updateLandmark(){
+        console.log("updating landmark");
         this.loading = true;
         this.lmProvider.getLandmark(this.landmark.landmarkId)
         .subscribe(landmark => {
+            console.log("updated landmark");
+            console.log(landmark);
             this.knights = this.landmark.knights;
             this.checkLandmarkHostility();
             this.iProvider.getInventory()
@@ -63,7 +72,7 @@ export class LandmarkPage {
                 this.loading = false;
             });
             if(this.enemy || this.friendly){
-                pProv.getPlayer(this.landmark.owner)
+                this.pProv.getPlayer(this.landmark.owner)
                 .subscribe(p => {
                     this.ownerName = p.PlayerName;
                 });
@@ -125,7 +134,8 @@ export class LandmarkPage {
                 Title: {monsterTitleId: 0, monsterTitleText: "Sir"},
                 isKnight: true,
                 landmark: this.landmark
-                }
+            },
+              lmPage: this
             }
         )
         combatModal.present();

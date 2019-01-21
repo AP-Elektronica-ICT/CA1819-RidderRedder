@@ -4,6 +4,7 @@ import { Player } from "./Player";
 import { DeviceMotion, DeviceMotionAccelerationData } from "@ionic-native/device-motion";
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import { CombatPage } from "../pages/combat/combat";
+import { LandmarkPage } from "../pages/landmark/landmark";
 import { PlayerProvider } from "../providers/player/PlayerProvider";
 import { PlayerDto } from "../dtos/PlayerDto";
 import { MonsterProvider } from "../providers/monster/MonsterProvider";
@@ -11,6 +12,7 @@ import { MonsterDto } from "../dtos/MonsterDto";
 import { ElementRef } from "@angular/core";
 import { Knight } from "./Knight";
 import { AuthProvider } from "../providers/auth/AuthProvider";
+import { LandmarkProvider } from "../providers/landmark/LandmarkProvider";
 import { InventoryItem } from "./InventoryItem";
 import { InventoryProvider } from '../providers/inventory/InventoryProvider';
 import { AddInventoryItemDto } from "../dtos/AddInventoryItemDto";
@@ -58,7 +60,9 @@ export class Combat {
         private playerProvider: PlayerProvider,
         private monsterProvider: MonsterProvider,
         private authProvider: AuthProvider,
-        private invProvider: InventoryProvider
+        private invProvider: InventoryProvider,
+        private lmProvider: LandmarkProvider,
+        private lmPage?: LandmarkPage
     ) {
         this.monster = m;
         this.player = p;
@@ -294,10 +298,16 @@ export class Combat {
         this.changeCombatState(CombatState.CombatVictory);
         this.parent.setInfo();
         this.generateLoot();
-        if(this.monster == isKnight){
+        let tmp: any = this.monster;
+        if(tmp.isKnight){
             //TODO start loadingd
-            this.lmProvider.killKnight(this.monster.landmark).subscribe(
+            console.log("defeated knight");
+            console.log(tmp);
+            this.lmProvider.killKnight(tmp.landmark).subscribe(
                 lm => {
+                    console.log("killKnight");
+                    console.log(lm);
+                    this.lmPage.updateLandmark();
                     //TODO end loading
                 });
         }
@@ -329,7 +339,8 @@ export class Combat {
 
     resetCombat(){
         this.lootGained = [];
-        if(this.monster != isKnight){
+        let tmp: any = this.monster;
+        if(!tmp.isKnight){
             this.monster.Marker.remove();
         }
     }

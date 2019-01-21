@@ -31,6 +31,7 @@ export class LandmarkProvider {
             console.log("got landmark");
             console.log(landmark);
             return landmark;
+        });
     }
     
     getLandmarks():Observable<Array<Landmark>>{
@@ -67,7 +68,7 @@ export class LandmarkProvider {
         let tmp = JSON.parse(JSON.stringify(landmark));
         tmp.marker = undefined;
         console.log(JSON.stringify(tmp));
-        return this.http.post<Landmark>(this.queryUrl + "/kill/" + landmark.landmarkId, tmp, this.httpOptions)
+        return this.http.post<Landmark>(this.queryUrl + "kill/" + landmark.landmarkId, tmp, this.httpOptions)
         .map(lm => {
             console.log("killKnight, got reply");
             console.log(lm);

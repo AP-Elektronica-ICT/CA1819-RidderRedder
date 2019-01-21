@@ -356,7 +356,9 @@ export class HomePage {
         console.log(landmark);
         this.navCtrl.push(
             LandmarkPage,
-            { landmark: landmark }
+            {   landmark: landmark,
+                home: this
+            }
         );
     }
 }
