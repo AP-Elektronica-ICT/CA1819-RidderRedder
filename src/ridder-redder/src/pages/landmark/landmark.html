@@ -15,7 +15,7 @@
             <p>Garrisoned knights:</p>
             <div class=knightList id="garrison" *ngIf="knights.length > 0">
                 <div class="inventory-item" *ngFor="let knight of knights">
-                    <!-- <h6>{{getImage(knight)}}</h6> -->
+                    <h6>{{knight.level}}</h6>
                     <img src="{{getImage(knight)}}">
                 </div>
 

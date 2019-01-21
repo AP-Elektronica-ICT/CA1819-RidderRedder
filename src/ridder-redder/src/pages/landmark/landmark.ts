@@ -175,9 +175,9 @@ export class LandmarkPage {
             {
                 monster: {
                     Difficulty: 3,
-                    Health: 300,
-                    Level: 3,
-                    MaxHealth: 300,
+                    Health: this.knights[0].level * 50,
+                    Level:  this.knights[0].level,
+                    MaxHealth:  this.knights[0].level * 50,
                     Model: { monsterModelId: 0, monsterModelPath: this.getImage(this.knights[0]) },
                     MonsterId: 0,
                     Name: { monsterNameId: 0, monsterNameText: "Knight" },
