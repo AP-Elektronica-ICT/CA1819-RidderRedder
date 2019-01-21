@@ -30,7 +30,8 @@ export class AuthProvider {
     constructor(public zone: NgZone) {
         this.user = this.getStorageVariable('profile');
         this.idToken = this.getStorageVariable('id_token');
-        this.AuthId = this.user.sub;
+        if(this.user)
+            this.AuthId = this.user.sub;
     }
 
     private getStorageVariable(name) {
