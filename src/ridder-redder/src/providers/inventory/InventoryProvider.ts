@@ -6,13 +6,15 @@ import { Observable } from 'rxjs';
 import { ItemType } from '../../models/ItemType';
 import { ItemImage } from '../../models/ItemImage';
 import { AddInventoryItemDto } from '../../dtos/AddInventoryItemDto';
+import { Landmark } from '../../models/Landmark';
+import { Knight } from '../../models/Knight';
 
 /*
   Generated class for the InventoryProvider provider.
 
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
-*/
+ */
 @Injectable()
 export class InventoryProvider {
 
@@ -145,4 +147,55 @@ export class InventoryProvider {
         return this.http.delete<Boolean>(`/inventory/${itemId}`);
     }
 
+    /*
+        Transfers some an amount of knights to the given landmark
+        PARAMS: item:       The InventoryItem to convert to a knight, which we will substract the given level/amount from
+                itemId:     The ID of the InventoryItem
+                amount:     The amount of knights to add to the landmark, also known as the level
+                landmark:   The landmark to add the knights to
+     */
+    public transferItemToLandmark(item: InventoryItem, amount: number, landmark: Landmark): Observable<Landmark> {
+        // Update given landmark to include knights to defend it with
+
+        let newAmount = amount > item.amount ? item.amount : amount;
+
+        // Create a new knight with given color, level and owner
+        let knight: Knight = {
+            knightId: undefined,
+            colour: "" + item.itemImage.itemImageId,
+            level: newAmount,
+            authId: this.auth.AuthId,
+            landmarkId: landmark.landmarkId
+        }
+        console.log(landmark);
+        if(landmark.knights){
+            landmark.knights.push(knight);
+        }
+        else{
+            landmark.knights = [knight];
+        }
+        landmark.owner = this.auth.AuthId;
+
+        // Update the landmark with its owner and defender(s)
+        var tmplandmark:Landmark;
+        tmplandmark = JSON.parse(JSON.stringify(landmark));
+        console.log(tmplandmark);
+        tmplandmark.marker = undefined;
+        console.log(JSON.stringify(tmplandmark));
+        return this.http.put<Landmark>(`/Landmark/${tmplandmark.landmarkId}`, tmplandmark)
+        .flatMap(landmarkData => {
+            tmplandmark = landmarkData;
+            tmplandmark.marker = landmark.marker;
+            console.log(landmarkData);
+            // Update the player's inventory to substract the amount of knights
+            item.amount -= newAmount;
+            console.log("post-add inventory item");
+            console.log(item);
+            return this.http.put<InventoryItem>(`/Inventory/${item.inventoryItemId}`, item)})
+        .map(itemData => {
+            console.log("after subtracting items:");
+            console.log(itemData);
+            return tmplandmark;
+        }, error => console.log(error));
+    }
 }
