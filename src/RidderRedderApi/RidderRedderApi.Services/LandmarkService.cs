@@ -31,19 +31,19 @@ namespace RidderRedderApi.Services {
 			return this.landmarkRepo.Post(l);
 		}
 
-        public Landmark KillKnight(Landmark l)
+        public Landmark KillKnight(Landmark landmark)
         {
-            if (l.Knights.Count > 0) {
-                l.Knights.ToList();
-                this.knightRepo.Delete(l.Knights.ToList()[0].KnightId);
-                Landmark retLm = Get(l.LandmarkId);
-                if (retLm.Knights.Count == 0){
-                    retLm.Owner = null;
-                    return Update(retLm);
+            if (landmark.Knights.Count > 0) {
+                landmark.Knights.ToList();
+                this.knightRepo.Delete(landmark.Knights.ToList()[0].KnightId);
+                Landmark retLandmark = Get(landmark.LandmarkId);
+                if (retLandmark.Knights.Count == 0){
+                    retLandmark.Owner = null;
+                    return Update(retLandmark);
                 }
-                else return Get(l.LandmarkId);
+                else return Get(landmark.LandmarkId);
             }
-            else return l;
+            else return landmark;
             
         }
 

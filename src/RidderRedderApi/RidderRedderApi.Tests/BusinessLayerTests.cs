@@ -27,6 +27,7 @@ namespace RidderRedderApi.Tests
         private MonsterRepository monsterRepository;
         private MonsterService monsterService;
 
+        private KnightRepository knightRepository;
         private LandmarkRepository landmarkRepository;
         private LandmarkService landmarkService;
 
@@ -59,8 +60,9 @@ namespace RidderRedderApi.Tests
             monsterRepository = new MonsterRepository(context);
             monsterService = new MonsterService(monsterRepository);
 
+            knightRepository = new KnightRepository(context);
             landmarkRepository = new LandmarkRepository(context);
-            landmarkService = new LandmarkService(landmarkRepository);
+            landmarkService = new LandmarkService(landmarkRepository, knightRepository);
 
         }
 
@@ -233,10 +235,9 @@ namespace RidderRedderApi.Tests
             context.SeedPlayer(new Player { AuthId = "admin", Experience = 123, Landmarks = null, PlayerName = "Admin" });
             
             for(int i = 0; i < 3; i++)
-                inventoryService.PostInventoryItem(new AddInventoryItemDto{ AuthId = "admin", InventoryItemId = 1, ItemImageId = 1, ItemTypeId = 1, Amount = 1});
+                inventoryService.PostInventoryItem(new AddInventoryItemDto{ AuthId = "admin", InventoryItemId = i, ItemImageId = i, ItemTypeId = 1, Amount = i});
             
-
-            inventoryService.GetInventoryForPlayer("admin").Should().HaveCountGreaterOrEqualTo(3);
+            inventoryService.GetInventoryForPlayer("admin").Should().HaveCount(3);
         }
 
         /// <summary>
