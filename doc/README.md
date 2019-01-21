@@ -18,3 +18,6 @@ Als coding guideline voor de Ionic omgeving hebben wij de volgende conventions v
 * Als er binnen een ``if() { }`` statement maar 1 regel code staat, mogen de curly brackets ``{}`` weggelaten worden.  
 * Namen van **Pages**, **Components** en **Directives** moeten met een kleine letter beginnen.  
 * Namen van **Providers** moeten met een hoofdletter beginnen.  
+
+### Unit testing
+Voor de API hebben we op de business layer enkele unit tests geschreven. Wij hebben alleen de unit tests geschreven voor functies waar ook daadwerkelijk business logic in verwerkt zit. Om de unit tests uit te voeren, kunnen we dit via Visual Studio doen. Klik in het menu bovenin op ``Test`` => ``Run`` => ``All Tests``. Of druk op ``Ctrl+R, A``.
