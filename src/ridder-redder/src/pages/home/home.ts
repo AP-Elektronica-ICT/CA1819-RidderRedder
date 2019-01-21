@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController, NavParams, NavController, IonicApp } from 'ionic-angular';
+import { ModalController, NavParams, NavController, IonicApp, ToastController } from 'ionic-angular';
 import { GoogleMaps, GoogleMap, GoogleMapOptions, GoogleMapsEvent, ILatLng, Marker, MarkerOptions, HtmlInfoWindow } from '@ionic-native/google-maps';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import { Observable } from 'rxjs/Rx';
@@ -35,9 +35,10 @@ export class HomePage {
     private loading = true;
 
     // tfw static doesn't work
-    monsterDistance: number = 0.003; // 0.005 ~ 250m?
+    monsterDistance: number = 0.003; // 0.003 ~ 250m?
+    playerToMonsterDistance: number = 0.001;
 
-    constructor(public navCtrl: NavController, public geolocation: Geolocation, public modalCtrl: ModalController, public monsterProvider: MonsterProvider, public lmProvider: LandmarkProvider, public pProvider: PlayerProvider, public authProvider: AuthProvider, public navParams: NavParams) {
+    constructor(public toastCtrl: ToastController, public navCtrl: NavController, public geolocation: Geolocation, public modalCtrl: ModalController, public monsterProvider: MonsterProvider, public lmProvider: LandmarkProvider, public pProvider: PlayerProvider, public authProvider: AuthProvider, public navParams: NavParams) {
         this.monsters = new Array<Monster>();
         this.prevPos = { lat: 0, lng: 0 };
         this.initialised = false;
@@ -315,9 +316,10 @@ export class HomePage {
 
             monster.Marker = marker;
             this.monsters.push(monster);
+            marker.setDisableAutoPan(true);
             marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
                 // console.log("Fighting: " + JSON.stringify(monster));
-                this.launchFight(monster);
+                this.checkMonsterRange(monster);
             });
         });
     }
@@ -338,6 +340,29 @@ export class HomePage {
         console.log("Removing landmark from the list: " + landmark.name);
         landmark.marker.remove();
         this.landmarks.shift();
+    }
+
+    checkMonsterRange(monster: Monster) {
+
+        let monsterPos = monster.Marker.getPosition();
+        let playerPos = this.prevPos;
+        
+        let distance =  Math.sqrt(Math.pow((monsterPos.lat - playerPos.lat), 2) + Math.pow((monsterPos.lng - playerPos.lng),2));
+
+        if(distance <= this.playerToMonsterDistance)
+            this.launchFight(monster);
+        else
+            this.showNotCloseEnoughToast();
+    }
+
+    showNotCloseEnoughToast() {
+        let toast = this.toastCtrl.create({
+            message: 'You are not close enough!',
+            duration: 3000,
+            position: 'top'
+        });
+
+        toast.present();
     }
 
     // open the fight screen

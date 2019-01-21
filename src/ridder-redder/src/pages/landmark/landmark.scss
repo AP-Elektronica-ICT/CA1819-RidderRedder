@@ -2,6 +2,32 @@ page-landmark {
 
 }
 
+page-landmark ion-content .fixed-content {
+    background: #6b7f9a;
+}
+
+.landmark-header {
+    text-align: center;
+
+    h6 {
+        color: #232323;
+    }
+}
+
+.garrisoned-knights-container {
+    padding: 8px 16px;
+    background: #727379;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: 30px;
+    border: 3px solid #494a4c;
+    p {
+        margin-top: 4px;
+    }
+}
+
 .knightList {
     width: 100%;
     height: 40%;
@@ -30,6 +56,20 @@ page-landmark {
     padding: 8px;
 }
 
+#inventory {
+    background: #bb8b5f;
+    padding: 8px 16px;
+    margin-top: 16px;
+    border-radius: 8px;
+    text-align: center;
+    border: solid 3px #856241;
+
+    p {
+        font-size: 18px;
+        margin-top: -4px;
+    }
+}
+
 .inventory-item {
     width: 20%;
     display: flex;
@@ -52,5 +92,8 @@ page-landmark {
     }
     a {
         margin-bottom: 1rem;
+        color: #d5d4d4;
+        padding-right: 8px;
+        padding-top: 4px;
     }
 }

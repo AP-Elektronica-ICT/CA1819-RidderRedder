@@ -1,17 +1,20 @@
 <ion-content padding>
-    <h2>{{landmark.name}}</h2>
+
     <div class="loading-container" *ngIf="loading">
         <img src="assets/icons/loading.gif" class="loading-gif" width="90" height="90">
     </div>
     <div *ngIf="!loading">
-        <div *ngIf='neutral'>
-            <h4>Neutral landmark</h4>
-            <p>Place a knight here to claim it</p>
+        <div class="landmark-header">
+            <h2>{{landmark.name}}</h2>
+            <div *ngIf='neutral'>
+                <h4>Neutral landmark</h4>
+                <p>Place a knight here to claim it</p>
+            </div>
+            <div *ngIf="!neutral">
+                <h4>Owned by: {{ownerName}}</h4>
+            </div>
         </div>
-        <div *ngIf="!neutral">
-            <h4>Owned by: {{ownerName}}</h4>
-        </div>
-        <div *ngIf="enemy || friendly">
+        <div class="garrisoned-knights-container" *ngIf="enemy || friendly">
             <p>Garrisoned knights:</p>
             <div class=knightList id="garrison" *ngIf="knights.length > 0">
                 <div class="inventory-item" *ngFor="let knight of knights">
@@ -28,12 +31,13 @@
             <button id="fightButton" ion-button color="danger" (click)="fight()">fight</button>
         </div>
         <div id="inventory" *ngIf="neutral || friendly">
-            <p>Tap a knight to add him to guard the castle:</p>
+            <h2>Inventory</h2>
+            <p>Choose your guards to defend the landmark!</p>
             <div class="knightList" *ngIf="inventory?.length > 0">
                 <div class="inventory-item" *ngFor="let item of inventory" (click)="addKnightsConfirm(item)">
                     <h6>{{item.amount}}</h6>
                     <img src="{{item.itemImage.path}}">
-                    <a (click)="addKnightsConfirm(item)">Add</a>
+                    <a (click)="addKnightsConfirm(item)">add</a>
                 </div>
                 <!-- <ion-card class="knightCard" *ngFor="let item of inventory" (click)="addItem(item)">
                     <p>{{item.amount}}</p>

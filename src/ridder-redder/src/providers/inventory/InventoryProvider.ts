@@ -123,11 +123,13 @@ export class InventoryProvider {
     public transferItemToLandmark(item: InventoryItem, amount: number, landmark: Landmark): Observable<Landmark> {
         // Update given landmark to include knights to defend it with
 
+        let newAmount = amount > item.amount ? item.amount : amount;
+
         // Create a new knight with given color, level and owner
         let knight: Knight = {
             knightId: undefined,
             colour: "" + item.itemImage.itemImageId,
-            level: amount,
+            level: newAmount,
             authId: this.auth.AuthId,
             landmarkId: landmark.landmarkId
         }
@@ -152,7 +154,7 @@ export class InventoryProvider {
             tmplandmark.marker = landmark.marker;
             console.log(landmarkData);
             // Update the player's inventory to substract the amount of knights
-            item.amount -= amount;
+            item.amount -= newAmount;
             console.log("post-add inventory item");
             console.log(item);
             return this.http.put<InventoryItem>(`/Inventory/${item.inventoryItemId}`, item)})
