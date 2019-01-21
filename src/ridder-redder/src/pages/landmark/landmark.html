@@ -1,18 +1,3 @@
-<!--
-    Generated template for the LandmarkPage page.
-
-    See http://ionicframework.com/docs/components/#navigation for more info on
-    Ionic pages and navigation.
--->
-<ion-header>
-
-    <ion-navbar>
-        <ion-title>landmarkPage</ion-title>
-    </ion-navbar>
-
-</ion-header>
-
-
 <ion-content padding>
     <h2>{{landmark.name}}</h2>
     <div class="loading-container" *ngIf="loading">
@@ -20,18 +5,23 @@
     </div>
     <div *ngIf="!loading">
         <div *ngIf='neutral'>
-            <h4>neutral landmark</h4>
+            <h4>Neutral landmark</h4>
             <p>Place a knight here to claim it</p>
         </div>
         <div *ngIf="!neutral">
             <h4>Owned by: {{ownerName}}</h4>
         </div>
         <div *ngIf="enemy || friendly">
-            <p>Garrisonned knights:</p>
+            <p>Garrisoned knights:</p>
             <div class=knightList id="garrison" *ngIf="knights.length > 0">
-                <ion-card class="knightCard" *ngFor="let knight of knights">
+                <div class="inventory-item" *ngFor="let knight of knights">
+                    <!-- <h6>{{getImage(knight)}}</h6> -->
+                    <img src="{{getImage(knight)}}">
+                </div>
+
+                <!-- <ion-card class="knightCard" *ngFor="let knight of knights">
                     <img src="{{getImage(knight)}}" width="40" height="40">
-                </ion-card>
+                </ion-card> -->
             </div>
         </div>
         <div *ngIf="enemy">
@@ -40,14 +30,19 @@
         <div id="inventory" *ngIf="neutral || friendly">
             <p>Tap a knight to add him to guard the castle:</p>
             <div class="knightList" *ngIf="inventory?.length > 0">
-                <ion-card class="knightCard" *ngFor="let item of inventory" (click)="addItem(item)">
+                <div class="inventory-item" *ngFor="let item of inventory" (click)="addKnightsConfirm(item)">
+                    <h6>{{item.amount}}</h6>
+                    <img src="{{item.itemImage.path}}">
+                    <a (click)="addKnightsConfirm(item)">Add</a>
+                </div>
+                <!-- <ion-card class="knightCard" *ngFor="let item of inventory" (click)="addItem(item)">
                     <p>{{item.amount}}</p>
                     <img src="{{item.itemImage.path}}" width="50" height="50">
-                </ion-card>
+                </ion-card> -->
             </div>
             <div *ngIf="inventory?.length == 0">
                 <ion-card>
-                    <b>You don't have any knights, go and resque some by beating monters</b>
+                    <b>You don't have any knights, go and rescue some by beating monters</b>
                 </ion-card>
             </div>
         </div>
