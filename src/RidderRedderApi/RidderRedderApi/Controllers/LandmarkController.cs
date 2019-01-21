@@ -37,15 +37,27 @@ namespace RidderRedderApi.Web.Api.Controllers {
 		}
 
 		/// <summary>
-		/// Update the specified landmark with given landmarkId
+		/// Returns the landmark with given landmarkId
 		/// </summary>
-		/// <returns>The update.</returns>
+		/// <returns>Landmark.</returns>
 		/// <param name="landmarkId">LandmarkId.</param>
 		/// <param name="l">L.</param>
 		[HttpPut("{landmarkId}")]
 		public IActionResult Update(string landmarkId, [FromBody]Landmark l) {
 			return Ok(landmarkService.Update(l));
 		}
+
+        /// <summary>
+		/// Update the specified landmark with given landmarkId
+		/// </summary>
+		/// <returns>The update.</returns>
+		/// <param name="landmarkId">LandmarkId.</param>
+		/// <param name="l">L.</param>
+		[HttpGet("{landmarkId}")]
+        public IActionResult Get(int landmarkId)
+        {
+            return Ok(landmarkService.Get(landmarkId));
+        }
 
         /// <summary>
 		/// Insert a new landmark
@@ -57,6 +69,19 @@ namespace RidderRedderApi.Web.Api.Controllers {
         public IActionResult Insert(string landmarkId, [FromBody]Landmark l)
         {
             return Ok(landmarkService.Post(l));
+        }
+
+        /// <summary>
+        /// pop he first knight off the landmark
+        /// </summary>
+        /// <returns>The update.</returns>
+        /// <param name="landmarkId">LandmarkId.</param>
+        /// <param name="l">L.</param>
+        [HttpPost("kill/{landmarkId}")]
+        public IActionResult KillKnight(string landmarkId, [FromBody]Landmark l)
+        {
+
+            return Ok(landmarkService.KillKnight(l));
         }
     }
 }

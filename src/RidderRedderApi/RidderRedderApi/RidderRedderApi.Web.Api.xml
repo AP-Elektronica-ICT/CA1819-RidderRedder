@@ -81,6 +81,14 @@
         </member>
         <member name="M:RidderRedderApi.Web.Api.Controllers.LandmarkController.Update(System.String,RidderRedderApi.Models.Landmark)">
             <summary>
+            Returns the landmark with given landmarkId
+            </summary>
+            <returns>Landmark.</returns>
+            <param name="landmarkId">LandmarkId.</param>
+            <param name="l">L.</param>
+        </member>
+        <member name="M:RidderRedderApi.Web.Api.Controllers.LandmarkController.Get(System.Int32)">
+            <summary>
             Update the specified landmark with given landmarkId
             </summary>
             <returns>The update.</returns>
@@ -90,6 +98,14 @@
         <member name="M:RidderRedderApi.Web.Api.Controllers.LandmarkController.Insert(System.String,RidderRedderApi.Models.Landmark)">
             <summary>
             Insert a new landmark
+            </summary>
+            <returns>The update.</returns>
+            <param name="landmarkId">LandmarkId.</param>
+            <param name="l">L.</param>
+        </member>
+        <member name="M:RidderRedderApi.Web.Api.Controllers.LandmarkController.KillKnight(System.String,RidderRedderApi.Models.Landmark)">
+            <summary>
+            pop he first knight off the landmark
             </summary>
             <returns>The update.</returns>
             <param name="landmarkId">LandmarkId.</param>

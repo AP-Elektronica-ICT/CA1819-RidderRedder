@@ -1,4 +1,5 @@
-﻿using RidderRedderApi.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using RidderRedderApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,9 @@ namespace RidderRedderApi.Repositories {
 
 		public List<Landmark> GetLandmarks() {
 			try {
-				return this.context.Landmarks.ToList();
+                return this.context.Landmarks
+                    .Include(lm => lm.Knights)
+                    .ToList();
 			}
 			catch (Exception e) {
 				throw e;
@@ -23,7 +26,10 @@ namespace RidderRedderApi.Repositories {
 
 		public Landmark Get(int landmarkId) {
 			try {
-				return this.context.Landmarks.Find(landmarkId);
+				return this.context.Landmarks
+                    .Where(lm => lm.LandmarkId == landmarkId)
+                    .Include(lm => lm.Knights)
+                    .First();
 			}
 			catch (Exception e) {
 				throw e;
@@ -47,10 +53,27 @@ namespace RidderRedderApi.Repositories {
 
 		}
 		public Landmark Put(Landmark l) {
-			try {
-				this.context.Landmarks.Update(l);
+            try
+            {
+                Landmark landmark = context.Landmarks.Find(l.LandmarkId);
+                landmark.Owner = l.Owner;
+                foreach (Knight k in l.Knights){
+                    Knight knight = context.Knights.Find(k.KnightId);
+                    if(knight != null) { 
+                        this.context.Knights.Update(knight);
+                    }
+                    else {
+                        this.context.Knights.Add(k);
+                    }
+                }
+				this.context.Landmarks.Update(landmark);
 				this.context.SaveChanges();
-				return l;
+
+                return l;
+                //return this.context.Landmarks
+                //    .Where(lm => lm.LandmarkId == l.LandmarkId)
+                //    .Include(lm => lm.Knights)
+                //    .First();
 			}
 			catch (Exception e) {
 				throw e;

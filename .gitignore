@@ -24,3 +24,5 @@ package-lock.json
 tmp/
 temp/
 platforms/
+
+*.props

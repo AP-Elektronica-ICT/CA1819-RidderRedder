@@ -16,6 +16,7 @@ using Swashbuckle.AspNetCore.Swagger;
 
 using RidderRedderApi.Repositories;
 using RidderRedderApi.Services;
+using Newtonsoft.Json;
 
 namespace RidderRedderApi {
     /// <summary>
@@ -85,6 +86,7 @@ namespace RidderRedderApi {
             services.AddScoped<PlayerService>();
 			services.AddScoped<LandmarkRepository>();
 			services.AddScoped<LandmarkService>();
+            services.AddScoped<KnightRepository>();
         }
 
         /// <summary>

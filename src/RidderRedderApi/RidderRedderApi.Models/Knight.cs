@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace RidderRedderApi.Models {
 
@@ -9,8 +10,10 @@ namespace RidderRedderApi.Models {
         [Key]
         public int KnightId { get; set; }
         public string AuthId { get; set; }
-		[ForeignKey("Landmark")]
         public int LandmarkId { get; set; }
+        [ForeignKey("LandmarkId")]
+        [JsonIgnore]
+        public Landmark Landmark { get; set; }
         public int Colour { get; set; }
         public int Level { get; set; }
     }
