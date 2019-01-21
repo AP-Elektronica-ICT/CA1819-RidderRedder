@@ -359,7 +359,9 @@ export class Combat {
             console.log("returnToMap start");
             console.log(this.parent.navCtrl);
             console.log(this.parent.navCtrl.getViews());
-            if(this.monster.isKnight){
+            
+            let tmp: any = this.monster;
+            if(tmp.isKnight){
                 //remove last 2 pages to go back to map
                 this.parent.navCtrl.remove(this.parent.navCtrl.length()-2, 2);
             }
