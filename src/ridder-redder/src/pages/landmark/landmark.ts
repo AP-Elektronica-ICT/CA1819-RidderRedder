@@ -55,6 +55,7 @@ export class LandmarkPage {
         this.pId = this.authProvider.AuthId;
         this.landmark = this.navParams.get('landmark');
         this.updateLandmark();
+
     }
 
     ionViewWillLeave() {
@@ -64,6 +65,7 @@ export class LandmarkPage {
     updateLandmark() {
         console.log("updating landmark");
         this.loading = true;
+        
         this.lmProvider.getLandmark(this.landmark.landmarkId)
             .subscribe(landmark => {
                 console.log("updated landmark");
@@ -81,9 +83,14 @@ export class LandmarkPage {
                     this.pProv.getPlayer(this.landmark.owner)
                         .subscribe(p => {
                             this.ownerName = p.PlayerName;
+                            this.checkLandmarkHostility();
                         });
                 }
             });
+    }
+
+    removeKnight(){
+        this.knights.shift();
     }
 
     checkLandmarkHostility() {
