@@ -358,7 +358,13 @@ export class Combat {
             console.log("returnToMap start");
             console.log(this.parent.navCtrl);
             console.log(this.parent.navCtrl.getViews());
-            this.parent.navCtrl.pop();
+            if(this.monster.isKnight){
+                //remove last 2 pages to go back to map
+                this.parent.navCtrl.remove(this.parent.navCtrl.length()-2, 2);
+            }
+            else {
+                this.parent.navCtrl.pop();
+            }
             // this.parent.navCtrl.push(
             //     HomePage,
             //     { lastmonster: this.monster }
