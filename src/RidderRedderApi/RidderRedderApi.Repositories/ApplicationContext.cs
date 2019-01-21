@@ -38,5 +38,46 @@ namespace RidderRedderApi.Repositories {
 
         }
 
+        public void SeedItemImages()
+        {
+            ItemImages.Add(new ItemImage { ItemImageId = 1, Path = "knight_blue.png" });
+            ItemImages.Add(new ItemImage { ItemImageId = 2, Path = "knight_red.png" });
+            ItemImages.Add(new ItemImage { ItemImageId = 3, Path = "knight_green.png" });
+            SaveChanges();
+        }
+        public void SeedItemTypes()
+        {
+            ItemTypes.Add(new ItemType { ItemTypeId = 1, ItemTypeName = "Knight" });
+            ItemTypes.Add(new ItemType { ItemTypeId = 2, ItemTypeName = "Potion" });
+            SaveChanges();
+        }
+
+        public void SeedMonsterTitles()
+        {
+            MonsterTitles.Add(new MonsterTitle { MonsterTitleId = 1, MonsterTitleText = "Baron" });
+            MonsterTitles.Add(new MonsterTitle { MonsterTitleId = 2, MonsterTitleText = "Captain" });
+            SaveChanges();
+        }
+
+        public void SeedMonsterNames()
+        {
+            MonsterNames.Add(new MonsterName { MonsterNameId = 1, MonsterNameText = "Sven" });
+            MonsterNames.Add(new MonsterName { MonsterNameId = 2, MonsterNameText = "Tom" });
+            SaveChanges();
+        }
+
+        public void SeedMonsterModels()
+        {
+            MonsterModels.Add(new MonsterModel { MonsterModelId = 1, MonsterModelPath = "path/monster1.png" });
+            MonsterModels.Add(new MonsterModel { MonsterModelId = 2, MonsterModelPath = "path/monster2.png" });
+            SaveChanges();
+        }
+
+        public void SeedPlayer(Player p)
+        {
+            Players.Add(p);
+            SaveChanges();
+        }
+
     }
 }
