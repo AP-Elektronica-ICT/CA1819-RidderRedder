@@ -54,5 +54,18 @@ namespace RidderRedderApi.Web.Api.Controllers {
         {
             return Ok(landmarkService.Post(l));
         }
+
+        /// <summary>
+        /// pop he first knight off the landmark
+        /// </summary>
+        /// <returns>The update.</returns>
+        /// <param name="landmarkId">LandmarkId.</param>
+        /// <param name="l">L.</param>
+        [HttpPost("kill/{landmarkId}")]
+        public IActionResult KillKnight(string landmarkId, [FromBody]Landmark l)
+        {
+
+            return Ok(landmarkService.KillKnight(l));
+        }
     }
 }

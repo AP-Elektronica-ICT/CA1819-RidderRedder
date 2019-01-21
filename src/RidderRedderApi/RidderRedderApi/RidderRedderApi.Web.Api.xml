@@ -84,6 +84,14 @@
             <param name="landmarkId">LandmarkId.</param>
             <param name="l">L.</param>
         </member>
+        <member name="M:RidderRedderApi.Web.Api.Controllers.LandmarkController.KillKnight(System.String,RidderRedderApi.Models.Landmark)">
+            <summary>
+            pop he first knight off the landmark
+            </summary>
+            <returns>The update.</returns>
+            <param name="landmarkId">LandmarkId.</param>
+            <param name="l">L.</param>
+        </member>
         <member name="T:RidderRedderApi.Web.Api.Controllers.MonsterController">
             <summary>
             Monster controller.
