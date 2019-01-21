@@ -50,7 +50,7 @@ export class Combat {
     private speechOptions;
 
     private returning: boolean;
-    
+
 
     public constructor(
         private parentPage: CombatPage,
@@ -185,7 +185,7 @@ export class Combat {
                 this.deviceMotionSubscription = this.deviceMotion.watchAcceleration({ frequency: 100 }).subscribe((acc: DeviceMotionAccelerationData) => {
                     /*
                         BETA formula, improve this
-                    */
+                     */
                     let a = Math.sqrt(Math.pow(acc.x, 2) * Math.pow(acc.y, 2) * Math.pow(acc.z, 2));
                     if (a > 250) {
                         this.hitMonster();
@@ -299,19 +299,21 @@ export class Combat {
         this.player.Experience += this.experienceGained;
         this.changeCombatState(CombatState.CombatVictory);
         this.parent.setInfo();
-        this.generateLoot();
         let tmp: any = this.monster;
         if(tmp.isKnight){
-            //TODO start loadingd
             console.log("defeated knight");
             console.log(tmp);
+            this.lootGained = [];
             this.lmProvider.killKnight(tmp.landmark).subscribe(
                 lm => {
                     console.log("killKnight");
                     console.log(lm);
                     this.lmPage.updateLandmark();
-                    //TODO end loading
                 });
+        }
+        else{
+            this.generateLoot();
+
         }
     }
 
@@ -346,21 +348,21 @@ export class Combat {
             //this.monster.Marker.remove();
         }
     }
-    
+
 
     returnToMap(){
         if(this.returning) return;
         else{
-           this.returning = true;
-        this.resetCombat();
-        console.log("returnToMap start");
-        console.log(this.parent.navCtrl);
-        console.log(this.parent.navCtrl.getViews());
-        this.parent.navCtrl.pop();
-        // this.parent.navCtrl.push(
-        //     HomePage,
-        //     { lastmonster: this.monster }
-        // );
+            this.returning = true;
+            this.resetCombat();
+            console.log("returnToMap start");
+            console.log(this.parent.navCtrl);
+            console.log(this.parent.navCtrl.getViews());
+            this.parent.navCtrl.pop();
+            // this.parent.navCtrl.push(
+            //     HomePage,
+            //     { lastmonster: this.monster }
+            // );
             console.log("Returning to map");
         }
     }
@@ -399,7 +401,7 @@ export class Combat {
                 itemTypeId: 1,
                 amount: 1
             }
-            
+
 
             this.invProvider.addToInventory(item).subscribe(data => {
                 data.amount = item.amount;
