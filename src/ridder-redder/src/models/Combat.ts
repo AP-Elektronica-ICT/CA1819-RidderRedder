@@ -49,6 +49,7 @@ export class Combat {
     private speechListener;
     private speechOptions;
 
+    private returning: boolean;
     
 
     public constructor(
@@ -72,6 +73,7 @@ export class Combat {
         this.parent = parentPage;
 
         this.resetTimer();
+        this.returning = false;
     }
 
     ngAfterViewInit() {
@@ -347,6 +349,9 @@ export class Combat {
     
 
     returnToMap(){
+        if(this.returning) return;
+        else{
+           this.returning = true;
         this.resetCombat();
         console.log("returnToMap start");
         console.log(this.parent.navCtrl);
@@ -356,7 +361,8 @@ export class Combat {
         //     HomePage,
         //     { lastmonster: this.monster }
         // );
-        console.log("Returning to map");
+            console.log("Returning to map");
+        }
     }
 
     changeCombatState(state: CombatState) {
