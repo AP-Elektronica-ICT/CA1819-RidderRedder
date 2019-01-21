@@ -117,7 +117,7 @@ export class LandmarkPage {
                     {
                         name: 'amount',
                         placeholder: 'Amount',
-                        value: this.addKnightsAmount
+                        type: 'number'
                     }
                 ],
                 buttons: [
@@ -130,9 +130,11 @@ export class LandmarkPage {
                     },
                     {
                         text: 'Confirm',
-                        handler: () => {
-                            this.addItem(item);
+                        handler: data => {
                             this.showingAddKnightsconfirm = false;
+                            this.addKnightsAmount = "" + data.amount;
+                            this.addItem(item);
+
                         }
                     }
                 ]
@@ -157,8 +159,8 @@ export class LandmarkPage {
                 .subscribe(inventory => {
                     this.inventory = inventory;
                     this.loading = false;
-                });
-        });
+                }, error => console.log(error));
+        }, error => console.log);
     }
 
     getImage(knight) {
