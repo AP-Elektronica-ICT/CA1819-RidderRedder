@@ -4,6 +4,7 @@ import { Player } from "./Player";
 import { DeviceMotion, DeviceMotionAccelerationData } from "@ionic-native/device-motion";
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import { CombatPage } from "../pages/combat/combat";
+import { LandmarkPage } from "../pages/landmark/landmark";
 import { PlayerProvider } from "../providers/player/PlayerProvider";
 import { PlayerDto } from "../dtos/PlayerDto";
 import { MonsterProvider } from "../providers/monster/MonsterProvider";
@@ -11,6 +12,7 @@ import { MonsterDto } from "../dtos/MonsterDto";
 import { ElementRef } from "@angular/core";
 import { Knight } from "./Knight";
 import { AuthProvider } from "../providers/auth/AuthProvider";
+import { LandmarkProvider } from "../providers/landmark/LandmarkProvider";
 import { InventoryItem } from "./InventoryItem";
 import { InventoryProvider } from '../providers/inventory/InventoryProvider';
 import { AddInventoryItemDto } from "../dtos/AddInventoryItemDto";
@@ -47,6 +49,7 @@ export class Combat {
     private speechListener;
     private speechOptions;
 
+    private returning: boolean;
 
 
     public constructor(
@@ -58,7 +61,9 @@ export class Combat {
         private playerProvider: PlayerProvider,
         private monsterProvider: MonsterProvider,
         private authProvider: AuthProvider,
-        private invProvider: InventoryProvider
+        private invProvider: InventoryProvider,
+        private lmProvider: LandmarkProvider,
+        private lmPage?: LandmarkPage
     ) {
         this.monster = m;
         this.player = p;
@@ -68,6 +73,7 @@ export class Combat {
         this.parent = parentPage;
 
         this.resetTimer();
+        this.returning = false;
     }
 
     // The function responsible for the horizontal 
@@ -196,7 +202,7 @@ export class Combat {
                 this.deviceMotionSubscription = this.deviceMotion.watchAcceleration({ frequency: 100 }).subscribe((acc: DeviceMotionAccelerationData) => {
                     /*
                         BETA formula, improve this
-                    */
+                     */
                     let a = Math.sqrt(Math.pow(acc.x, 2) * Math.pow(acc.y, 2) * Math.pow(acc.z, 2));
                     if (a > 250) {
                         this.hitMonster();
@@ -345,7 +351,25 @@ export class Combat {
         this.player.Experience += this.experienceGained;
         this.changeCombatState(CombatState.CombatVictory);
         this.parent.setInfo();
-        this.generateLoot();
+
+        let tmp: any = this.monster;
+        if(tmp.isKnight){
+            
+            console.log("defeated knight");
+            console.log(tmp);
+            this.lootGained = [];
+            this.lmProvider.killKnight(tmp.landmark).subscribe(
+                lm => {
+                    console.log("killKnight");
+                    console.log(lm);
+                    this.lmPage.removeKnight();
+                    this.lmPage.updateLandmark();
+                });
+        } else {
+            console.log("Defeated monster");
+            this.generateLoot();
+
+        }
     }
 
     // This function is called when the player has been
@@ -383,16 +407,32 @@ export class Combat {
     // from the marker.
     public resetCombat() {
         this.lootGained = [];
-        this.monster.Marker.remove();
+        let tmp: any = this.monster;
+        if(!tmp.isKnight){
+            //this.monster.Marker.remove();
+        }
     }
 
-    // Return to the map. This function is called
-    // whenever the monster/player has been defeated
-    public returnToMap() {
-        this.resetCombat();
-        this.parent.navCtrl.pop();
 
-        console.log("Returning to map");
+    returnToMap(){
+        if(this.returning) return;
+        else{
+            this.returning = true;
+            this.resetCombat();
+            console.log("returnToMap start");
+            console.log(this.parent.navCtrl);
+            console.log(this.parent.navCtrl.getViews());
+            
+            let tmp: any = this.monster;
+
+            this.parent.navCtrl.pop();
+            
+            // this.parent.navCtrl.push(
+            //     HomePage,
+            //     { lastmonster: this.monster }
+            // );
+            console.log("Returning to map");
+        }
     }
 
     // Change the combat state to the selected CombatState

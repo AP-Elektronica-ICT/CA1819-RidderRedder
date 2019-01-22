@@ -18,9 +18,7 @@ import { PlayerDto } from '../../dtos/PlayerDto';
 export class PlayerProvider {
 
     public player: Player;
-
-    // THIS NEEDS CLEANING UP
-    Inventory: Array<Knight>;
+    //Inventory: Array<Knight>;
 
     // We immediately load the player from the API thats connected
     // with the logged in user his AuthID.
@@ -32,20 +30,16 @@ export class PlayerProvider {
             console.log(error);
         });
 
-
-
-        // THIS NEEDS CLEANING UP
-        this.Inventory = new Array<Knight>();
-        this.Inventory.push({ id: 0, colour: "red", level: 4, owner: "admin" });
-        this.Inventory.push({ id: 1, colour: "blue", level: 6, owner: "admin" });
-        this.Inventory.push({ id: 2, colour: "black", level: 2, owner: "admin" });
-        this.Inventory.push({ id: 3, colour: "red", level: 5, owner: "admin" });
+        /* this.Inventory = new Array<Knight>();
+        this.Inventory.push({id: 0, colour: "red", level: 4 , owner: "admin"});
+        this.Inventory.push({id: 1, colour: "blue", level: 6, owner: "admin"});
+        this.Inventory.push({id: 2, colour: "black", level: 2, owner: "admin"});
+        this.Inventory.push({id: 3,  colour: "red", level: 5, owner: "admin"});*/
     }
 
-    // THIS NEEDS CLEANING UP
-    getInventory() {
-        return this.Inventory;
-    }
+    //getInventory() {
+    //  return this.Inventory;
+    //}
 
     // Create a new player to store in the API's database
     // This gets called whenever a new user logs in to the game
@@ -73,7 +67,7 @@ export class PlayerProvider {
                 Experience: data.experience,
                 AuthId: data.authId
             };
-            this.player = p;
+            //this.player = p;
             return p;
         });
     }

@@ -81,9 +81,47 @@ Visual Studio Code | Gebruiken wij als IDE voor Ionic. | [download](https://code
   * Wijzig de variabel ``apiUrl`` om te verwijzen naar het IP adres en poort nummer van de lokale API server. (Dit is het IP adres van de computer waarop de Dotnet applicatie gehost wordt). Bijvoorbeeld: ``public static apiUrl = "192.168.11.15:80/api/v1";``
 
 ### Azure API Deployment
-#### Requirements
-INSERT AZURE DEPLOYMENT HERE
+1. Aanmaken virtual machine:
+ - Windows Server
+ - size: standard B1ms is voldoende
+ - username + paswoord voor admin
+ - Inbound Ports:
+	Allow selected ports
+	80, 3389, 443
+ - create
+		
+2. configuratie VM:
+ - DNS Name instellen
+	 (handig, aangezien default IP dynamisch is)
+ - onder Networking:
+ 	inbound ports:
+	5000 (API)
+	8172 (Web Deploy)
+	
+3. Installatie nodige componenten op VM
+ - dotNet 2.11:
+	Runtime 2.1.1 van https://dotnet.microsoft.com/download/dotnet-core/2.1
+ - Mysql 8
+ 	https://dev.mysql.com/downloads/installer/
+	server only
+	defaults zijn in orde
+ 	username/paswoord 
+	hierboven onder ASP.NET Core API Deployment is beschreven hoe deze aan te passen in de applicatie, deze moeten overeen komen
+ - import database:
+	mysql.exe -u username -p database_name < file.sql
 
+ - enable publish to VM
+ 	instructies hier volgen https://docs.microsoft.com/en-us/visualstudio/deployment/tutorial-import-publish-settings-iis?view=vs-2017
+	
+ - In Visual Studio:
+ 	rechsklik RidderRedderApi.Web.Api > Publish ...
+	New Profile
+	Azure Virtual Machines
+		de juiste VM selecteren
+	Create profile
+	
+	Configure
+	username/paswoord van de server ingeven en "Validate Connection" klikken om het certifikaat binnen te halen
 
  ### Troubleshooting
  * ``Error: Requirements check failed for JDK 1.8``

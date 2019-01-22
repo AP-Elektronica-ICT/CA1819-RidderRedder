@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { ModalController, NavParams, NavController, IonicApp } from 'ionic-angular';
-import { GoogleMaps, GoogleMap, GoogleMapOptions, GoogleMapsEvent, ILatLng, Marker, MarkerOptions, HtmlInfoWindow } from '@ionic-native/google-maps';
+import { ModalController, NavParams, NavController, IonicApp, ToastController } from 'ionic-angular';
+import { GoogleMaps, GoogleMap, GoogleMapOptions, GoogleMapsEvent, ILatLng, Marker, MarkerOptions, HtmlInfoWindow, Circle } from '@ionic-native/google-maps';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs/Subscription';
+import { first } from 'rxjs/operators';
 import { Monster } from '../../models/Monster';
 import { Landmark } from '../../models/Landmark';
 import { InventoryPage } from '../inventory/inventory';
@@ -27,40 +28,63 @@ export class HomePage {
     mapUpdater: Subscription;
     monsters: Array<Monster>;
     landmarks: Array<Landmark>;
-
+    initialised: boolean;
     mapLoaded = false;
+    playerRadius: Circle;
     private geoPosWatcher: any;
 
     private loading = true;
 
-    // The maximum distance a monster should be able to spawn from you
-    private monsterDistance: number = 0.003; // 0.005 ~ 250m?
+    // tfw static doesn't work
+    monsterDistance: number = 0.003; // 0.003 ~ 250m?
+    playerToMonsterDistance: number = 0.001;
 
-    constructor(public navCtrl: NavController, public geolocation: Geolocation, public modalCtrl: ModalController, public monsterProvider: MonsterProvider, public lmProvider: LandmarkProvider, public pProvider: PlayerProvider, public authProvider: AuthProvider, public navParams: NavParams) {
+    constructor(public toastCtrl: ToastController, public navCtrl: NavController, public geolocation: Geolocation, public modalCtrl: ModalController, public monsterProvider: MonsterProvider, public lmProvider: LandmarkProvider, public pProvider: PlayerProvider, public authProvider: AuthProvider, public navParams: NavParams) {
         this.monsters = new Array<Monster>();
         this.prevPos = { lat: 0, lng: 0 };
+        this.initialised = false;
     }
 
-    ionViewDidLoad() {
+    // was didLoad
+    ionViewDidEnter() {
+        console.log("Home page did load");
+
         document.addEventListener("pause", this.resetGeo, false);
 
         // this.presentInventory();
 
+        this.monsters = new Array<Monster>();
+
         // Check if there has previously been a defeated monster.
         // Then remove it from the list
         if (!this.navParams.get('lastmonster'))
-            this.removeMonster(this.navParams.get('lastmonster'));
+            console.log("get nvparams lastmonster");
+        console.log(this.navParams.get('lastmonster'));
+        this.removeMonster(this.navParams.get('lastmonster'));
 
-        // Check if the map is loaded, load the map, watch the map.
-        if (!this.mapLoaded)
-            this.loadMap();
-        else
-            this.watchMap();
-        // this.mapUpdater = Observable.interval(5000).subscribe(() => {
-        //     this.updateMap();
-        //     this.updateMonsters();
-        // });
+        //if (!this.mapLoaded)
+        this.loadMap();
+        //else
+        this.watchMap();
+        this.mapUpdater = Observable.interval(5000).subscribe(() => {
+            this.updateMap();
+            this.updateMonsters();
+        });
+        this.initialised = true;
+    }
 
+    // unsubscribe from subscriptions
+    ionViewWillLeave() {
+        console.log("home view left");
+        console.log(this.mapUpdater);
+        console.log(this.geoPosWatcher);
+        this.mapLoaded = false;
+        this.initialised = false;
+        this.loading = true;
+        this.map.remove();
+        this.mapUpdater.unsubscribe();
+        this.geolocation.watchPosition().subscribe().unsubscribe();
+        this.geoPosWatcher.unsubscribe();
     }
 
     // Here we load the Google Maps map by getting our current geolocation.
@@ -116,16 +140,17 @@ export class HomePage {
 
                 this.map = GoogleMaps.create('map_canvas', mapOptions);
 
-                // Step 2. Load in our landmarks from the API and put them on our map
-                this.lmProvider.getLandmarks().subscribe((landmarks) => {
+                this.lmProvider.getLandmarks().pipe(first()).subscribe((landmarks) => {
                     console.log('got landmarks');
                     console.log(landmarks);
                     this.landmarks = landmarks;
                     this.addLandmarks();
+                    // Step 2. Load in our landmarks from the API and put them on our map
                 });
 
                 // Step 3. We start watching our map for movement changes
                 this.mapLoaded = true;
+
                 this.watchMap();
 
             }).catch((error) => {
@@ -143,34 +168,49 @@ export class HomePage {
     // and let the camera follow the user.
     private watchMap() {
         console.log("Watching map...");
-        this.geolocation.watchPosition({ timeout: 5000, enableHighAccuracy: true }).subscribe(data => {
-            this.loading = false;
-            this.updateMonsters();
-            this.prevPos.lat = data.coords.latitude;
-            this.prevPos.lng = data.coords.longitude;
-
-            // Follow the user
-            this.map.animateCamera(
-                {
-                    target:
+        this.geoPosWatcher = this.geolocation.watchPosition({ timeout: 5000, enableHighAccuracy: true })
+            .subscribe(data => {
+                if (this.map) {
+                    console.log("in geo watcher");
+                    this.loading = false;
+                    this.updateMonsters();
+                    this.prevPos.lat = data.coords.latitude;
+                    this.prevPos.lng = data.coords.longitude;
+                }
+                // Follow the user
+                this.map.animateCamera(
                     {
-                        lat: data.coords.latitude,
-                        lng: data.coords.longitude
-                    },
-                    zoom: 16,
-                    tilt: 30
-                });
-        }, error => {
-            console.log("Stopped watching: " + error);
-        });
+                        target:
+                        {
+                            lat: data.coords.latitude,
+                            lng: data.coords.longitude
+                        },
+                        zoom: 16,
+                        tilt: 30
+                    });
+                    this.updateRadius();
+            }, error => {
+                console.log("Stopped watching: " + error);
+            });
 
+    }
+
+    private updateRadius() {
+        this.playerRadius = this.map.addCircleSync({
+            center: this.prevPos,
+            clickable: false,
+            radius: 80, 
+            fillColor: "rgba(0, 0, 255, 0.05)",
+            strokeColor: "rgba(0, 0, 255, 0.1)",
+            strokeWidth: 1
+        })
     }
 
     // Select the landmark icon based on the state of the landmark
     // PARAM: landmark: The landmark to check it's owner
     private chooseLandmarkIcon(landmark) {
         var icon;
-        if (landmark.ownerId == null) {
+        if (landmark.owner == null) {
             icon = {
                 url: 'assets/imgs/castle_black.png',  //Castle by BGBOXXX Design from the Noun Project
                 size: {
@@ -179,7 +219,7 @@ export class HomePage {
                 }
             }
         }
-        else if (landmark.ownerId == this.authProvider.AuthId) {
+        else if (landmark.owner == this.authProvider.AuthId) {
             icon = {
                 url: 'assets/imgs/castle_green.png',  //Castle by BGBOXXX Design from the Noun Project
                 size: {
@@ -252,17 +292,24 @@ export class HomePage {
     private updateMonsters() {
         // console.log("Updating monsters");
         if (this.monsters.length > 5) {
-            // this.monsters[0].Marker.remove();
-            // this.monsters.shift().Marker.remove();
+            //if( (this.monsters[0].createdAt-Date.now()) > 5*60*1000){
+            //    // if created more then 5 minutes ago, remove
+            //    this.monsters[0].Marker.remove();
+            //    this.monsters.shift();
+            //}
         } else {
             // for (let index = 0; index < 5 - this.monsters.length; index++) {
             this.generateMonster();
+            //this.monsters[this.monsters.length - 1].createdAt = Date.now();
             // }
         }
 
         this.monsters.forEach(m => {
-            if (m.Health <= 0)
+            if (m.Health <= 0) {
+                console.log("minster health low");
+                console.log(m);
                 this.removeMonster(m);
+            }
         });
 
     }
@@ -277,8 +324,8 @@ export class HomePage {
         let rlng: number = (this.prevPos.lng - this.monsterDistance) + (Math.random() * 2 * this.monsterDistance);
 
         //generate random monster, attach marker
-        this.monsterProvider.getMonster().subscribe(data => {
-
+        this.monsterProvider.getMonster().pipe(first()).subscribe(data => {
+            console.log("got random monster in home");
             let monster: Monster = data;
 
             let marker: Marker = this.map.addMarkerSync({
@@ -300,9 +347,10 @@ export class HomePage {
 
             monster.Marker = marker;
             this.monsters.push(monster);
+            marker.setDisableAutoPan(true);
             marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
                 // console.log("Fighting: " + JSON.stringify(monster));
-                this.launchFight(monster);
+                this.checkMonsterRange(monster);
             });
         });
     }
@@ -316,18 +364,59 @@ export class HomePage {
 
         console.log("Removing monster from the list: " + monster.Name);
         monster.Marker.remove();
-        this.monsters.splice(this.monsters.indexOf(monster), 1);
+        this.monsters.shift();
+    }
+
+    // Remove the landmark from the list and the map.
+    // PARAM: landmark: the landmark to remove
+    removeLandmark(landmark: Landmark) {
+        if (!landmark)
+            return;
+
+        console.log("Removing landmark from the list: " + landmark.name);
+        landmark.marker.remove();
+        this.landmarks.shift();
+    }
+
+    // Check if the monster is in range of
+    // the player, before starting combat.
+    // PARAM: monster: the monster to check distance
+    checkMonsterRange(monster: Monster) {
+
+        let monsterPos = monster.Marker.getPosition();
+        let playerPos = this.prevPos;
+
+        let distance = Math.sqrt(Math.pow((monsterPos.lat - playerPos.lat), 2) + Math.pow((monsterPos.lng - playerPos.lng), 2));
+
+        if (distance <= this.playerToMonsterDistance)
+            this.launchFight(monster);
+        else
+            this.showNotCloseEnoughToast();
+    }
+
+    // Show a toast when the player is too
+    // far away from the monster.
+    showNotCloseEnoughToast() {
+        let toast = this.toastCtrl.create({
+            message: 'You are not close enough!',
+            duration: 3000,
+            position: 'top'
+        });
+
+        toast.present();
     }
 
     // Navigate to the combat screen in order to fight the monster
     // PARAM: monster: The Monster to start combat with
-    private launchFight(monster: Monster) {
+    launchFight(monster: Monster) {
         this.resetGeo();
-        let combatModal = this.modalCtrl.create(
+        console.log("launching fight");
+        console.log(monster);
+        this.navCtrl.push( //let combatModal = this.modalCtrl.create(
             CombatPage,
             { monster: monster }
         )
-        combatModal.present();
+        //combatModal.present();
     }
 
     // Stops the subscription on watchPosition.
@@ -351,7 +440,10 @@ export class HomePage {
         console.log(landmark);
         this.navCtrl.push(
             LandmarkPage,
-            { landmark: landmark }
+            {
+                landmark: landmark,
+                home: this
+            }
         );
     }
 }

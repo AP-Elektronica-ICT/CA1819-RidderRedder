@@ -6,6 +6,9 @@ import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device
 import { MonsterProvider } from '../../providers/monster/MonsterProvider';
 import { PlayerProvider } from '../../providers/player/PlayerProvider';
 import { AuthProvider } from '../../providers/auth/AuthProvider';
+import { LandmarkProvider } from "../../providers/landmark/LandmarkProvider";
+
+import { LandmarkPage } from "../landmark/landmark";
 
 import { Combat } from '../../models/Combat';
 import { Player } from '../../models/Player';
@@ -31,6 +34,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 export class CombatPage {
 
     @Input() monster: Monster;
+    @Input() lmPage?: LandmarkPage;
     @ViewChild('monsterObject') monsterObject: ElementRef;
 
     private combat: Combat;
@@ -49,7 +53,8 @@ export class CombatPage {
         private playerProvider: PlayerProvider,
         private authProvider: AuthProvider,
         private invProvider: InventoryProvider,
-        private geolocation: Geolocation
+        private geolocation: Geolocation,
+        private lmProvider: LandmarkProvider
     ) {
         this.setMonster();
     }
@@ -86,7 +91,8 @@ export class CombatPage {
      * PARAM monster: The monster that should be fighting the player
      */
     private loadCombat(player: Player, monster: Monster) {
-        this.combat = new Combat(this, monster, player, this.deviceMotion, this.speech, this.playerProvider, this.monsterProvider, this.authProvider, this.invProvider);
+        this.lmPage = this.navParams.get('lmPage');
+        this.combat = new Combat(this, monster, player, this.deviceMotion, this.speech, this.playerProvider, this.monsterProvider, this.authProvider, this.invProvider, this.lmProvider, this.lmPage);
         this.setInfo();
     }
 
@@ -117,7 +123,7 @@ export class CombatPage {
     private loadMonster(player: Player) {
         this.monsterProvider.getMonster().subscribe(data => {
             this.monster = data;
-            this.combat = new Combat(this, this.monster, player, this.deviceMotion, this.speech, this.playerProvider, this.monsterProvider, this.authProvider, this.invProvider);
+            this.combat = new Combat(this, this.monster, player, this.deviceMotion, this.speech, this.playerProvider, this.monsterProvider, this.authProvider, this.invProvider, this.lmProvider);
 
             this.setInfo();
             this.loadSpeech();

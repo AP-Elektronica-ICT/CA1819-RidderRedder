@@ -1,45 +1,54 @@
-<!--
-  Generated template for the LandmarkPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>landmarkPage</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
 <ion-content padding>
-  <ion-card *ngIf="loading">
-    <p>LOADING</p>
-  </ion-card>
-  <ion-card *ngIf="!loading">
-    <h3>{{landmark.name}}</h3>
-    <div *ngIf='landmark.ownerId; else notClaimed'>
-      <p>owner: {{landmark.ownerName}}</p>
+
+    <div class="loading-container" *ngIf="loading">
+        <img src="assets/icons/loading.gif" class="loading-gif" width="90" height="90">
     </div>
-    <ng-template #notClaimed>  
-      <h4>neutral landmark</h4>
-      <p>Place a knight here to claim it</p>
-      <p>Owned knights:</p>
-      <div *ngIf="knights?.length > 0">
-        <ion-list>
-          <ion-item *ngFor="let knight of knights">
-            <ion-card (click)="addKnight(knight)">
-              <p>colour: {{knight.colour}}, level: {{knight.level}}</p>
-            </ion-card>
-          </ion-item>
-        </ion-list>
-      </div>
-      <div *ngIf="knights?.length == 0">
-        <ion-card>
-          <b>You don't have any knights, go and resque some by beating monters</b>
-        </ion-card>
-      </div>
-    </ng-template>
-  </ion-card>
+    <div *ngIf="!loading">
+        <div class="landmark-header">
+            <h2>{{landmark.name}}</h2>
+            <div *ngIf='neutral'>
+                <h4>Neutral landmark</h4>
+                <p>Place a knight here to claim it</p>
+            </div>
+            <div *ngIf="!neutral">
+                <h4>Owned by: {{ownerName}}</h4>
+            </div>
+        </div>
+        <div class="garrisoned-knights-container" *ngIf="enemy || friendly">
+            <p>Garrisoned knights:</p>
+            <div class=knightList id="garrison" *ngIf="knights.length > 0">
+                <div class="inventory-item" *ngFor="let knight of knights">
+                    <h6>{{knight.level}}</h6>
+                    <img src="{{getImage(knight)}}">
+                </div>
+
+                <!-- <ion-card class="knightCard" *ngFor="let knight of knights">
+                    <img src="{{getImage(knight)}}" width="40" height="40">
+                </ion-card> -->
+            </div>
+        </div>
+        <div *ngIf="enemy">
+            <button id="fightButton" ion-button color="danger" (click)="fight()">fight</button>
+        </div>
+        <div id="inventory" *ngIf="neutral || friendly">
+            <h2>Inventory</h2>
+            <p>Choose your guards to defend the landmark!</p>
+            <div class="knightList" *ngIf="inventory?.length > 0">
+                <div class="inventory-item" *ngFor="let item of inventory" (click)="addKnightsConfirm(item)">
+                    <h6>{{item.amount}}</h6>
+                    <img src="{{item.itemImage.path}}">
+                    <a (click)="addKnightsConfirm(item)">add</a>
+                </div>
+                <!-- <ion-card class="knightCard" *ngFor="let item of inventory" (click)="addItem(item)">
+                    <p>{{item.amount}}</p>
+                    <img src="{{item.itemImage.path}}" width="50" height="50">
+                </ion-card> -->
+            </div>
+            <div *ngIf="inventory?.length == 0">
+                <ion-card>
+                    <b>You don't have any knights, go and rescue some by beating monters</b>
+                </ion-card>
+            </div>
+        </div>
+    </div>
 </ion-content>
