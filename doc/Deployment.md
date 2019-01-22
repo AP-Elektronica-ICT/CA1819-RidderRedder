@@ -81,9 +81,46 @@ Visual Studio Code | Gebruiken wij als IDE voor Ionic. | [download](https://code
   * Wijzig de variabel ``apiUrl`` om te verwijzen naar het IP adres en poort nummer van de lokale API server. (Dit is het IP adres van de computer waarop de Dotnet applicatie gehost wordt). Bijvoorbeeld: ``public static apiUrl = "192.168.11.15:80/api/v1";``
 
 ### Azure API Deployment
-#### Requirements
-INSERT AZURE DEPLOYMENT HERE
+- Create virtual machine:
+		 Windows Server
+		 size: standard B1ms is voldoende
+		 username + paswoord voor admin
+		
+		 Inbound Ports:
+		 Allow selected ports
+		 80, 3389, 443
+		
+		 create
+		
+- configuration VM:
+	 DNS Name instellen
+	 (handig, aangezien default IP dynamisch is)
+	
+	 Networking:
+	 inbound ports:
+		 5000 (API)
+		 8172 (Web Deploy)
+	
+- Installatie nodige componenten
+  dotNet 2.11:
+	  Runtime 2.1.1 van https://dotnet.microsoft.com/download/dotnet-core/2.1
+	
+	Mysql 8
+ https://dev.mysql.com/downloads/installer/
+	server only
+	defaults zijn in orde
+ 
+	import database:
+	mysql.exe -u username -p database_name < file.sql
 
+	via ServerManager:
+	 Server Roles:
+		 Web Server (IIS)
+			 management tools
+				 management service
+	
+- enable publish to VM
+https://docs.microsoft.com/en-us/visualstudio/deployment/tutorial-import-publish-settings-iis?view=vs-2017
 
  ### Troubleshooting
  * ``Error: Requirements check failed for JDK 1.8``
