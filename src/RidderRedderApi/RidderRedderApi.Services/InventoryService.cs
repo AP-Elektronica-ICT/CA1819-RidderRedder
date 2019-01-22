@@ -65,6 +65,12 @@ namespace RidderRedderApi.Services {
             item.ItemType = type;
             item.ItemImage = img;
 
+            if(item.Amount == 0)
+            {
+                this.DeleteInventoryItem(itemid);
+                return item;
+            }
+
             return this.inventoryRepository.UpdateInventoryItem(item, itemid);
 
         }

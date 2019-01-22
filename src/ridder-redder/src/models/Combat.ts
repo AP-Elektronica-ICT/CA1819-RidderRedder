@@ -4,6 +4,7 @@ import { Player } from "./Player";
 import { DeviceMotion, DeviceMotionAccelerationData } from "@ionic-native/device-motion";
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import { CombatPage } from "../pages/combat/combat";
+import { LandmarkPage } from "../pages/landmark/landmark";
 import { PlayerProvider } from "../providers/player/PlayerProvider";
 import { PlayerDto } from "../dtos/PlayerDto";
 import { MonsterProvider } from "../providers/monster/MonsterProvider";
@@ -11,6 +12,7 @@ import { MonsterDto } from "../dtos/MonsterDto";
 import { ElementRef } from "@angular/core";
 import { Knight } from "./Knight";
 import { AuthProvider } from "../providers/auth/AuthProvider";
+import { LandmarkProvider } from "../providers/landmark/LandmarkProvider";
 import { InventoryItem } from "./InventoryItem";
 import { InventoryProvider } from '../providers/inventory/InventoryProvider';
 import { AddInventoryItemDto } from "../dtos/AddInventoryItemDto";
@@ -47,7 +49,8 @@ export class Combat {
     private speechListener;
     private speechOptions;
 
-    
+    private returning: boolean;
+
 
     public constructor(
         private parentPage: CombatPage,
@@ -58,7 +61,9 @@ export class Combat {
         private playerProvider: PlayerProvider,
         private monsterProvider: MonsterProvider,
         private authProvider: AuthProvider,
-        private invProvider: InventoryProvider
+        private invProvider: InventoryProvider,
+        private lmProvider: LandmarkProvider,
+        private lmPage?: LandmarkPage
     ) {
         this.monster = m;
         this.player = p;
@@ -68,13 +73,13 @@ export class Combat {
         this.parent = parentPage;
 
         this.resetTimer();
+        this.returning = false;
     }
 
-    ngAfterViewInit() {
-
-    }
-
-    moveMonster() {
+    // The function responsible for the horizontal 
+    // movement of the monster. This keeps repeating
+    // whenever the monster is in combat
+    private moveMonster() {
         let obj: ElementRef = this.parent.monsterObject;
 
         if (!this.inCombat) {
@@ -94,7 +99,9 @@ export class Combat {
 
     }
 
-    moveMonsterRight(obj: ElementRef) {
+    // Move the monster to the right
+    // PARAM: obj: The HTML element reference to the monster
+    private moveMonsterRight(obj: ElementRef) {
         // console.log("Moving monster to the right")
         this.monsterPosX += 10;
         if (obj)
@@ -104,7 +111,9 @@ export class Combat {
             this.monsterMovingLeft = true;
     }
 
-    moveMonsterLeft(obj: ElementRef) {
+    // Move the monster to the left
+    // PARAM: obj: The HTML element reference to the monster
+    private moveMonsterLeft(obj: ElementRef) {
         // console.log("Moving monster to the left")
         this.monsterPosX -= 10;
         if (obj)
@@ -114,14 +123,18 @@ export class Combat {
             this.monsterMovingLeft = false;
     }
 
-    resetMonsterPosition(obj: ElementRef) {
+    // Resets the monster his position to the middle
+    // PARAM: obj: The HTML element reference to the monster
+    public resetMonsterPosition(obj: ElementRef) {
         // console.log("Resetting monster position");
         this.monsterPosX = 50;
         if (obj)
             obj.nativeElement.setAttribute("style", "left: calc(" + this.monsterPosX + "% - 50px)");
     }
 
-    checkArrowHit(arrowX: number) {
+    // Checks if the arrow, shot from the bow collides
+    // with the monster, based on his current position
+    public checkArrowHit(arrowX: number) {
         // console.log("Checking arrow collision at " + arrowX);
 
         //Hit left
@@ -135,11 +148,12 @@ export class Combat {
         //Hit right
         if (arrowX > 120 && this.monsterPosX > 50)
             this.hitMonster();
-
-
     }
 
-    startCombat() {
+    // When everything is set up, this function is
+    // called in order to start the combat. Starting
+    // the timer and start moving the monster.
+    public startCombat() {
         // console.log("Player has selected combat style, starting combat");
 
         this.startTimer();
@@ -149,7 +163,11 @@ export class Combat {
         this.moveMonster();
     }
 
-    stopCombat() {
+    // When the monster/player is defeated, we stop 
+    // the combat here. This resets the UI, timer,
+    // the monster his position, motion tracker,
+    // and then we return to the map
+    private stopCombat() {
         // console.log("Combat has been stopped");
         this.inCombat = false;
         this.combatState = CombatState.ChoosingCombatStyle;
@@ -167,19 +185,24 @@ export class Combat {
         this.returnToMap();
     }
 
-    resetTimer() {
+    // Here we reset the timer of the combat
+    private resetTimer() {
         this.maxTime = 10 + (90 / this.monster.Difficulty);
         this.MAXTIME = this.maxTime;
     }
 
-    selectCombatStyle(e) {
+    // Here we select the combat style that the player
+    // has chosen. This is based on the three combat
+    // types, hence the switch case. Then we start
+    // the combat.
+    public selectCombatStyle(e) {
         switch (e.path[0].id) {
             case "img-sword":
                 this.combatState = CombatState.CombatMelee;
                 this.deviceMotionSubscription = this.deviceMotion.watchAcceleration({ frequency: 100 }).subscribe((acc: DeviceMotionAccelerationData) => {
                     /*
                         BETA formula, improve this
-                    */
+                     */
                     let a = Math.sqrt(Math.pow(acc.x, 2) * Math.pow(acc.y, 2) * Math.pow(acc.z, 2));
                     if (a > 250) {
                         this.hitMonster();
@@ -198,7 +221,9 @@ export class Combat {
         this.startCombat();
     }
 
-    startTimer() {
+    // Here we start the timer. We keep repeating this
+    // function to count down, and update the health bars
+    private startTimer() {
         this.inCombat = true;
         this.timer = setTimeout(x => {
 
@@ -222,7 +247,13 @@ export class Combat {
 
     }
 
-    hitMonster(damage: number = 50) {
+    // Here we damage the monster, whenever the player
+    // hits with one of the combat styles, the monster
+    // receives damage based on the given parameter.
+    // We also update the health bar here.
+    // PARAM: damage: The amount of damage to be dealt
+    //                to the monster, default = 50
+    public hitMonster(damage: number = 50) {
         if (!this.monsterHittable)
             return;
 
@@ -239,12 +270,19 @@ export class Combat {
         this.parent.setInfo();
     }
 
-    updateMonsterHealthbar() {
+    // Here we update the monster's health bar
+    private updateMonsterHealthbar() {
         let healthPercentage = (this.monster.Health / this.monster.MaxHealth) * 100;
         document.getElementById("monsterbar").style.backgroundSize = healthPercentage + "% 100%";
     }
 
-    screenSplash() {
+    // Whenever the player succesfully hits the monster
+    // this function is called. It shows a quick screen
+    // light flash to indicate that there has been a 
+    // succesfull hit.
+    // WARNING: This is not working, and thus has not 
+    //          been implemented yet.
+    public screenSplash() {
         console.log("HIT! Splashing screen")
         //FIX THIS 
         let container = document.getElementsByName("screen-splash").item(0);
@@ -256,12 +294,26 @@ export class Combat {
         }, 1000);
     }
 
-    interactFooter(event) {
+    // This is called when the footer of the combat screen
+    // has been interacted with. Currently it only has 
+    // a functionality when the player is in the Magic
+    // CombatState. 
+    // PARAM: event: The ClickEvent received from Ionic
+    public interactFooter(event) {
         if (this.combatState === CombatState.CombatMagic)
             this.castSpell();
     }
 
-    castSpell() {
+    // This function is called whenever the player has
+    // interacted with the footer of the combat screen.
+    // It starts the speech listener, and listens for
+    // the text linked to the spell.
+    // At the moment, a wide variety of spells have not
+    // been implemented yet. Only one.
+    // TODO: Add a spellbook with spell selection and
+    //       make this function listen for that 
+    //       particular spell.
+    private castSpell() {
         // console.log("Listening for spellcast");
         this.speechListener = this.speech.startListening({ showPopup: false })
             .subscribe(
@@ -278,7 +330,10 @@ export class Combat {
             )
     }
 
-    checkHealth() {
+    // Checks the monster's health. This function is
+    // called regularly to see if the monster has 
+    // been killed.
+    public checkHealth() {
         if (this.monster.Health <= 0) {
             // console.log("Monster is defeated");
             setTimeout(() => {
@@ -287,25 +342,53 @@ export class Combat {
         }
     }
 
-    defeatMonster() {
+    // This function is called whenever the monster has
+    // been defeated. It calculates the experience
+    // and loot gained for the player.
+    private defeatMonster() {
         this.inCombat = false;
         this.experienceGained = this.monster.Difficulty * 50 + this.maxTime;
         this.player.Experience += this.experienceGained;
         this.changeCombatState(CombatState.CombatVictory);
         this.parent.setInfo();
-        this.generateLoot();
+
+        let tmp: any = this.monster;
+        if(tmp.isKnight){
+            
+            console.log("defeated knight");
+            console.log(tmp);
+            this.lootGained = [];
+            this.lmProvider.killKnight(tmp.landmark).subscribe(
+                lm => {
+                    console.log("killKnight");
+                    console.log(lm);
+                    this.lmPage.removeKnight();
+                    this.lmPage.updateLandmark();
+                });
+        } else {
+            console.log("Defeated monster");
+            this.generateLoot();
+
+        }
     }
 
-    defeatedByMonster() {
+    // This function is called when the player has been
+    // defeated by the monster (when the time runs out).
+    // It gives the player a small amount of experience.
+    private defeatedByMonster() {
         this.inCombat = false;
-        this.experienceGained = this.monster.Difficulty * 20;
+        this.experienceGained = this.monster.Difficulty * 10;
         this.player.Experience += this.experienceGained;
         this.changeCombatState(CombatState.CombatDefeat);
         this.parent.setInfo();
     }
 
-    retry() {
-        if(!this.DEBUG)
+    // This function is called when the return/retry
+    // button has been pressed. When in DEBUG mode
+    // it restarts the combat state with a new monster.
+    // If not in DEBUG mode it returns to the map.
+    public retry() {
+        if (!this.DEBUG)
             this.returnToMap();
 
         if (this.combatState == CombatState.CombatVictory) {
@@ -320,22 +403,41 @@ export class Combat {
         this.stopCombat();
     }
 
-    resetCombat(){
+    // Resets the loot gained and removes the monster
+    // from the marker.
+    public resetCombat() {
         this.lootGained = [];
-        this.monster.Marker.remove();
+        let tmp: any = this.monster;
+        if(!tmp.isKnight){
+            //this.monster.Marker.remove();
+        }
     }
+
 
     returnToMap(){
-        this.resetCombat();
-        this.parent.navCtrl.pop();
-        // this.parent.navCtrl.push(
-        //     HomePage,
-        //     { lastmonster: this.monster }
-        // );
-        console.log("Returning to map");
+        if(this.returning) return;
+        else{
+            this.returning = true;
+            this.resetCombat();
+            console.log("returnToMap start");
+            console.log(this.parent.navCtrl);
+            console.log(this.parent.navCtrl.getViews());
+            
+            let tmp: any = this.monster;
+
+            this.parent.navCtrl.pop();
+            
+            // this.parent.navCtrl.push(
+            //     HomePage,
+            //     { lastmonster: this.monster }
+            // );
+            console.log("Returning to map");
+        }
     }
 
-    changeCombatState(state: CombatState) {
+    // Change the combat state to the selected CombatState
+    // PARAM: state: The CombatState selected by the player
+    private changeCombatState(state: CombatState) {
         // console.log("Changing combat state to " + state);
         this.combatState = state;
 
@@ -356,7 +458,10 @@ export class Combat {
         }
     }
 
-    generateLoot() {
+    // Generate some random loot for the player. Then
+    // push this loot to the API to save it in the 
+    // player his inventory.
+    private generateLoot() {
         let items: AddInventoryItemDto[] = [];
         this.lootGained = [];
 
@@ -369,7 +474,10 @@ export class Combat {
                 itemTypeId: 1,
                 amount: 1
             }
+
+
             this.invProvider.addToInventory(item).subscribe(data => {
+                data.amount = item.amount;
                 this.lootGained.push(data);
                 console.log("Added new " + data.itemType.itemTypeName + " to inventory");
             }, err => {

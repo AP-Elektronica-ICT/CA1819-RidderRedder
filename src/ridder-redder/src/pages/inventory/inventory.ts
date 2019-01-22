@@ -18,25 +18,29 @@ import { InventoryProvider } from '../../providers/inventory/InventoryProvider';
     templateUrl: 'inventory.html',
 })
 export class InventoryPage {
-    Knights: Array<Knight>;
 
     private inventoryItems: InventoryItem[];
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public playerProvider: PlayerProvider, private invProvider: InventoryProvider) {
-        this.Knights = playerProvider.getInventory();
+        this.loadInventory();
+    }
 
-        invProvider.getInventory().subscribe(data => {
+    /*
+     *  Loads all inventory items from the API thats linked to the currently logged in user.
+     */
+    private loadInventory() {
+        this.invProvider.getInventory().subscribe(data => {
             this.inventoryItems = data;
+        }, error => {
+            console.log(error);
         });
-
-        console.log(this.Knights);
     }
 
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad InventoryPage');
-    }
-
-    returnView() {
+    /*
+     *  This function should be called in order to return to the previously opened tab. 
+     *  Normally this should return to the home/navigation page.
+     */
+    private returnView() {
         this.navCtrl.pop();
     }
 
