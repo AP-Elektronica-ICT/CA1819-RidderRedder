@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController, NavParams, NavController, IonicApp, ToastController } from 'ionic-angular';
-import { GoogleMaps, GoogleMap, GoogleMapOptions, GoogleMapsEvent, ILatLng, Marker, MarkerOptions, HtmlInfoWindow } from '@ionic-native/google-maps';
+import { GoogleMaps, GoogleMap, GoogleMapOptions, GoogleMapsEvent, ILatLng, Marker, MarkerOptions, HtmlInfoWindow, Circle } from '@ionic-native/google-maps';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs/Subscription';
@@ -30,6 +30,7 @@ export class HomePage {
     landmarks: Array<Landmark>;
     initialised: boolean;
     mapLoaded = false;
+    playerRadius: Circle;
     private geoPosWatcher: any;
 
     private loading = true;
@@ -144,7 +145,7 @@ export class HomePage {
                     console.log(landmarks);
                     this.landmarks = landmarks;
                     this.addLandmarks();
-                // Step 2. Load in our landmarks from the API and put them on our map
+                    // Step 2. Load in our landmarks from the API and put them on our map
                 });
 
                 // Step 3. We start watching our map for movement changes
@@ -169,28 +170,40 @@ export class HomePage {
         console.log("Watching map...");
         this.geoPosWatcher = this.geolocation.watchPosition({ timeout: 5000, enableHighAccuracy: true })
             .subscribe(data => {
-                if(this.map){
+                if (this.map) {
                     console.log("in geo watcher");
                     this.loading = false;
                     this.updateMonsters();
                     this.prevPos.lat = data.coords.latitude;
                     this.prevPos.lng = data.coords.longitude;
-
-            // Follow the user
-            this.map.animateCamera(
-                {
-                    target:
+                }
+                // Follow the user
+                this.map.animateCamera(
                     {
-                        lat: data.coords.latitude,
-                        lng: data.coords.longitude
-                    },
-                    zoom: 16,
-                    tilt: 30
-                });
-        }, error => {
-            console.log("Stopped watching: " + error);
-        });
+                        target:
+                        {
+                            lat: data.coords.latitude,
+                            lng: data.coords.longitude
+                        },
+                        zoom: 16,
+                        tilt: 30
+                    });
+                    this.updateRadius();
+            }, error => {
+                console.log("Stopped watching: " + error);
+            });
 
+    }
+
+    private updateRadius() {
+        this.playerRadius = this.map.addCircleSync({
+            center: this.prevPos,
+            clickable: false,
+            radius: 80, 
+            fillColor: "rgba(0, 0, 255, 0.05)",
+            strokeColor: "rgba(0, 0, 255, 0.1)",
+            strokeWidth: 1
+        })
     }
 
     // Select the landmark icon based on the state of the landmark
@@ -292,7 +305,7 @@ export class HomePage {
         }
 
         this.monsters.forEach(m => {
-            if (m.Health <= 0){
+            if (m.Health <= 0) {
                 console.log("minster health low");
                 console.log(m);
                 this.removeMonster(m);
@@ -354,6 +367,8 @@ export class HomePage {
         this.monsters.shift();
     }
 
+    // Remove the landmark from the list and the map.
+    // PARAM: landmark: the landmark to remove
     removeLandmark(landmark: Landmark) {
         if (!landmark)
             return;
@@ -363,19 +378,24 @@ export class HomePage {
         this.landmarks.shift();
     }
 
+    // Check if the monster is in range of
+    // the player, before starting combat.
+    // PARAM: monster: the monster to check distance
     checkMonsterRange(monster: Monster) {
 
         let monsterPos = monster.Marker.getPosition();
         let playerPos = this.prevPos;
-        
-        let distance =  Math.sqrt(Math.pow((monsterPos.lat - playerPos.lat), 2) + Math.pow((monsterPos.lng - playerPos.lng),2));
 
-        if(distance <= this.playerToMonsterDistance)
+        let distance = Math.sqrt(Math.pow((monsterPos.lat - playerPos.lat), 2) + Math.pow((monsterPos.lng - playerPos.lng), 2));
+
+        if (distance <= this.playerToMonsterDistance)
             this.launchFight(monster);
         else
             this.showNotCloseEnoughToast();
     }
 
+    // Show a toast when the player is too
+    // far away from the monster.
     showNotCloseEnoughToast() {
         let toast = this.toastCtrl.create({
             message: 'You are not close enough!',
@@ -386,10 +406,9 @@ export class HomePage {
         toast.present();
     }
 
-    // open the fight screen
-    launchFight(monster: Monster) {
     // Navigate to the combat screen in order to fight the monster
     // PARAM: monster: The Monster to start combat with
+    launchFight(monster: Monster) {
         this.resetGeo();
         console.log("launching fight");
         console.log(monster);
@@ -404,7 +423,7 @@ export class HomePage {
     // This should be called when cleaning up
     private resetGeo() {
         // this.geoPosWatcher.unsubscribe();
-        if(this.geolocation){
+        if (this.geolocation) {
             this.geolocation.watchPosition().subscribe().unsubscribe();
         }
     }
@@ -421,7 +440,8 @@ export class HomePage {
         console.log(landmark);
         this.navCtrl.push(
             LandmarkPage,
-            {   landmark: landmark,
+            {
+                landmark: landmark,
                 home: this
             }
         );

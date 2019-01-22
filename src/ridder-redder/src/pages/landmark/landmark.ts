@@ -62,6 +62,9 @@ export class LandmarkPage {
         console.log("ionViewWillLeave landmark")
         //this.home.ionViewWillEnter();
     }
+
+    // Update the current landmark, check if all knights have been defeated
+    // if the landmark was hostile.
     updateLandmark() {
         console.log("updating landmark");
         this.loading = true;
@@ -92,10 +95,12 @@ export class LandmarkPage {
             });
     }
 
+    // Remove the first knight from the array, this is called from above.
     removeKnight(){
         this.knights.shift();
     }
 
+    // Check the status of the landmark, whether or not the owner has been changed
     checkLandmarkHostility() {
         if (!this.landmark.owner || (this.landmark.owner == null)) {
             this.neutral = true;
@@ -114,8 +119,7 @@ export class LandmarkPage {
         }
     }
 
-
-
+    // Show an alert when the user chooses to add a knight to the landmark.
     addKnightsConfirm(item: InventoryItem) {
         console.log("popping knights confirm")
         
@@ -155,6 +159,7 @@ export class LandmarkPage {
         
     }
 
+    // Convert the knights from the user's inventory to the landmark
     addItem(item: InventoryItem) {
         //tell landmark provider to add knight to landmark
         console.log("adding knight to landmark:");
@@ -173,10 +178,12 @@ export class LandmarkPage {
         }, error => console.log);
     }
 
+    // Get the model of the knight to load in Combat
     getImage(knight) {
         return this.iProvider.ItemImages[knight.colour - 1].path;
     }
 
+    // Navigate to the combat screen to fight the defending knight
     fight() {
         console.log("fight yo");
         console.log(this.navCtrl);

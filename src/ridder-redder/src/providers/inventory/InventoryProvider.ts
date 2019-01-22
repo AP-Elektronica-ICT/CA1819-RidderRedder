@@ -77,7 +77,7 @@ export class InventoryProvider {
     // Get an item type by ID
     // PARAM: id: the ID of the ItemType
     // RETURNS: ItemType
-    public getItemTypeById(id: number): ItemType{
+    public getItemTypeById(id: number): ItemType {
         if (!this.ItemTypes)
             this.ItemTypes = [];
 
@@ -168,34 +168,35 @@ export class InventoryProvider {
             landmarkId: landmark.landmarkId
         }
         console.log(landmark);
-        if(landmark.knights){
+        if (landmark.knights) {
             landmark.knights.push(knight);
         }
-        else{
+        else {
             landmark.knights = [knight];
         }
         landmark.owner = this.auth.AuthId;
 
         // Update the landmark with its owner and defender(s)
-        var tmplandmark:Landmark;
+        var tmplandmark: Landmark;
         tmplandmark = JSON.parse(JSON.stringify(landmark));
         console.log(tmplandmark);
         tmplandmark.marker = undefined;
         console.log(JSON.stringify(tmplandmark));
         return this.http.put<Landmark>(`/Landmark/${tmplandmark.landmarkId}`, tmplandmark)
-        .flatMap(landmarkData => {
-            tmplandmark = landmarkData;
-            tmplandmark.marker = landmark.marker;
-            console.log(landmarkData);
-            // Update the player's inventory to substract the amount of knights
-            item.amount -= newAmount;
-            console.log("post-add inventory item");
-            console.log(item);
-            return this.http.put<InventoryItem>(`/Inventory/${item.inventoryItemId}`, item)})
-        .map(itemData => {
-            console.log("after subtracting items:");
-            console.log(itemData);
-            return tmplandmark;
-        }, error => console.log(error));
+            .flatMap(landmarkData => {
+                tmplandmark = landmarkData;
+                tmplandmark.marker = landmark.marker;
+                console.log(landmarkData);
+                // Update the player's inventory to substract the amount of knights
+                item.amount -= newAmount;
+                console.log("post-add inventory item");
+                console.log(item);
+                return this.http.put<InventoryItem>(`/Inventory/${item.inventoryItemId}`, item)
+            })
+            .map(itemData => {
+                console.log("after subtracting items:");
+                console.log(itemData);
+                return tmplandmark;
+            }, error => console.log(error));
     }
 }
